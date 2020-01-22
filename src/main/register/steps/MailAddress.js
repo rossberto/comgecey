@@ -13,6 +13,12 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
+import InputLabel from '@material-ui/core/InputLabel';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import NativeSelect from '@material-ui/core/NativeSelect';
+
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -48,6 +54,24 @@ const useStyles = makeStyles(theme => ({
 
 export default function MailAddress() {
   const classes = useStyles();
+
+  const [state, setState] = React.useState({
+    age: '',
+    name: 'hai',
+  });
+
+  const inputLabel = React.useRef(null);
+  const [labelWidth, setLabelWidth] = React.useState(0);
+  React.useEffect(() => {
+    setLabelWidth(inputLabel.current.offsetWidth);
+  }, []);
+
+  const handleChange = name => event => {
+    setState({
+      ...state,
+      [name]: event.target.value,
+    });
+  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -100,14 +124,56 @@ export default function MailAddress() {
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                name="state"
-                label="Estado"
-                id="state"
-              />
+              <FormControl fullWidth variant="outlined" className={classes.formControl}>
+                <InputLabel ref={inputLabel} htmlFor="outlined-age-native-simple">
+                  Age
+                </InputLabel>
+                <Select
+
+                  native
+                  value={state.age}
+                  onChange={handleChange('age')}
+                  labelWidth={labelWidth}
+                  inputProps={{
+                    name: 'age',
+                    id: 'outlined-age-native-simple',
+                  }}
+                >
+                  <option value="no">Seleccione uno...</option>
+                  <option value="Aguascalientes">Aguascalientes</option>
+                  <option value="Baja California">Baja California</option>
+                  <option value="Baja California Sur">Baja California Sur</option>
+                  <option value="Campeche">Campeche</option>
+                  <option value="Chiapas">Chiapas</option>
+                  <option value="Chihuahua">Chihuahua</option>
+                  <option value="Coahuila">Coahuila</option>
+                  <option value="Colima">Colima</option>
+                  <option value="Distrito Federal">Distrito Federal</option>
+                  <option value="Durango">Durango</option>
+                  <option value="Estado de México">Estado de México</option>
+                  <option value="Guanajuato">Guanajuato</option>
+                  <option value="Guerrero">Guerrero</option>
+                  <option value="Hidalgo">Hidalgo</option>
+                  <option value="Jalisco">Jalisco</option>
+                  <option value="Michoacán">Michoacán</option>
+                  <option value="Morelos">Morelos</option>
+                  <option value="Nayarit">Nayarit</option>
+                  <option value="Nuevo León">Nuevo León</option>
+                  <option value="Oaxaca">Oaxaca</option>
+                  <option value="Puebla">Puebla</option>
+                  <option value="Querétaro">Querétaro</option>
+                  <option value="Quintana Roo">Quintana Roo</option>
+                  <option value="San Luis Potosí">San Luis Potosí</option>
+                  <option value="Sinaloa">Sinaloa</option>
+                  <option value="Sonora">Sonora</option>
+                  <option value="Tabasco">Tabasco</option>
+                  <option value="Tamaulipas">Tamaulipas</option>
+                  <option value="Tlaxcala">Tlaxcala</option>
+                  <option value="Veracruz">Veracruz</option>
+                  <option value="Yucatán">Yucatán</option>
+                  <option value="Zacatecas">Zacatecas</option>
+                </Select>
+              </FormControl>
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -134,7 +200,6 @@ export default function MailAddress() {
 
           <Button
             type="submit"
-            fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
@@ -143,9 +208,6 @@ export default function MailAddress() {
           </Button>
         </form>
       </div>
-      <Box mt={5}>
-        <Copyright />
-      </Box>
     </Container>
   );
 }

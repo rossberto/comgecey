@@ -121,7 +121,7 @@ export default function Profesional() {
                 required
                 fullWidth
                 name="finish_date_internship"
-                label="Terminación de Internado"
+                label="Fin de Internado"
                 type="date"
                 id="finish_date_internship"
                 InputLabelProps={{shrink: true}}
@@ -155,7 +155,7 @@ export default function Profesional() {
                 required
                 fullWidth
                 name="finish_date_social"
-                label="Terminación de Servicio Social"
+                label="Fin de Servicio Social"
                 type="date"
                 id="finish_date_social"
                 InputLabelProps={{shrink: true}}
@@ -239,7 +239,6 @@ export default function Profesional() {
 
           <Button
             type="submit"
-            fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
@@ -248,9 +247,6 @@ export default function Profesional() {
           </Button>
         </form>
       </div>
-      <Box mt={5}>
-        <Copyright />
-      </Box>
     </Container>
   );
 }

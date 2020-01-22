@@ -118,7 +118,6 @@ export default function IdCard() {
 
           <Button
             type="submit"
-            fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
@@ -127,9 +126,6 @@ export default function IdCard() {
           </Button>
         </form>
       </div>
-      <Box mt={5}>
-        <Copyright />
-      </Box>
     </Container>
   );
 }

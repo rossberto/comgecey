@@ -31,7 +31,7 @@ function getSteps() {
 function getStepContent(step) {
   switch (step) {
     case 0:
-      return <ParticularAddress />;//<IdCard />;
+      return <IdCard />;
     case 1:
       return <ParticularAddress />;
     case 2:
@@ -125,18 +125,8 @@ export default function InscriptionForm() {
             <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
             <div>
               <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
-                Back
+                Regresar
               </Button>
-              {isStepOptional(activeStep) && (
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={handleSkip}
-                  className={classes.button}
-                >
-                  Skip
-                </Button>
-              )}
 
               <Button
                 variant="contained"
@@ -144,7 +134,7 @@ export default function InscriptionForm() {
                 onClick={handleNext}
                 className={classes.button}
               >
-                {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                {activeStep === steps.length - 1 ? 'Terminar' : 'Siguiente'}
               </Button>
             </div>
           </div>
