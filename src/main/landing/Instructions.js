@@ -10,7 +10,7 @@ const useStyles = makeStyles({
   card: {
     minWidth: 275,
     maxWidth: 500,
-    opacity: 0.9,
+    opacity: 0.8,
     margin: 'auto',
     padding: '70px 0',
     textAlign: 'center'
