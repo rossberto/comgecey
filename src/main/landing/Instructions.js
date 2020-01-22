@@ -45,10 +45,13 @@ export default function SimpleCard() {
           2. Ingresa tus datos y sube tu documentación.
         </Typography>
         <Typography variant="h5" component="h2">
-          3. Realiza el examen en tu fecha correspondiente.
+          3. Realiza tu pago
         </Typography>
         <Typography variant="h5" component="h2">
-          4. Recibe tu certificado.
+          4. Realiza el examen en tu fecha correspondiente.
+        </Typography>
+        <Typography variant="h5" component="h2">
+          5. Recibe tu certificado.
         </Typography>
       </CardContent>
       <br />
