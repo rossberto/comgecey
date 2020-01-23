@@ -6,6 +6,7 @@ import SignUp from './main/signup/Signup';
 import LandingPage from './main/landing/Landing';
 import SuscribeDialog from './main/landing/Suscribe';
 import InscriptionForm from './main/register/InscriptionForm';
+import DocumentsUpload from './main/documents/DocumentsUpload';
 
 import Button from '@material-ui/core/Button';
 
@@ -82,8 +83,8 @@ function App() {
           Blog
         </Button>
 
-        {page}
-        {/*<InscriptionForm />*/}
+        {/*page*/}
+        <DocumentsUpload />
       </ThemeProvider>
     </div>
   );
