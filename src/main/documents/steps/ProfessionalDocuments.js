@@ -112,6 +112,7 @@ export default function ProfessionalDocuments(props) {
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <Button
+                color="primary"
                 fullWidth
                 variant="contained"
                 component="label"
@@ -131,6 +132,7 @@ export default function ProfessionalDocuments(props) {
             </Grid>
             <Grid item xs={12}>
               <Button
+                color="primary"
                 fullWidth
                 variant="contained"
                 component="label"
@@ -150,6 +152,7 @@ export default function ProfessionalDocuments(props) {
             </Grid>
             <Grid item xs={12}>
               <Button
+                color="primary"
                 fullWidth
                 variant="contained"
                 component="label"
