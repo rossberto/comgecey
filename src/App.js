@@ -1,12 +1,6 @@
 import React, {useState} from 'react';
-import './App.css';
 
-import Blog from './main/blog/Blog';
-import SignUp from './main/signup/Signup';
-import LandingPage from './main/landing/Landing';
-import SuscribeDialog from './main/landing/Suscribe';
-import InscriptionForm from './main/register/InscriptionForm';
-import DocumentsUpload from './main/documents/DocumentsUpload';
+import Layout from './main/layout/Layout';
 
 import Button from '@material-ui/core/Button';
 
@@ -38,54 +32,34 @@ const theme = createMuiTheme({
 });
 
 function App() {
-  const [page, setPage] = useState(<LandingPage />)
-  function handleClick(e) {
-    switch (e.target.textContent) {
-      case 'Landing Page':
-        setPage(<LandingPage />)
-        break;
-      case 'Forma de Inscripción':
-        setPage(<InscriptionForm />)
-        break;
-      case 'Blog':
-        setPage(<Blog />)
-        break;
-      default:
-
-    }
-    console.log(e.target.textContent);
-  }
   return (
-    <div className="App">
-      <ThemeProvider theme={theme}>
-        <Button
-          value='landing'
-          variant="contained"
-          color="primary"
-          onClick={handleClick}
-        >
-          Landing Page
-        </Button>
-        <Button
-          type="submit"
-          variant="contained"
-          color="primary"
-          onClick={handleClick}
-        >
-          Forma de Inscripción
-        </Button>
-        <Button
-          type="submit"
-          variant="contained"
-          color="primary"
-          onClick={handleClick}
-        >
-          Blog
-        </Button>
-
+    <div>
+      {/*<ThemeProvider theme={theme}>*/}
         {/*page*/}
-        <DocumentsUpload />
-      </ThemeProvider>
+        <Layout />
+      {/*</ThemeProvider>*/}
+
+      {/*
+        <AppContext.Provider
+             value={{
+                 routes
+             }}
+         >
+             <StylesProvider jss={jss} generateClassName={generateClassName}>
+                 <Provider store={store}>
+                     <Auth>
+                         <Router history={history}>
+                             <FuseAuthorization>
+                                 <FuseTheme>
+                                     <FuseLayout/>
+                                 </FuseTheme>
+                             </FuseAuthorization>
+                         </Router>
+                     </Auth>
+                 </Provider>
+             </StylesProvider>
+         </AppContext.Provider>
+      */}
     </div>
   );
 }
