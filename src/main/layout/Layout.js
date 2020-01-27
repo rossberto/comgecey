@@ -4,12 +4,13 @@ import Frame from './Frame';
 import DocumentsUpload from '../documents/DocumentsUpload';
 import UsersList from '../users/UsersList';
 import UsersTable from '../users/UsersTable';
+import Users from '../users/Users';
 
 export default function Layout() {
   return (
     <div>
       <Frame>
-        <UsersTable />
+        <Users />
       </Frame>
     </div>
 

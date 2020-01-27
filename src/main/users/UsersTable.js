@@ -1,7 +1,8 @@
 import React from 'react';
 import MaterialTable from 'material-table';
 
-export default function UsersTable() {
+
+export default function MaterialTableDemo() {
   const [state, setState] = React.useState({
     columns: [
       { title: 'Name', field: 'name' },
