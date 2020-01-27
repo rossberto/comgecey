@@ -1,6 +1,6 @@
 import React from 'react';
 import ComAppBar from './ComAppBar';
-import PersistentDrawer from './Navigation';
+import Frame from './Frame';
 import DocumentsUpload from '../documents/DocumentsUpload';
 import UsersList from '../users/UsersList';
 import UsersTable from '../users/UsersTable';
@@ -8,7 +8,9 @@ import UsersTable from '../users/UsersTable';
 export default function Layout() {
   return (
     <div>
-      <PersistentDrawer />
+      <Frame>
+        <UsersTable />
+      </Frame>
     </div>
 
   );

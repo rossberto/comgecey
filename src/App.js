@@ -1,4 +1,8 @@
 import React, {useState} from 'react';
+//import {Router} from 'react-router-dom';
+//import {createBrowserHistory} from 'history';
+
+//const history = createBrowserHistory();
 
 import Layout from './main/layout/Layout';
 
@@ -36,7 +40,9 @@ function App() {
     <div>
       {/*<ThemeProvider theme={theme}>*/}
         {/*page*/}
+      {/*<Router history={history}>*/}
         <Layout />
+      {/*</Router>*/}
       {/*</ThemeProvider>*/}
 
       {/*
