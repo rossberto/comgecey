@@ -13,7 +13,8 @@ import NativeSelect from '@material-ui/core/NativeSelect';
 
 import InputAdornment from '@material-ui/core/InputAdornment';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-
+import EditIcon from '@material-ui/icons/Edit';
+import SaveIcon from '@material-ui/icons/Save';
 
 export default function AddressInfo(props) {
   const [state, setState] = React.useState({
@@ -36,9 +37,17 @@ export default function AddressInfo(props) {
 
   return (
     <React.Fragment>
-      <Typography component="h1" variant="h5">
-        Domicilio particular
-      </Typography>
+      <Grid container justify="space-between">
+        <Grid item>
+          <Typography component="h1" variant="h5">
+            Domicilio particular
+          </Typography>
+        </Grid>
+        <Grid item>
+          <Button><SaveIcon /></Button>
+          <Button><EditIcon /></Button>
+        </Grid>
+      </Grid>
       <form className={props.classes.form} noValidate>
         <Grid container spacing={2}>
           <Grid item xs={4}>
@@ -156,15 +165,6 @@ export default function AddressInfo(props) {
           </Grid>
 
         </Grid>
-
-        <Button
-          type="submit"
-          variant="contained"
-          color="primary"
-          className={props.classes.submit}
-        >
-          Guardar
-        </Button>
       </form>
     </React.Fragment>
   );

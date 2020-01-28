@@ -4,13 +4,23 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import EditIcon from '@material-ui/icons/Edit';
+import SaveIcon from '@material-ui/icons/Save';
 
 export default function ProfessionalInfo(props) {
   return (
     <React.Fragment>
-      <Typography component="h1" variant="h5">
-        Licenciatura
-      </Typography>
+      <Grid container justify="space-between">
+        <Grid item>
+          <Typography component="h1" variant="h5">
+            Licenciatura
+          </Typography>
+        </Grid>
+        <Grid item>
+          <Button><SaveIcon /></Button>
+          <Button><EditIcon /></Button>
+        </Grid>
+      </Grid>
       <form className={props.classes.form} noValidate>
         <Grid container spacing={2}>
           <Grid item xs={12}>
@@ -191,15 +201,6 @@ export default function ProfessionalInfo(props) {
           </Grid>
 
         </Grid>
-
-        <Button
-          type="submit"
-          variant="contained"
-          color="primary"
-          className={props.classes.submit}
-        >
-          Guardar
-        </Button>
       </form>
     </React.Fragment>
   );
