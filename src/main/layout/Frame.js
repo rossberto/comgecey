@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -24,7 +24,7 @@ const useStyles = makeStyles(theme => ({
   root: {
     marginTop: "50px",
     //marginRight: "50px",
-    display: 'flex',
+    display: 'flex'
   },
   drawer: {
     [theme.breakpoints.up('sm')]: {
@@ -41,7 +41,7 @@ const useStyles = makeStyles(theme => ({
       display: 'none',
     },
   },
-  toolbar: theme.mixins.toolbar,
+  toolbar: {},// theme.mixins.toolbar,
   drawerPaper: {
     width: drawerWidth,
   },
@@ -50,10 +50,12 @@ const useStyles = makeStyles(theme => ({
     paddingTop: "24px",
     //padding: theme.spacing(3),
     //height: '100vh',
-    overflow: 'auto',
+    //overflow: 'auto',
   },
   container: {
+    //alignItems: 'flex-start'
     //maxHeight: "800px"
+    backgroundColor: 'black'
   },
 }));
 
@@ -66,6 +68,10 @@ function Frame(props) {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  });
 
   const drawer = (
     <div>

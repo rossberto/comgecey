@@ -14,7 +14,7 @@ import UserFiles from './UserFiles';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    flexGrow: 1,
+    //flexGrow: 1,
   },
   paper: {
     padding: theme.spacing(2),
