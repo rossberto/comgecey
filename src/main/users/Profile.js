@@ -33,22 +33,20 @@ export default function FullWidthGrid() {
   return (
     <div className={classes.root}>
       <Grid container spacing={3}>
-        <Grid item xs={12} sm={12}>
-          <Paper className={classes.paper}>
-            <UserFiles classes={classes}/>
-          </Paper>
-        </Grid>
-        <Grid item xs={12} sm={12}>
+        <Grid item xs={12} sm={6}>
           <Paper className={classes.paper}>
             <IdInfo classes={classes}/>
           </Paper>
-        </Grid>
-        <Grid item xs={12} sm={12}>
+          <br />
+          <Paper className={classes.paper}>
+            <UserFiles classes={classes}/>
+          </Paper>
+          <br />
           <Paper className={classes.paper}>
             {<AddressInfo classes={classes} />}
           </Paper>
         </Grid>
-        <Grid item xs={12} sm={12}>
+        <Grid item xs={12} sm={6}>
           <Paper className={classes.paper}>
             <ProfessionalInfo classes={classes} />
           </Paper>
