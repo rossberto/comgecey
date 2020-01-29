@@ -4,12 +4,13 @@ import Frame from './Frame';
 import DocumentsUpload from '../documents/DocumentsUpload';
 import Users from '../users/Users';
 import Profile from '../users/Profile';
+import Convocatory from '../convocatories/Convocatory';
 
 export default function Layout() {
   return (
     <div>
       <Frame>
-        <Users />
+        <Convocatory />
       </Frame>
     </div>
 
