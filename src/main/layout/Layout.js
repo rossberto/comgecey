@@ -5,12 +5,14 @@ import DocumentsUpload from '../documents/DocumentsUpload';
 import Users from '../users/Users';
 import Profile from '../users/Profile';
 import Convocatory from '../convocatories/Convocatory';
+import Convocatories from '../convocatories/Convocatories';
+
 
 export default function Layout() {
   return (
     <div>
       <Frame>
-        <Convocatory />
+        <Convocatories />
       </Frame>
     </div>
 
