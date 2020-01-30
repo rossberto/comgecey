@@ -1,15 +1,17 @@
 import React, {useState} from 'react';
-//import {Router} from 'react-router-dom';
-//import {createBrowserHistory} from 'history';
-
-//const history = createBrowserHistory();
-
 import Layout from './main/layout/Layout';
-
 import Button from '@material-ui/core/Button';
-
 import { ThemeProvider } from '@material-ui/styles';
 import { createMuiTheme } from '@material-ui/core/styles';
+
+import AppContext from './AppContext';
+import routes from './configs/routesConfig';
+import {createBrowserHistory} from 'history';
+import {Router} from 'react-router-dom';
+
+
+const history = createBrowserHistory();
+
 
 const theme = createMuiTheme({
   palette: {
@@ -37,12 +39,16 @@ const theme = createMuiTheme({
 
 function App() {
   return (
-    <div>
+    <AppContext.Provider
+      value={{
+        routes
+      }}
+    >
       {/*<ThemeProvider theme={theme}>*/}
         {/*page*/}
-      {/*<Router history={history}>*/}
+      <Router history={history}>
         <Layout />
-      {/*</Router>*/}
+      </Router>
       {/*</ThemeProvider>*/}
 
       {/*
@@ -66,7 +72,7 @@ function App() {
              </StylesProvider>
          </AppContext.Provider>
       */}
-    </div>
+    </AppContext.Provider>
   );
 }
 

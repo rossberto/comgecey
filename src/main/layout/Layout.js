@@ -1,4 +1,6 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import AppContext from '../../AppContext';
+import {renderRoutes} from 'react-router-config'
 
 import Frame from './Frame';
 import DocumentsUpload from '../documents/DocumentsUpload';
@@ -9,10 +11,16 @@ import Convocatories from '../convocatories/Convocatories';
 
 
 export default function Layout() {
+  const appContext = useContext(AppContext);
+  const {routes} = appContext;
+
   return (
     <div>
       <Frame>
-        <Convocatories />
+        <React.Suspense fallback={<h1>Cargando</h1>}>
+          {renderRoutes(routes)}
+        </React.Suspense>
+        {/*<Convocatories />*/}
       </Frame>
     </div>
 
