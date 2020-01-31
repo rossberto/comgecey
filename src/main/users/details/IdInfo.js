@@ -17,7 +17,7 @@ export default function IdInfo(props) {
           </Typography>
         </Grid>
         <Grid item>
-          <Button><SaveIcon /></Button>
+          <Button disabled><SaveIcon /></Button>
           <Button><EditIcon /></Button>
         </Grid>
       </Grid>
@@ -33,6 +33,7 @@ export default function IdInfo(props) {
               label="Nombre(s)"
               autoFocus
               size="small"
+              value={props.info.name}
             />
           </Grid>
           <Grid item xs={6}>
@@ -44,6 +45,7 @@ export default function IdInfo(props) {
               name="lastName"
               autoComplete="lname"
               size="small"
+              value={props.info.father_lname}
             />
           </Grid>
           <Grid item xs={6}>
@@ -55,6 +57,7 @@ export default function IdInfo(props) {
               name="email"
               autoComplete="email"
               size="small"
+              value={props.info.mother_lname}
             />
           </Grid>
           <Grid item xs={6}>
@@ -67,6 +70,7 @@ export default function IdInfo(props) {
               id="birthdate"
               InputLabelProps={{shrink: true}}
               size="small"
+              value={props.info.birthdate}
             />
           </Grid>
           <Grid item xs={6}>
@@ -77,6 +81,7 @@ export default function IdInfo(props) {
               label="Lugar de Nacimiento"
               name="birthplace"
               size="small"
+              value={props.info.birthplace}
             />
           </Grid>
         </Grid>

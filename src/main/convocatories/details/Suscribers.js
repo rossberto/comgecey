@@ -13,6 +13,8 @@ import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 
+import nav from '../../nav.js'
+
 const columns = [
   { id: 'name', label: 'Nombre Completo', minWidth: 170 },
   { id: 'code', label: 'Pago' },
@@ -73,6 +75,10 @@ export default function Suscribers() {
     setPage(0);
   };
 
+  function handleClick() {
+    nav('/users/1');
+  }
+
   return (
     <Paper className={classes.root}>
       <TableContainer className={classes.container}>
@@ -98,7 +104,7 @@ export default function Suscribers() {
                     const value = row[column.id];
                     return (
                       <TableCell key={column.id} align={column.align}>
-                        <Button>{column.format && typeof value === 'number' ? column.format(value) : value}</Button>
+                        <Button onClick={handleClick}>{column.format && typeof value === 'number' ? column.format(value) : value}</Button>
                       </TableCell>
                     );
                   })}

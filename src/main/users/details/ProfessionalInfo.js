@@ -17,7 +17,7 @@ export default function ProfessionalInfo(props) {
           </Typography>
         </Grid>
         <Grid item>
-          <Button><SaveIcon /></Button>
+          <Button disabled><SaveIcon /></Button>
           <Button><EditIcon /></Button>
         </Grid>
       </Grid>
@@ -32,6 +32,7 @@ export default function ProfessionalInfo(props) {
               label="Escuela donde estudió la licenciatura"
               autoFocus
               size="small"
+              value={props.info.school}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -44,6 +45,7 @@ export default function ProfessionalInfo(props) {
               id="start_date"
               InputLabelProps={{shrink: true}}
               size="small"
+              value={props.info.startDate}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -56,6 +58,7 @@ export default function ProfessionalInfo(props) {
               id="finish_date"
               InputLabelProps={{shrink: true}}
               size="small"
+              value={props.info.endDate}
             />
           </Grid>
           <Grid item xs={12}>
@@ -66,6 +69,7 @@ export default function ProfessionalInfo(props) {
               label="Sitio donde realizó el internado"
               name="internship"
               size="small"
+              value={props.info.internship}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -78,6 +82,7 @@ export default function ProfessionalInfo(props) {
               id="start_date_internship"
               InputLabelProps={{shrink: true}}
               size="small"
+              value={props.info.internStartDate}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -90,6 +95,7 @@ export default function ProfessionalInfo(props) {
               id="finish_date_internship"
               InputLabelProps={{shrink: true}}
               size="small"
+              value={props.info.internEndDate}
             />
           </Grid>
           <Grid item xs={12}>
@@ -100,6 +106,7 @@ export default function ProfessionalInfo(props) {
               label="Lugar donde realizó el servicio social"
               name="social_service"
               size="small"
+              value={props.info.ss}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -112,6 +119,7 @@ export default function ProfessionalInfo(props) {
               id="start_date_social"
               InputLabelProps={{shrink: true}}
               size="small"
+              value={props.info.ssStartDate}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -124,6 +132,7 @@ export default function ProfessionalInfo(props) {
               id="finish_date_social"
               InputLabelProps={{shrink: true}}
               size="small"
+              value={props.info.ssEndDate}
             />
           </Grid>
           <Grid item xs={12}>
@@ -136,6 +145,7 @@ export default function ProfessionalInfo(props) {
               id="exam_date"
               InputLabelProps={{shrink: true}}
               size="small"
+              value={props.info.examDate}
             />
           </Grid>
           <Grid item xs={12}>
@@ -146,6 +156,7 @@ export default function ProfessionalInfo(props) {
               label="Tipo de Examen (Oral y/o Escrito)"
               id="exam_type"
               size="small"
+              value={props.info.examType}
             />
           </Grid>
           <Grid item xs={12}>
@@ -155,6 +166,7 @@ export default function ProfessionalInfo(props) {
               label="Título de la Tesis Recepcional"
               id="tesis"
               size="small"
+              value={props.info.examTitle}
             />
           </Grid>
           <Grid item xs={12}>
@@ -165,6 +177,7 @@ export default function ProfessionalInfo(props) {
               label="Número de Cédula Profesional"
               id="profesional_id"
               size="small"
+              value={props.info.profId}
             />
           </Grid>
           <Grid item xs={12}>
@@ -177,6 +190,7 @@ export default function ProfessionalInfo(props) {
               id="profesional_id_date"
               InputLabelProps={{shrink: true}}
               size="small"
+              value={props.info.profIdDate}
             />
           </Grid>
           <Grid item xs={12}>
@@ -187,6 +201,7 @@ export default function ProfessionalInfo(props) {
               label="Libro, Fojas y Número"
               id="book"
               size="small"
+              value={props.info.book}
             />
           </Grid>
           <Grid item xs={12}>
@@ -197,6 +212,7 @@ export default function ProfessionalInfo(props) {
               label="Registro en la SSA"
               id="ssa"
               size="small"
+              value={props.info.profId}
             />
           </Grid>
 

@@ -24,11 +24,12 @@ function createData(name, calories, fat) {
 }
 
 const rows = [
-  createData('Frozen yoghurt', 159, 6.0),
-  createData('Ice cream sandwich', 237, 9.0),
-  createData('Eclair', 262, 16.0),
-  createData('Cupcake', 305, 3.7),
-  createData('Gingerbread', 356, 16.0),
+  createData('CURP', 159, 6.0),
+  createData('RFC', 237, 9.0),
+  createData('Comprobante de domicilio', 262, 16.0),
+  createData('Título Profesional', 305, 3.7),
+  createData('Solicitud', 356, 16.0),
+  createData('Comprobante de pago', 356, 16.0),
 ];
 
 export default function UserFiles() {

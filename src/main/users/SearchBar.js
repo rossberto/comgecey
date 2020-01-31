@@ -40,7 +40,7 @@ export default function CustomizedInputBase() {
       <Paper component="form" className={classes.root}>
         <InputBase
           className={classes.input}
-          placeholder="Search Google Maps"
+          placeholder="Buscar Usuario"
           inputProps={{ 'aria-label': 'search google maps' }}
         />
         <IconButton type="submit" className={classes.iconButton} aria-label="search">

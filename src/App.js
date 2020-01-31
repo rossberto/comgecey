@@ -7,6 +7,7 @@ import { createMuiTheme } from '@material-ui/core/styles';
 import AppContext from './AppContext';
 import routes from './configs/routesConfig';
 import {Router} from 'react-router-dom';
+import {renderRoutes} from 'react-router-config'
 
 import history from './main/history';
 

@@ -58,7 +58,7 @@ const useStyles = makeStyles(theme => ({
   container: {
     //alignItems: 'flex-start'
     //maxHeight: "800px"
-    backgroundColor: 'black'
+    //backgroundColor: 'black'
   },
 }));
 
@@ -77,9 +77,6 @@ function Frame(props) {
   });
 
   function handleClick(e, text) {
-    //e.preventDefault()
-    console.log(text);
-    //console.log(e);
     switch (text) {
       case 'Mi Perfil':
           nav('/users/1');
@@ -90,6 +87,17 @@ function Frame(props) {
       case 'Usuarios':
           nav('/users');
         break;
+      /*
+      case 'Landing':
+          nav('/landing');
+        break;
+      case 'Registro':
+          nav('/register');
+        break;
+      case 'Blog':
+          nav('/blog');
+        break;
+      */
       default:
 
     }
@@ -109,8 +117,8 @@ function Frame(props) {
       </List>
       <Divider />
       <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-          <ListItem button value={text} key={text}>
+        {['Landing', 'Registro', 'Blog'].map((text, index) => (
+          <ListItem button value={text} key={text} onClick={(e) => handleClick(e, text)}>
             <ListItemIcon value={text}>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
             <ListItemText value={text} primary={text} />
           </ListItem>
@@ -125,7 +133,7 @@ function Frame(props) {
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
           <Typography variant="h6" noWrap>
-            Responsive drawer
+            Plataforma Comgecey
           </Typography>
           <IconButton
             color="inherit"

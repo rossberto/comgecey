@@ -51,7 +51,7 @@ export default function AddressInfo(props) {
           </Typography>
         </Grid>
         <Grid item>
-          <Button><SaveIcon /></Button>
+          <Button disabled><SaveIcon /></Button>
           <Button><EditIcon /></Button>
         </Grid>
       </Grid>
@@ -66,6 +66,7 @@ export default function AddressInfo(props) {
               label="Lugar"
               autoFocus
               size="small"
+              value={props.info.place}
             />
           </Grid>
           <Grid item xs={4}>
@@ -77,6 +78,7 @@ export default function AddressInfo(props) {
               label="Calle"
               autoFocus
               size="small"
+              value={props.info.street}
             />
           </Grid>
           <Grid item xs={4} >
@@ -87,6 +89,7 @@ export default function AddressInfo(props) {
               label="Número"
               name="number"
               size="small"
+              value={props.info.value}
             />
           </Grid>
           <Grid item xs={4}>
@@ -97,6 +100,7 @@ export default function AddressInfo(props) {
               label="Colonia"
               name="town"
               size="small"
+              value={props.info.town}
             />
           </Grid>
           <Grid item xs={4}>
@@ -107,6 +111,7 @@ export default function AddressInfo(props) {
               label="Ciudad"
               id="ciudad"
               size="small"
+              value={props.info.city}
             />
           </Grid>
           <Grid item xs={4}>
@@ -117,7 +122,7 @@ export default function AddressInfo(props) {
               <Select
 
                 native
-                value={state.age}
+                value={props.info.state}//value={state.age}
                 onChange={handleChange('age')}
                 labelWidth={labelWidth}
                 inputProps={{
@@ -169,6 +174,7 @@ export default function AddressInfo(props) {
               label="C.P."
               id="zipcode"
               size="small"
+              value={props.info.cp}
             />
           </Grid>
           <Grid item xs={12}>
@@ -179,6 +185,7 @@ export default function AddressInfo(props) {
               label="Número telefónico"
               id="phone_number"
               size="small"
+              value={props.info.phone}
             />
           </Grid>
 

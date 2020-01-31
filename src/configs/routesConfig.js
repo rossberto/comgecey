@@ -3,11 +3,13 @@ import {Redirect} from 'react-router-dom';
 
 import {UsersAppConfig} from '../main/users/UsersAppConfig';
 import {ConvocatoriesAppConfig} from '../main/convocatories/ConvocatoriesAppConfig';
+import {LandingAppConfig} from '../main/landing/LandingAppConfig';
 import generateRoutesFromConfigs from './fuseRouting';
 
 const routeConfigs = [
     UsersAppConfig,
-    ConvocatoriesAppConfig
+    ConvocatoriesAppConfig,
+    LandingAppConfig
 ];
 
 

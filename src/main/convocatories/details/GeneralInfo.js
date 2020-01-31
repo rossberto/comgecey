@@ -17,7 +17,7 @@ export default function GeneralInfo(props) {
           </Typography>
         </Grid>
         <Grid item>
-          <Button><SaveIcon /></Button>
+          <Button disabled><SaveIcon /></Button>
           <Button><EditIcon /></Button>
         </Grid>
       </Grid>
@@ -33,6 +33,7 @@ export default function GeneralInfo(props) {
               label="Title "
               autoFocus
               size="small"
+              value={props.info.title}
             />
           </Grid>
           <Grid item xs={6}>
@@ -45,6 +46,7 @@ export default function GeneralInfo(props) {
               id="date"
               InputLabelProps={{shrink: true}}
               size="small"
+              value={props.info.date}
             />
           </Grid>
           <Grid item xs={6}>
@@ -67,6 +69,7 @@ export default function GeneralInfo(props) {
               name="email"
               autoComplete="emai"
               size="small"
+              value={props.info.email}
             />
           </Grid>
           <Grid item xs={6}>
@@ -78,6 +81,7 @@ export default function GeneralInfo(props) {
               name="phone"
               autoComplete="phon"
               size="small"
+              value={props.info.phone}
             />
           </Grid>
           <Grid item xs={6}>
@@ -89,6 +93,7 @@ export default function GeneralInfo(props) {
               name="bank_account"
               autoComplete="bank"
               size="small"
+              value={props.info.bank}
             />
           </Grid>
         </Grid>

@@ -25,6 +25,25 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+const genInfo = {
+  title: '2020-2',
+  date: '2020-05-25',
+  email: 'hola@comgecey.org',
+  phone: '9999875421',
+  bank: '1234567890'
+}
+
+const placeInfo = {
+  place: 'Facultad de Medicina - UADY',
+  street: 'Av. Itzimná',
+  number: 'S/N',
+  town: 'Col. Cupules',
+  city: 'Mérida',
+  state: 'Yucatán',
+  cp: '97321',
+  phone: '9999876532'
+}
+
 export default function Convocatory() {
   const classes = useStyles();
 
@@ -33,11 +52,11 @@ export default function Convocatory() {
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
           <Paper className={classes.paper}>
-            <GeneralInfo classes={classes}/>
+            <GeneralInfo info={genInfo} classes={classes}/>
           </Paper>
           <br />
           <Paper className={classes.paper}>
-            <AddressInfo classes={classes}/>
+            <AddressInfo info={placeInfo} classes={classes}/>
           </Paper>
         </Grid>
         <Grid item xs={12} sm={6}>
