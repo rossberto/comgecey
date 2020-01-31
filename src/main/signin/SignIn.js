@@ -20,7 +20,7 @@ function Copyright() {
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
       <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+        Comgecey
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -54,6 +54,10 @@ export default function SignIn() {
 
   const classes = useStyles();
 
+  function handleClick(e) {
+    e.preventDefault();
+    goDashboard(true);
+  }
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -62,7 +66,7 @@ export default function SignIn() {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          Ingreso
         </Typography>
         <form className={classes.form} noValidate>
           <TextField
@@ -71,7 +75,7 @@ export default function SignIn() {
             required
             fullWidth
             id="email"
-            label="Email Address"
+            label="Correo Electrónico"
             name="email"
             autoComplete="email"
             autoFocus
@@ -82,14 +86,14 @@ export default function SignIn() {
             required
             fullWidth
             name="password"
-            label="Password"
+            label="Contraseña"
             type="password"
             id="password"
             autoComplete="current-password"
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
+            label="Recordarme"
           />
           <Button
             type="submit"
@@ -97,19 +101,19 @@ export default function SignIn() {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={goDashboard}
+            onClick={handleClick}
           >
-            Sign In
+            Ingresar
           </Button>
           <Grid container>
             <Grid item xs>
               <Link href="#" variant="body2">
-                Forgot password?
+                ¿Olvidaste tu contraseña?
               </Link>
             </Grid>
             <Grid item>
               <Link href="#" variant="body2">
-                {"Don't have an account? Sign Up"}
+                {"¿Todavía no tienes cuenta? Regístrate"}
               </Link>
             </Grid>
           </Grid>

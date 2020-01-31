@@ -51,8 +51,12 @@ function App() {
   const [auth, setAuth] = useState(false);
 
   function goDashboard(val) {
-    setAuth(true);
-    history.push('/users/1');
+    setAuth(val);
+    if (val==true) {
+      history.push('/users/1');
+    } else {
+      history.push('/signin')
+    }
   }
   return (
     <AppContext.Provider

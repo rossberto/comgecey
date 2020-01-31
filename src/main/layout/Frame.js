@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useContext} from 'react';
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -18,6 +18,7 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
+import AppContext from '../../AppContext';
 
 import nav from '../nav';
 
@@ -44,6 +45,9 @@ const useStyles = makeStyles(theme => ({
       display: 'none',
     },
   },
+  signOutButton: {
+    marginLeft: "auto",
+  },
   toolbar: theme.mixins.toolbar,
   drawerPaper: {
     width: drawerWidth,
@@ -66,6 +70,10 @@ function Frame(props) {
   const { container } = props;
   const classes = useStyles(props);
   const theme = useTheme();
+
+  const appContext = useContext(AppContext);
+  const {auth, goDashboard} = appContext;
+
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const handleDrawerToggle = () => {
@@ -103,6 +111,10 @@ function Frame(props) {
     }
   }
 
+  function handleSignOut() {
+    goDashboard(false);
+  }
+
   const drawer = (
     <div>
       <div className={classes.toolbar} />
@@ -135,6 +147,14 @@ function Frame(props) {
           <Typography variant="h6" noWrap>
             Plataforma Comgecey
           </Typography>
+          <IconButton
+            color="inherit"
+            edge="start"
+            onClick={handleSignOut}
+            className={classes.signOutButton}
+          >
+            <font size="4">Salir</font>
+          </IconButton>
           <IconButton
             color="inherit"
             aria-label="open drawer"
