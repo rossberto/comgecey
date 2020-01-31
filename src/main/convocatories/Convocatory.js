@@ -25,7 +25,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function FullWidthGrid() {
+export default function Convocatory() {
   const classes = useStyles();
 
   return (

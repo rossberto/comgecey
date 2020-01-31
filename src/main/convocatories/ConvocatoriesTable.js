@@ -13,6 +13,8 @@ import Button from '@material-ui/core/Button';
 import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
 import StopIcon from '@material-ui/icons/Stop';
 
+import nav from '../nav';
+
 const columns = [
   { id: 'code', label: 'Convocatoria', align: 'center' },
   { id: 'name', label: 'Estado', minWidth: 170, align: 'center' },
@@ -48,7 +50,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function UsersTable() {
+export default function UsersTable(props) {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -61,6 +63,10 @@ export default function UsersTable() {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
+
+  function handleClick() {
+    nav('/convocatories/1')
+  }
 
   return (
     <Paper className={classes.root}>
@@ -87,7 +93,7 @@ export default function UsersTable() {
                     const value = row[column.id];
                     return (
                       <TableCell key={column.id} align={column.align}>
-                        <Button>{column.format && typeof value === 'number' ? column.format(value) : value}</Button>
+                        <Button onClick={handleClick}>{column.format && typeof value === 'number' ? column.format(value) : value}</Button>
                       </TableCell>
                     );
                   })}
