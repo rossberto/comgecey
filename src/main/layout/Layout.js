@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState, useEffect} from 'react';
 import AppContext from '../../AppContext';
 import {renderRoutes} from 'react-router-config'
 
@@ -10,15 +10,22 @@ import Convocatory from '../convocatories/Convocatory';
 import Convocatories from '../convocatories/Convocatories';
 
 
-export default function Layout() {
+export default function Layout(props) {
   const appContext = useContext(AppContext);
   const {routes} = appContext;
+
+  const [ruta, setRuta] = useState(routes);
+
+  useEffect(() => {
+    console.log(routes);
+    setRuta(routes);
+  });
 
   return (
     <div>
       <Frame>
         <React.Suspense fallback={<h1>Cargando</h1>}>
-          {renderRoutes(routes)}
+          {renderRoutes(ruta)}
         </React.Suspense>
         {/*<Convocatories />*/}
       </Frame>

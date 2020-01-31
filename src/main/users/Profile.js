@@ -7,10 +7,11 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
 import IdInfo from './details/IdInfo';
+import UserFiles from './UserFiles';
 import ProfessionalInfo from './details/ProfessionalInfo';
 import AddressInfo from './details/AddressInfo';
 
-import UserFiles from './UserFiles';
+
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -27,7 +28,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function FullWidthGrid() {
+export default function Profile(props) {
   const classes = useStyles();
 
   return (

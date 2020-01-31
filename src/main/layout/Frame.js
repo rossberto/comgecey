@@ -16,7 +16,10 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
+import Button from '@material-ui/core/Button';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
+
+import nav from '../nav';
 
 const drawerWidth = 200;
 
@@ -73,14 +76,33 @@ function Frame(props) {
     window.scrollTo(0, 0)
   });
 
+  function handleClick(e, text) {
+    //e.preventDefault()
+    console.log(text);
+    //console.log(e);
+    switch (text) {
+      case 'Mi Perfil':
+          nav('/users/1');
+        break;
+      case 'Convocatorias':
+          nav('/convocatories');
+        break;
+      case 'Usuarios':
+          nav('/users');
+        break;
+      default:
+
+    }
+  }
+
   const drawer = (
     <div>
       <div className={classes.toolbar} />
       <Divider />
       <List>
-        {['Convocatorias', 'Usuarios', 'Boletines', 'Drafts'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+        {['Mi Perfil', 'Convocatorias', 'Usuarios', 'Boletines'].map((text, index) => (
+          <ListItem button ContainerProps={{name: text}} key={text} onClick={(e) => handleClick(e, text)}>
+            <ListItemIcon>{index % 2 === 0 ? <InboxIcon name={text} /> : <MailIcon />}</ListItemIcon>
             <ListItemText primary={text} />
           </ListItem>
         ))}
@@ -88,9 +110,9 @@ function Frame(props) {
       <Divider />
       <List>
         {['All mail', 'Trash', 'Spam'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
+          <ListItem button value={text} key={text}>
+            <ListItemIcon value={text}>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+            <ListItemText value={text} primary={text} />
           </ListItem>
         ))}
       </List>

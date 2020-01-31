@@ -29,22 +29,22 @@ function createData(name, code, population, size) {
 }
 
 const rows = [
-  createData('Christian Eduardo Boyain de Goytia y Luna', '2020-1', <DeleteIcon />),
+  createData('Christian Eduardo Boyain de Goytia y Luna', '2027-1', <DeleteIcon />),
   createData('Diana Iveth Sierra Gomez', '2020-1', <DeleteIcon />),
-  createData('Jorge Alberto Fonz Aguilar', '2020-1', <DeleteIcon />),
-  createData('Gloria Yaneth Calderón Loeza', '2020-1', <DeleteIcon />),
-  createData('Francisco Calderón Ojeda', '2020-1', <DeleteIcon />),
-  createData('Diana Iveth Sierra Gomez', '2020-1', <DeleteIcon />),
-  createData('Jorge Alberto Fonz Aguilar', '2020-1', <DeleteIcon />),
-  createData('Gloria Yaneth Calderón Loeza', '2020-1', <DeleteIcon />),
-  createData('Francisco Calderón Ojeda', '2020-1', <DeleteIcon />),
-  createData('Diana Iveth Sierra Gomez', '2020-1', <DeleteIcon />),
-  createData('Jorge Alberto Fonz Aguilar', '2020-1', <DeleteIcon />),
-  createData('Gloria Yaneth Calderón Loeza', '2020-1', <DeleteIcon />),
-  createData('Francisco Calderón Ojeda', '2020-1', <DeleteIcon />),
-  createData('Diana Iveth Sierra Gomez', '2020-1', <DeleteIcon />),
-  createData('Jorge Alberto Fonz Aguilar', '2020-1', <DeleteIcon />),
-  createData('Gloria Yaneth Calderón Loeza', '2020-1', <DeleteIcon />),
+  createData('Jorge Alberto Fonz Aguilar', '2020-2', <DeleteIcon />),
+  createData('Gloria Yaneth Calderón Loeza', '2020-3', <DeleteIcon />),
+  createData('Francisco Calderón Ojeda', '2020-4', <DeleteIcon />),
+  createData('Diana Iveth Sierra Gomez', '2020-5', <DeleteIcon />),
+  createData('Jorge Alberto Fonz Aguilar', '2020-6', <DeleteIcon />),
+  createData('Gloria Yaneth Calderón Loeza', '2020-7', <DeleteIcon />),
+  createData('Francisco Calderón Ojeda', '2020-8', <DeleteIcon />),
+  createData('Diana Iveth Sierra Gomez', '2020-9', <DeleteIcon />),
+  createData('Jorge Alberto Fonz Aguilar', '2021-1', <DeleteIcon />),
+  createData('Gloria Yaneth Calderón Loeza', '2022-1', <DeleteIcon />),
+  createData('Francisco Calderón Ojeda', '2023-1', <DeleteIcon />),
+  createData('Diana Iveth Sierra Gomez', '2024-1', <DeleteIcon />),
+  createData('Jorge Alberto Fonz Aguilar', '2025-1', <DeleteIcon />),
+  createData('Gloria Yaneth Calderón Loeza', '2026-1', <DeleteIcon />),
 ];
 
 const useStyles = makeStyles({
