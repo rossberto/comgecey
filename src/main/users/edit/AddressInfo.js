@@ -22,8 +22,6 @@ export default function AddressInfo(props) {
     name: 'hai',
   });
 
-  const [editDisabled, setEditDisabled] = React.useState(false);
-
   const inputLabel = React.useRef(null);
   const [labelWidth, setLabelWidth] = React.useState(0);
   React.useEffect(() => {
@@ -37,14 +35,6 @@ export default function AddressInfo(props) {
     });
   };
 
-  function handleEdit() {
-    setEditDisabled(true);
-  }
-
-  function handleSave() {
-    setEditDisabled(false);
-  }
-
   return (
     <React.Fragment>
       <Grid container justify="space-between">
@@ -54,8 +44,8 @@ export default function AddressInfo(props) {
           </Typography>
         </Grid>
         <Grid item>
-          <Button disabled={!editDisabled} onClick={handleSave}><SaveIcon /></Button>
-          <Button disabled={editDisabled} onClick={handleEdit}><EditIcon /></Button>
+          <Button disabled><SaveIcon /></Button>
+          <Button><EditIcon /></Button>
         </Grid>
       </Grid>
       <form className={props.classes.form} noValidate>
@@ -70,10 +60,6 @@ export default function AddressInfo(props) {
               autoFocus
               size="small"
               value={props.info.street}
-              InputProps={{
-                readOnly: !editDisabled,
-              }}
-              variant={editDisabled ? "outlined" : "filled"}
             />
           </Grid>
           <Grid item xs={4} >
@@ -85,10 +71,6 @@ export default function AddressInfo(props) {
               name="number"
               size="small"
               value={props.info.number}
-              InputProps={{
-                readOnly: !editDisabled,
-              }}
-              variant={editDisabled ? "outlined" : "filled"}
             />
           </Grid>
           <Grid item xs={4}>
@@ -100,10 +82,6 @@ export default function AddressInfo(props) {
               name="town"
               size="small"
               value={props.info.town}
-              InputProps={{
-                readOnly: !editDisabled,
-              }}
-              variant={editDisabled ? "outlined" : "filled"}
             />
           </Grid>
           <Grid item xs={4}>
@@ -115,10 +93,6 @@ export default function AddressInfo(props) {
               id="ciudad"
               size="small"
               value={props.info.city}
-              InputProps={{
-                readOnly: !editDisabled,
-              }}
-              variant={editDisabled ? "outlined" : "filled"}
             />
           </Grid>
           <Grid item xs={4}>
@@ -127,6 +101,7 @@ export default function AddressInfo(props) {
                 Estado
               </InputLabel>
               <Select
+
                 native
                 value={props.info.state} //value={state.age}
                 onChange={handleChange('age')}
@@ -134,9 +109,7 @@ export default function AddressInfo(props) {
                 inputProps={{
                   name: 'age',
                   id: 'outlined-age-native-simple',
-                  readOnly: !editDisabled
                 }}
-                variant={editDisabled ? "outlined" : "filled"}
               >
                 <option value="no">Seleccione uno...</option>
                 <option value="Aguascalientes">Aguascalientes</option>
@@ -183,10 +156,6 @@ export default function AddressInfo(props) {
               id="zipcode"
               size="small"
               value={props.info.cp}
-              InputProps={{
-                readOnly: !editDisabled,
-              }}
-              variant={editDisabled ? "outlined" : "filled"}
             />
           </Grid>
           <Grid item xs={12}>
@@ -198,10 +167,6 @@ export default function AddressInfo(props) {
               id="phone_number"
               size="small"
               value={props.info.phone}
-              InputProps={{
-                readOnly: !editDisabled,
-              }}
-              variant={editDisabled ? "outlined" : "filled"}
             />
           </Grid>
 

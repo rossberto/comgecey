@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
@@ -8,16 +8,6 @@ import EditIcon from '@material-ui/icons/Edit';
 import SaveIcon from '@material-ui/icons/Save';
 
 export default function IdInfo(props) {
-  const [editDisabled, setEditDisabled] = useState(false);
-
-  function handleEdit() {
-    setEditDisabled(true);
-  }
-
-  function handleSave() {
-    setEditDisabled(false);
-  }
-
   return (
     <React.Fragment>
       <Grid container justify="space-between">
@@ -27,8 +17,8 @@ export default function IdInfo(props) {
           </Typography>
         </Grid>
         <Grid item>
-          <Button disabled={!editDisabled} onClick={handleSave}><SaveIcon /></Button>
-          <Button disabled={editDisabled} onClick={handleEdit}><EditIcon /></Button>
+          <Button disabled><SaveIcon /></Button>
+          <Button><EditIcon /></Button>
         </Grid>
       </Grid>
       <form className={props.classes.form} noValidate>
@@ -44,10 +34,6 @@ export default function IdInfo(props) {
               autoFocus
               size="small"
               value={props.info.name}
-              InputProps={{
-                readOnly: !editDisabled,
-              }}
-              variant={editDisabled ? "outlined" : "filled"}
             />
           </Grid>
           <Grid item xs={6}>
@@ -60,10 +46,6 @@ export default function IdInfo(props) {
               autoComplete="lname"
               size="small"
               value={props.info.father_lname}
-              InputProps={{
-                readOnly: !editDisabled,
-              }}
-              variant={editDisabled ? "outlined" : "filled"}
             />
           </Grid>
           <Grid item xs={6}>
@@ -76,10 +58,6 @@ export default function IdInfo(props) {
               autoComplete="email"
               size="small"
               value={props.info.mother_lname}
-              InputProps={{
-                readOnly: !editDisabled,
-              }}
-              variant={editDisabled ? "outlined" : "filled"}
             />
           </Grid>
           <Grid item xs={6}>
@@ -93,10 +71,6 @@ export default function IdInfo(props) {
               InputLabelProps={{shrink: true}}
               size="small"
               value={props.info.birthdate}
-              InputProps={{
-                readOnly: !editDisabled,
-              }}
-              variant={editDisabled ? "outlined" : "filled"}
             />
           </Grid>
           <Grid item xs={6}>
@@ -108,10 +82,6 @@ export default function IdInfo(props) {
               name="birthplace"
               size="small"
               value={props.info.birthplace}
-              InputProps={{
-                readOnly: !editDisabled,
-              }}
-              variant={editDisabled ? "outlined" : "filled"}
             />
           </Grid>
         </Grid>

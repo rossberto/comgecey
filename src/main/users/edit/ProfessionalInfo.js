@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
@@ -8,16 +8,6 @@ import EditIcon from '@material-ui/icons/Edit';
 import SaveIcon from '@material-ui/icons/Save';
 
 export default function ProfessionalInfo(props) {
-  const [editDisabled, setEditDisabled] = useState(false);
-
-  function handleEdit() {
-    setEditDisabled(true);
-  }
-
-  function handleSave() {
-    setEditDisabled(false);
-  }
-
   return (
     <React.Fragment>
       <Grid container justify="space-between">
@@ -27,8 +17,8 @@ export default function ProfessionalInfo(props) {
           </Typography>
         </Grid>
         <Grid item>
-          <Button disabled={!editDisabled} onClick={handleSave}><SaveIcon /></Button>
-          <Button disabled={editDisabled} onClick={handleEdit}><EditIcon /></Button>
+          <Button disabled><SaveIcon /></Button>
+          <Button><EditIcon /></Button>
         </Grid>
       </Grid>
       <form className={props.classes.form} noValidate>
@@ -43,10 +33,6 @@ export default function ProfessionalInfo(props) {
               autoFocus
               size="small"
               value={props.info.school}
-              InputProps={{
-                readOnly: !editDisabled,
-              }}
-              variant={editDisabled ? "outlined" : "filled"}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -60,10 +46,6 @@ export default function ProfessionalInfo(props) {
               InputLabelProps={{shrink: true}}
               size="small"
               value={props.info.startDate}
-              InputProps={{
-                readOnly: !editDisabled,
-              }}
-              variant={editDisabled ? "outlined" : "filled"}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -77,10 +59,6 @@ export default function ProfessionalInfo(props) {
               InputLabelProps={{shrink: true}}
               size="small"
               value={props.info.endDate}
-              InputProps={{
-                readOnly: !editDisabled,
-              }}
-              variant={editDisabled ? "outlined" : "filled"}
             />
           </Grid>
           <Grid item xs={12}>
@@ -92,10 +70,6 @@ export default function ProfessionalInfo(props) {
               name="internship"
               size="small"
               value={props.info.internship}
-              InputProps={{
-                readOnly: !editDisabled,
-              }}
-              variant={editDisabled ? "outlined" : "filled"}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -109,10 +83,6 @@ export default function ProfessionalInfo(props) {
               InputLabelProps={{shrink: true}}
               size="small"
               value={props.info.internStartDate}
-              InputProps={{
-                readOnly: !editDisabled,
-              }}
-              variant={editDisabled ? "outlined" : "filled"}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -126,10 +96,6 @@ export default function ProfessionalInfo(props) {
               InputLabelProps={{shrink: true}}
               size="small"
               value={props.info.internEndDate}
-              InputProps={{
-                readOnly: !editDisabled,
-              }}
-              variant={editDisabled ? "outlined" : "filled"}
             />
           </Grid>
           <Grid item xs={12}>
@@ -141,10 +107,6 @@ export default function ProfessionalInfo(props) {
               name="social_service"
               size="small"
               value={props.info.ss}
-              InputProps={{
-                readOnly: !editDisabled,
-              }}
-              variant={editDisabled ? "outlined" : "filled"}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -158,10 +120,6 @@ export default function ProfessionalInfo(props) {
               InputLabelProps={{shrink: true}}
               size="small"
               value={props.info.ssStartDate}
-              InputProps={{
-                readOnly: !editDisabled,
-              }}
-              variant={editDisabled ? "outlined" : "filled"}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -175,10 +133,6 @@ export default function ProfessionalInfo(props) {
               InputLabelProps={{shrink: true}}
               size="small"
               value={props.info.ssEndDate}
-              InputProps={{
-                readOnly: !editDisabled,
-              }}
-              variant={editDisabled ? "outlined" : "filled"}
             />
           </Grid>
           <Grid item xs={12}>
@@ -192,10 +146,6 @@ export default function ProfessionalInfo(props) {
               InputLabelProps={{shrink: true}}
               size="small"
               value={props.info.examDate}
-              InputProps={{
-                readOnly: !editDisabled,
-              }}
-              variant={editDisabled ? "outlined" : "filled"}
             />
           </Grid>
           <Grid item xs={12}>
@@ -207,10 +157,6 @@ export default function ProfessionalInfo(props) {
               id="exam_type"
               size="small"
               value={props.info.examType}
-              InputProps={{
-                readOnly: !editDisabled,
-              }}
-              variant={editDisabled ? "outlined" : "filled"}
             />
           </Grid>
           <Grid item xs={12}>
@@ -221,10 +167,6 @@ export default function ProfessionalInfo(props) {
               id="tesis"
               size="small"
               value={props.info.examTitle}
-              InputProps={{
-                readOnly: !editDisabled,
-              }}
-              variant={editDisabled ? "outlined" : "filled"}
             />
           </Grid>
           <Grid item xs={12}>
@@ -236,10 +178,6 @@ export default function ProfessionalInfo(props) {
               id="profesional_id"
               size="small"
               value={props.info.profId}
-              InputProps={{
-                readOnly: !editDisabled,
-              }}
-              variant={editDisabled ? "outlined" : "filled"}
             />
           </Grid>
           <Grid item xs={12}>
@@ -253,10 +191,6 @@ export default function ProfessionalInfo(props) {
               InputLabelProps={{shrink: true}}
               size="small"
               value={props.info.profIdDate}
-              InputProps={{
-                readOnly: !editDisabled,
-              }}
-              variant={editDisabled ? "outlined" : "filled"}
             />
           </Grid>
           <Grid item xs={12}>
@@ -268,10 +202,6 @@ export default function ProfessionalInfo(props) {
               id="book"
               size="small"
               value={props.info.book}
-              InputProps={{
-                readOnly: !editDisabled,
-              }}
-              variant={editDisabled ? "outlined" : "filled"}
             />
           </Grid>
           <Grid item xs={12}>
@@ -283,10 +213,6 @@ export default function ProfessionalInfo(props) {
               id="ssa"
               size="small"
               value={props.info.profId}
-              InputProps={{
-                readOnly: !editDisabled,
-              }}
-              variant={editDisabled ? "outlined" : "filled"}
             />
           </Grid>
 

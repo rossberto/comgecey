@@ -48,7 +48,7 @@ function StartPage() {
 }
 
 function App() {
-  const [auth, setAuth] = useState(false);
+  const [auth, setAuth] = useState(true);
 
   function goDashboard(val) {
     setAuth(val);
