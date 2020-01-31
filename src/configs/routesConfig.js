@@ -4,9 +4,11 @@ import {Redirect} from 'react-router-dom';
 import {UsersAppConfig} from '../main/users/UsersAppConfig';
 import {ConvocatoriesAppConfig} from '../main/convocatories/ConvocatoriesAppConfig';
 import {LandingAppConfig} from '../main/landing/LandingAppConfig';
+import {SignInAppConfig} from '../main/signin/SignInAppConfig';
 import generateRoutesFromConfigs from './fuseRouting';
 
 const routeConfigs = [
+    SignInAppConfig,
     UsersAppConfig,
     ConvocatoriesAppConfig,
     LandingAppConfig
@@ -18,7 +20,7 @@ const routes = [
   {
       path     : '/',
       exact    : true,
-      component: () => <Redirect to="/users" />
+      component: () => <Redirect to="/signin" />
   },
   {
       component: () => <Redirect to="/users"/>

@@ -9,23 +9,27 @@ import Profile from '../users/Profile';
 import Convocatory from '../convocatories/Convocatory';
 import Convocatories from '../convocatories/Convocatories';
 
+import spinner from './91.gif'
 
 export default function Layout(props) {
   const appContext = useContext(AppContext);
   const {routes} = appContext;
-
+/*
   const [ruta, setRuta] = useState(routes);
 
   useEffect(() => {
     console.log(routes);
     setRuta(routes);
   });
-
+*/
   return (
     <div>
       <Frame>
-        <React.Suspense fallback={<h1>Cargando</h1>}>
-          {renderRoutes(ruta)}
+        <React.Suspense
+          fallback = <div borderTop="16px solid blue"
+                      borderBottom="16px solid blue"> </div>
+        >
+          {renderRoutes(routes)}
         </React.Suspense>
         {/*<Convocatories />*/}
       </Frame>

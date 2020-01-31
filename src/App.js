@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import Layout from './main/layout/Layout';
 import Button from '@material-ui/core/Button';
 import { ThemeProvider } from '@material-ui/styles';
@@ -8,6 +8,7 @@ import AppContext from './AppContext';
 import routes from './configs/routesConfig';
 import {Router} from 'react-router-dom';
 import {renderRoutes} from 'react-router-config'
+import Pages from './main/pages/Pages';
 
 import history from './main/history';
 
@@ -35,17 +36,36 @@ const theme = createMuiTheme({
   },
 });
 
+function StartPage() {
+  const appContext = useContext(AppContext);
+
+  return (
+    <React.Fragment>
+      {appContext.auth && <Layout />}
+      {!appContext.auth && <Pages />}
+    </React.Fragment>
+  );
+}
+
 function App() {
+  const [auth, setAuth] = useState(false);
+
+  function goDashboard(val) {
+    setAuth(true);
+    history.push('/users/1');
+  }
   return (
     <AppContext.Provider
       value={{
-        routes
+        routes,
+        auth,
+        goDashboard
       }}
     >
       {/*<ThemeProvider theme={theme}>*/}
         {/*page*/}
       <Router history={history}>
-        <Layout />
+        <StartPage />
       </Router>
       {/*</ThemeProvider>*/}
 
