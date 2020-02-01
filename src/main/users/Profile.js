@@ -62,7 +62,8 @@ const professionalInfo = {
   examTitle: 'La diabetis en Yucatán',
   book: '24/123',
   profId: '6ASDF15AS6SFD1',
-  profIdDate: '2010-12-12'
+  profIdDate: '2010-12-12',
+  ssa: '1DF3D5DF1'
 }
 
 export default function Profile(props) {

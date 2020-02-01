@@ -7,8 +7,10 @@ import Typography from '@material-ui/core/Typography';
 import EditIcon from '@material-ui/icons/Edit';
 import SaveIcon from '@material-ui/icons/Save';
 
+
 export default function IdInfo(props) {
   const [editDisabled, setEditDisabled] = useState(false);
+  const [info, setInfo] = useState(props.info);
 
   function handleEdit() {
     setEditDisabled(true);
@@ -16,6 +18,12 @@ export default function IdInfo(props) {
 
   function handleSave() {
     setEditDisabled(false);
+  }
+
+  function handleChange(e) {
+    const key = e.target.name;
+    const value = e.target.value;
+    setInfo(info => ({...info, [key]:value}));
   }
 
   return (
@@ -31,19 +39,19 @@ export default function IdInfo(props) {
           <Button disabled={editDisabled} onClick={handleEdit}><EditIcon /></Button>
         </Grid>
       </Grid>
-      <form className={props.classes.form} noValidate>
+      <form className={props.classes.form} noValidate onChange={handleChange}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <TextField
               autoComplete="fname"
-              name="firstName"
+              name="name"
               required
               fullWidth
-              id="firstName"
+              id="name"
               label="Nombre(s)"
               autoFocus
               size="small"
-              value={props.info.name}
+              value={info.name}
               InputProps={{
                 readOnly: !editDisabled,
               }}
@@ -54,12 +62,12 @@ export default function IdInfo(props) {
             <TextField
               required
               fullWidth
-              id="lastName"
+              id="father_lname"
               label="Apellido Paterno"
-              name="lastName"
+              name="father_lname"
               autoComplete="lname"
               size="small"
-              value={props.info.father_lname}
+              value={info.father_lname}
               InputProps={{
                 readOnly: !editDisabled,
               }}
@@ -70,12 +78,12 @@ export default function IdInfo(props) {
             <TextField
               required
               fullWidth
-              id="email"
+              id="mother_lname"
               label="Apellido Materno"
-              name="email"
-              autoComplete="email"
+              name="mother_lname"
+              autoComplete="mother_lnameac"
               size="small"
-              value={props.info.mother_lname}
+              value={info.mother_lname}
               InputProps={{
                 readOnly: !editDisabled,
               }}
@@ -92,7 +100,7 @@ export default function IdInfo(props) {
               id="birthdate"
               InputLabelProps={{shrink: true}}
               size="small"
-              value={props.info.birthdate}
+              value={info.birthdate}
               InputProps={{
                 readOnly: !editDisabled,
               }}
@@ -107,7 +115,7 @@ export default function IdInfo(props) {
               label="Lugar de Nacimiento"
               name="birthplace"
               size="small"
-              value={props.info.birthplace}
+              value={info.birthplace}
               InputProps={{
                 readOnly: !editDisabled,
               }}

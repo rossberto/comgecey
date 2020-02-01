@@ -30,19 +30,28 @@ export default function AddressInfo(props) {
     setLabelWidth(inputLabel.current.offsetWidth);
   }, []);
 
+  const [info, setInfo] = React.useState(props.info)
+/*
   const handleChange = name => event => {
     setState({
       ...state,
       [name]: event.target.value,
     });
   };
-
+*/
   function handleEdit() {
     setEditDisabled(true);
   }
 
   function handleSave() {
     setEditDisabled(false);
+  }
+
+  function handleChange(e) {
+    console.log(e.target);
+    const key = e.target.name;
+    const value = e.target.value;
+    setInfo(info => ({...info, [key]:value}))
   }
 
   return (
@@ -58,7 +67,7 @@ export default function AddressInfo(props) {
           <Button disabled={editDisabled} onClick={handleEdit}><EditIcon /></Button>
         </Grid>
       </Grid>
-      <form className={props.classes.form} noValidate>
+      <form className={props.classes.form} noValidate onChange={handleChange}>
         <Grid container spacing={2}>
           <Grid item xs={4}>
             <TextField
@@ -69,7 +78,7 @@ export default function AddressInfo(props) {
               label="Calle"
               autoFocus
               size="small"
-              value={props.info.street}
+              value={info.street}
               InputProps={{
                 readOnly: !editDisabled,
               }}
@@ -84,7 +93,7 @@ export default function AddressInfo(props) {
               label="Número"
               name="number"
               size="small"
-              value={props.info.number}
+              value={info.number}
               InputProps={{
                 readOnly: !editDisabled,
               }}
@@ -99,7 +108,7 @@ export default function AddressInfo(props) {
               label="Colonia"
               name="town"
               size="small"
-              value={props.info.town}
+              value={info.town}
               InputProps={{
                 readOnly: !editDisabled,
               }}
@@ -110,11 +119,11 @@ export default function AddressInfo(props) {
             <TextField
               required
               fullWidth
-              name="ciudad"
+              name="city"
               label="Ciudad"
-              id="ciudad"
+              id="city"
               size="small"
-              value={props.info.city}
+              value={info.city}
               InputProps={{
                 readOnly: !editDisabled,
               }}
@@ -128,11 +137,11 @@ export default function AddressInfo(props) {
               </InputLabel>
               <Select
                 native
-                value={props.info.state} //value={state.age}
-                onChange={handleChange('age')}
+                value={info.state} //value={state.age}
+                //onChange={handleChange('age')}
                 labelWidth={labelWidth}
                 inputProps={{
-                  name: 'age',
+                  name: 'state',
                   id: 'outlined-age-native-simple',
                   readOnly: !editDisabled
                 }}
@@ -178,11 +187,11 @@ export default function AddressInfo(props) {
             <TextField
               required
               fullWidth
-              name="zipcode"
+              name="cp"
               label="C.P."
-              id="zipcode"
+              id="cp"
               size="small"
-              value={props.info.cp}
+              value={info.cp}
               InputProps={{
                 readOnly: !editDisabled,
               }}
@@ -193,11 +202,11 @@ export default function AddressInfo(props) {
             <TextField
               required
               fullWidth
-              name="phone_number"
+              name="phone"
               label="Número telefónico"
-              id="phone_number"
+              id="phone"
               size="small"
-              value={props.info.phone}
+              value={info.phone}
               InputProps={{
                 readOnly: !editDisabled,
               }}
