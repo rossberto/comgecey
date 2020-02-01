@@ -50,7 +50,7 @@ export default function IdInfo(props) {
               InputProps={{
                 readOnly: !editDisabled,
               }}
-              variant={editDisabled ? "outlined" : "filled"}
+              variant={editDisabled ? "standard" : "filled"}
             />
           </Grid>
           <Grid item xs={6}>
@@ -66,7 +66,7 @@ export default function IdInfo(props) {
               InputProps={{
                 readOnly: !editDisabled,
               }}
-              variant={editDisabled ? "outlined" : "filled"}
+              variant={editDisabled ? "standard" : "filled"}
             />
           </Grid>
           <Grid item xs={6}>
@@ -82,7 +82,7 @@ export default function IdInfo(props) {
               InputProps={{
                 readOnly: !editDisabled,
               }}
-              variant={editDisabled ? "outlined" : "filled"}
+              variant={editDisabled ? "standard" : "filled"}
             />
           </Grid>
           <Grid item xs={6}>
@@ -99,7 +99,7 @@ export default function IdInfo(props) {
               InputProps={{
                 readOnly: !editDisabled,
               }}
-              variant={editDisabled ? "outlined" : "filled"}
+              variant={editDisabled ? "standard" : "filled"}
             />
           </Grid>
           <Grid item xs={6}>
@@ -114,7 +114,7 @@ export default function IdInfo(props) {
               InputProps={{
                 readOnly: !editDisabled,
               }}
-              variant={editDisabled ? "outlined" : "filled"}
+              variant={editDisabled ? "standard" : "filled"}
             />
           </Grid>
         </Grid>

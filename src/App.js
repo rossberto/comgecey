@@ -28,7 +28,7 @@ function App() {
 
   function goDashboard(val) {
     setAuth(val);
-    if (val==true) {
+    if (val===true) {
       history.push('/users/1');
     } else {
       history.push('/signin')

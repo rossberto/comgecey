@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
@@ -17,10 +17,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import SaveIcon from '@material-ui/icons/Save';
 
 export default function AddressInfo(props) {
-  const [state, setState] = React.useState({
-    age: '',
-    name: 'hai',
-  });
+  const [info, setInfo] = useState(props.info);
 
   const inputLabel = React.useRef(null);
   const [labelWidth, setLabelWidth] = React.useState(0);
@@ -28,34 +25,16 @@ export default function AddressInfo(props) {
     setLabelWidth(inputLabel.current.offsetWidth);
   }, []);
 
-  const handleChange = name => event => {
-    setState({
-      ...state,
-      [name]: event.target.value,
-    });
-  };
-  /*
-  place
-  name
-  street
-  number
-  town
-  city
-  */
+  function handleChange(e) {
+    e.preventDefault();
+    const key = e.target.name;
+    const value= e.target.value;
+    setInfo({...info, [key]:value});
+  }
+
   return (
     <React.Fragment>
-      <Grid container justify="space-between">
-        <Grid item>
-          <Typography component="h1" variant="h5">
-            Lugar del Examen
-          </Typography>
-        </Grid>
-        <Grid item>
-          <Button disabled><SaveIcon /></Button>
-          <Button><EditIcon /></Button>
-        </Grid>
-      </Grid>
-      <form className={props.classes.form} noValidate>
+      <form className={props.classes.form} noValidate onChange={handleChange}>
         <Grid container spacing={2}>
           <Grid item xs={4}>
             <TextField
@@ -66,7 +45,11 @@ export default function AddressInfo(props) {
               label="Lugar"
               autoFocus
               size="small"
-              value={props.info.place}
+              value={info.place}
+              InputProps={{
+                readOnly: !props.edit,
+              }}
+              variant={props.edit ? "standard" : "filled"}
             />
           </Grid>
           <Grid item xs={4}>
@@ -78,7 +61,11 @@ export default function AddressInfo(props) {
               label="Calle"
               autoFocus
               size="small"
-              value={props.info.street}
+              value={info.street}
+              InputProps={{
+                readOnly: !props.edit,
+              }}
+              variant={props.edit ? "standard" : "filled"}
             />
           </Grid>
           <Grid item xs={4} >
@@ -89,7 +76,11 @@ export default function AddressInfo(props) {
               label="Número"
               name="number"
               size="small"
-              value={props.info.value}
+              value={info.number}
+              InputProps={{
+                readOnly: !props.edit,
+              }}
+              variant={props.edit ? "standard" : "filled"}
             />
           </Grid>
           <Grid item xs={4}>
@@ -100,35 +91,44 @@ export default function AddressInfo(props) {
               label="Colonia"
               name="town"
               size="small"
-              value={props.info.town}
+              value={info.town}
+              InputProps={{
+                readOnly: !props.edit,
+              }}
+              variant={props.edit ? "standard" : "filled"}
             />
           </Grid>
           <Grid item xs={4}>
             <TextField
               required
               fullWidth
-              name="ciudad"
+              name="city"
               label="Ciudad"
-              id="ciudad"
+              id="city"
               size="small"
-              value={props.info.city}
+              value={info.city}
+              InputProps={{
+                readOnly: !props.edit,
+              }}
+              variant={props.edit ? "standard" : "filled"}
             />
           </Grid>
           <Grid item xs={4}>
             <FormControl size="small" fullWidth className={props.classes.formControl}>
-              <InputLabel ref={inputLabel} htmlFor="outlined-age-native-simple">
+              <InputLabel ref={inputLabel} htmlFor="standard-age-native-simple">
                 Estado
               </InputLabel>
               <Select
-
                 native
-                value={props.info.state}//value={state.age}
-                onChange={handleChange('age')}
+                value={info.state}
                 labelWidth={labelWidth}
+                disabled={!props.edit}
                 inputProps={{
-                  name: 'age',
-                  id: 'outlined-age-native-simple',
+                  name: 'state',
+                  id: 'state',
+                  readOnly: !props.edit
                 }}
+                variant={props.edit ? "standard" : "filled"}
               >
                 <option value="no">Seleccione uno...</option>
                 <option value="Aguascalientes">Aguascalientes</option>
@@ -170,22 +170,30 @@ export default function AddressInfo(props) {
             <TextField
               required
               fullWidth
-              name="zipcode"
+              name="cp"
               label="C.P."
-              id="zipcode"
+              id="cp"
               size="small"
-              value={props.info.cp}
+              value={info.cp}
+              InputProps={{
+                readOnly: !props.edit,
+              }}
+              variant={props.edit ? "standard" : "filled"}
             />
           </Grid>
           <Grid item xs={12}>
             <TextField
               required
               fullWidth
-              name="phone_number"
+              name="phone"
               label="Número telefónico"
-              id="phone_number"
+              id="phone"
               size="small"
-              value={props.info.phone}
+              value={info.phone}
+              InputProps={{
+                readOnly: !props.edit,
+              }}
+              variant={props.edit ? "standard" : "filled"}
             />
           </Grid>
 

@@ -49,7 +49,7 @@ export default function ProfessionalInfo(props) {
               InputProps={{
                 readOnly: !editDisabled,
               }}
-              variant={editDisabled ? "outlined" : "filled"}
+              variant={editDisabled ? "standard" : "filled"}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -66,7 +66,7 @@ export default function ProfessionalInfo(props) {
               InputProps={{
                 readOnly: !editDisabled,
               }}
-              variant={editDisabled ? "outlined" : "filled"}
+              variant={editDisabled ? "standard" : "filled"}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -83,7 +83,7 @@ export default function ProfessionalInfo(props) {
               InputProps={{
                 readOnly: !editDisabled,
               }}
-              variant={editDisabled ? "outlined" : "filled"}
+              variant={editDisabled ? "standard" : "filled"}
             />
           </Grid>
           <Grid item xs={12}>
@@ -98,7 +98,7 @@ export default function ProfessionalInfo(props) {
               InputProps={{
                 readOnly: !editDisabled,
               }}
-              variant={editDisabled ? "outlined" : "filled"}
+              variant={editDisabled ? "standard" : "filled"}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -115,7 +115,7 @@ export default function ProfessionalInfo(props) {
               InputProps={{
                 readOnly: !editDisabled,
               }}
-              variant={editDisabled ? "outlined" : "filled"}
+              variant={editDisabled ? "standard" : "filled"}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -132,7 +132,7 @@ export default function ProfessionalInfo(props) {
               InputProps={{
                 readOnly: !editDisabled,
               }}
-              variant={editDisabled ? "outlined" : "filled"}
+              variant={editDisabled ? "standard" : "filled"}
             />
           </Grid>
           <Grid item xs={12}>
@@ -147,7 +147,7 @@ export default function ProfessionalInfo(props) {
               InputProps={{
                 readOnly: !editDisabled,
               }}
-              variant={editDisabled ? "outlined" : "filled"}
+              variant={editDisabled ? "standard" : "filled"}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -164,7 +164,7 @@ export default function ProfessionalInfo(props) {
               InputProps={{
                 readOnly: !editDisabled,
               }}
-              variant={editDisabled ? "outlined" : "filled"}
+              variant={editDisabled ? "standard" : "filled"}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -181,7 +181,7 @@ export default function ProfessionalInfo(props) {
               InputProps={{
                 readOnly: !editDisabled,
               }}
-              variant={editDisabled ? "outlined" : "filled"}
+              variant={editDisabled ? "standard" : "filled"}
             />
           </Grid>
           <Grid item xs={12}>
@@ -198,7 +198,7 @@ export default function ProfessionalInfo(props) {
               InputProps={{
                 readOnly: !editDisabled,
               }}
-              variant={editDisabled ? "outlined" : "filled"}
+              variant={editDisabled ? "standard" : "filled"}
             />
           </Grid>
           <Grid item xs={12}>
@@ -213,7 +213,7 @@ export default function ProfessionalInfo(props) {
               InputProps={{
                 readOnly: !editDisabled,
               }}
-              variant={editDisabled ? "outlined" : "filled"}
+              variant={editDisabled ? "standard" : "filled"}
             />
           </Grid>
           <Grid item xs={12}>
@@ -227,7 +227,7 @@ export default function ProfessionalInfo(props) {
               InputProps={{
                 readOnly: !editDisabled,
               }}
-              variant={editDisabled ? "outlined" : "filled"}
+              variant={editDisabled ? "standard" : "filled"}
             />
           </Grid>
           <Grid item xs={12}>
@@ -242,7 +242,7 @@ export default function ProfessionalInfo(props) {
               InputProps={{
                 readOnly: !editDisabled,
               }}
-              variant={editDisabled ? "outlined" : "filled"}
+              variant={editDisabled ? "standard" : "filled"}
             />
           </Grid>
           <Grid item xs={12}>
@@ -259,7 +259,7 @@ export default function ProfessionalInfo(props) {
               InputProps={{
                 readOnly: !editDisabled,
               }}
-              variant={editDisabled ? "outlined" : "filled"}
+              variant={editDisabled ? "standard" : "filled"}
             />
           </Grid>
           <Grid item xs={12}>
@@ -274,7 +274,7 @@ export default function ProfessionalInfo(props) {
               InputProps={{
                 readOnly: !editDisabled,
               }}
-              variant={editDisabled ? "outlined" : "filled"}
+              variant={editDisabled ? "standard" : "filled"}
             />
           </Grid>
           <Grid item xs={12}>
@@ -289,7 +289,7 @@ export default function ProfessionalInfo(props) {
               InputProps={{
                 readOnly: !editDisabled,
               }}
-              variant={editDisabled ? "outlined" : "filled"}
+              variant={editDisabled ? "standard" : "filled"}
             />
           </Grid>
 

@@ -1,9 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import {Paper, InputBase, Divider, IconButton, InputLabel, FormHelperText, FormControl, Select, NativeSelect} from '@material-ui/core';
+import {Paper, InputBase, Divider, IconButton, InputLabel, FormHelperText,
+        FormControl, Select, NativeSelect} from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import Add from '@material-ui/icons/Add';
+import NewConvDialog from './NewConvDialog';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -32,6 +34,8 @@ const useStyles = makeStyles(theme => ({
 export default function SearchBar(props) {
   const classes = useStyles();
 
+  const [open, setOpen] = useState(false);
+
   const [inputs, setInputs] = React.useState({
     searchText: '',
     filterOption: 'Todas'
@@ -56,6 +60,14 @@ export default function SearchBar(props) {
       [key]: value,
     });
   };
+
+  function handleClick() {
+    setOpen(true);
+  }
+
+  function handleDialogClose() {
+    setOpen(false);
+  }
 
   return (
     <React.Fragment>
@@ -94,9 +106,11 @@ export default function SearchBar(props) {
           </Select>
         </FormControl>
         <Divider className={classes.divider} orientation="vertical" />
-        <IconButton color="primary" className={classes.iconButton} aria-label="directions">
+        <IconButton color="primary" className={classes.iconButton}
+                    aria-label="directions" onClick={handleClick}>
           <Add />
         </IconButton>
+        <NewConvDialog closeDialog={handleDialogClose} open={open} />
       </Paper>
     </React.Fragment>
   );

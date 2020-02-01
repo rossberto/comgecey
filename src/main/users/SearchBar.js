@@ -49,10 +49,6 @@ export default function SearchBar(props) {
         <IconButton type="submit" className={classes.iconButton} aria-label="search">
           <SearchIcon />
         </IconButton>
-        <Divider className={classes.divider} orientation="vertical" />
-        <IconButton color="primary" className={classes.iconButton} aria-label="directions">
-          <Add />
-        </IconButton>
       </Paper>
     </React.Fragment>
   );

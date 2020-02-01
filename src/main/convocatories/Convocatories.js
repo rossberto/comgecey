@@ -4,8 +4,8 @@ import SearchBar from './SearchBar';
 import ConvocatoriesTable from './ConvocatoriesTable';
 import StopIcon from '@material-ui/icons/Stop';
 
-function createData(convocatory, status, actions) {
-  return { convocatory, status, actions };
+function createData(convocatory, status) {
+  return { convocatory, status };
 }
 
 const rows = [

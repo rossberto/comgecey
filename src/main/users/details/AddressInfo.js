@@ -71,7 +71,7 @@ export default function AddressInfo(props) {
               InputProps={{
                 readOnly: !editDisabled,
               }}
-              variant={editDisabled ? "outlined" : "filled"}
+              variant={editDisabled ? "standard" : "filled"}
             />
           </Grid>
           <Grid item xs={4} >
@@ -86,7 +86,7 @@ export default function AddressInfo(props) {
               InputProps={{
                 readOnly: !editDisabled,
               }}
-              variant={editDisabled ? "outlined" : "filled"}
+              variant={editDisabled ? "standard" : "filled"}
             />
           </Grid>
           <Grid item xs={4}>
@@ -101,7 +101,7 @@ export default function AddressInfo(props) {
               InputProps={{
                 readOnly: !editDisabled,
               }}
-              variant={editDisabled ? "outlined" : "filled"}
+              variant={editDisabled ? "standard" : "filled"}
             />
           </Grid>
           <Grid item xs={4}>
@@ -116,12 +116,12 @@ export default function AddressInfo(props) {
               InputProps={{
                 readOnly: !editDisabled,
               }}
-              variant={editDisabled ? "outlined" : "filled"}
+              variant={editDisabled ? "standard" : "filled"}
             />
           </Grid>
           <Grid item xs={4}>
             <FormControl size="small" fullWidth className={props.classes.formControl}>
-              <InputLabel ref={inputLabel} htmlFor="outlined-age-native-simple">
+              <InputLabel ref={inputLabel} htmlFor="standard-age-native-simple">
                 Estado
               </InputLabel>
               <Select
@@ -131,10 +131,10 @@ export default function AddressInfo(props) {
                 labelWidth={labelWidth}
                 inputProps={{
                   name: 'state',
-                  id: 'outlined-age-native-simple',
+                  id: 'standard-age-native-simple',
                   readOnly: !editDisabled
                 }}
-                variant={editDisabled ? "outlined" : "filled"}
+                variant={editDisabled ? "standard" : "filled"}
               >
                 <option value="no">Seleccione uno...</option>
                 <option value="Aguascalientes">Aguascalientes</option>
@@ -184,7 +184,7 @@ export default function AddressInfo(props) {
               InputProps={{
                 readOnly: !editDisabled,
               }}
-              variant={editDisabled ? "outlined" : "filled"}
+              variant={editDisabled ? "standard" : "filled"}
             />
           </Grid>
           <Grid item xs={12}>
@@ -199,7 +199,7 @@ export default function AddressInfo(props) {
               InputProps={{
                 readOnly: !editDisabled,
               }}
-              variant={editDisabled ? "outlined" : "filled"}
+              variant={editDisabled ? "standard" : "filled"}
             />
           </Grid>
 
