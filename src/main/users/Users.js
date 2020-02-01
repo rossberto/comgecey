@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Container, Grid} from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import SearchBar from './SearchBar';
@@ -28,13 +28,20 @@ const rows = [
 ];
 
 export default function Users(props) {
+  const [users, setUsers] = useState(rows);
+
+  function handleUpdateFilter(filter) {
+    const filtered = rows.filter(row => row.name.toLowerCase().includes(filter.toLowerCase()));
+    setUsers(filtered)
+  }
+
   return (
     <Grid container alignItems="center" direction="column" spacing={3}>
       <Grid item xs={12} sm={10}>
-        <SearchBar />
+        <SearchBar updateFilter={handleUpdateFilter} />
       </Grid>
       <Grid item xs={12} >
-        <UsersTable users={rows} />
+        <UsersTable users={users} />
       </Grid>
     </Grid>
   );

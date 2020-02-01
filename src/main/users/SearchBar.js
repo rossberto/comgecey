@@ -29,8 +29,13 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function CustomizedInputBase() {
+export default function SearchBar(props) {
   const classes = useStyles();
+
+  function handleChange(e) {
+    e.preventDefault();
+    props.updateFilter(e.target.value);
+  }
 
   return (
     <React.Fragment>
@@ -39,6 +44,7 @@ export default function CustomizedInputBase() {
           className={classes.input}
           placeholder="Buscar Usuario"
           inputProps={{ 'aria-label': 'search google maps' }}
+          onChange={handleChange}
         />
         <IconButton type="submit" className={classes.iconButton} aria-label="search">
           <SearchIcon />
