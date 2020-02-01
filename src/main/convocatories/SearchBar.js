@@ -29,7 +29,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function CustomizedInputBase() {
+export default function SearchBar(props) {
   const classes = useStyles();
 
   const [inputs, setInputs] = React.useState({
@@ -44,7 +44,8 @@ export default function CustomizedInputBase() {
   }, []);
 
   React.useEffect(() => {
-    console.log(inputs.filterOption);
+    props.updateFilter(inputs.filterOption);
+    //console.log(inputs.filterOption);
   }, [inputs.filterOption]);
 
   function handleChange(e) {
@@ -87,9 +88,9 @@ export default function CustomizedInputBase() {
             onChange={handleChange}
           >
             <option value="Todas">Todas</option>
-            <option value="Abiertas">Abiertas</option>
-            <option value="Cerradas">Cerradas</option>
-            <option value="Canceladas">Canceladas</option>
+            <option value="Abierta">Abiertas</option>
+            <option value="Cerrada">Cerradas</option>
+            <option value="Cancelada">Canceladas</option>
           </Select>
         </FormControl>
         <Divider className={classes.divider} orientation="vertical" />

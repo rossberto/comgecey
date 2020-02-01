@@ -19,17 +19,7 @@ const columns = [
   },
 ];
 
-function createData(name, code, population, size) {
-  return { name, code, population };
-}
 
-const rows = [
-  createData('Abierta', '2020-1', <StopIcon />),
-  createData('Cerrada', '2019-3', <StopIcon />),
-  createData('Cerrada', '2019-2b', <StopIcon />),
-  createData('Cerrada', '2019-1', <StopIcon />),
-  createData('Cancelada', '2019-2a', <StopIcon />),
-];
 
 const useStyles = makeStyles({
   root: {
@@ -78,17 +68,18 @@ export default function UsersTable(props) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => {
+            {props.convs.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => {
               return (
-                <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                  {columns.map(column => {
-                    const value = row[column.id];
-                    return (
-                      <TableCell key={column.id} align={column.align}>
-                        <Button onClick={handleClick}>{column.format && typeof value === 'number' ? column.format(value) : value}</Button>
-                      </TableCell>
-                    );
-                  })}
+                <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+                  <TableCell key={row.convocatory} align="center">
+                    <Button onClick={handleClick}>{row.convocatory}</Button>
+                  </TableCell>
+                  <TableCell key={row.status} align="center">
+                    <Button onClick={handleClick}>{row.status}</Button>
+                  </TableCell>
+                  <TableCell key="icon" align="center">
+                    <Button onClick={handleClick}><StopIcon /></Button>
+                  </TableCell>
                 </TableRow>
               );
             })}
@@ -98,7 +89,7 @@ export default function UsersTable(props) {
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
         component="div"
-        count={rows.length}
+        count={props.convs.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onChangePage={handleChangePage}
