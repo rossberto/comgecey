@@ -14,24 +14,15 @@ import spinner from './91.gif'
 export default function Layout(props) {
   const appContext = useContext(AppContext);
   const {routes} = appContext;
-/*
-  const [ruta, setRuta] = useState(routes);
 
-  useEffect(() => {
-    console.log(routes);
-    setRuta(routes);
-  });
-*/
   return (
     <div>
       <Frame>
         <React.Suspense
-          fallback = <div borderTop="16px solid blue"
-                      borderBottom="16px solid blue"> </div>
+          fallback = <h1>Cargando...</h1>
         >
           {renderRoutes(routes)}
         </React.Suspense>
-        {/*<Convocatories />*/}
       </Frame>
     </div>
 

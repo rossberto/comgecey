@@ -90,16 +90,16 @@ export default function UsersTable(props) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {props.users.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => {
+            {props.users.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => {
               return (
-                <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                  <TableCell key={row.name} align="center">
+                <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+                  <TableCell key={index+row.name} align="center">
                     <Button onClick={(e) => handleClick(e, 'user')}>{row.name}</Button>
                   </TableCell>
-                  <TableCell key={row.name+row.convocatory} align="center">
+                  <TableCell key={index+row.convocatory} align="center">
                     <Button name={row.convocatory} onClick={(e) => handleClick(e, 'conv')}>{row.convocatory}</Button>
                   </TableCell>
-                  <TableCell key={'del-'+row.name} align="center">
+                  <TableCell key={index+'del-'+row.name} align="center">
                     <Button onClick={(e) => handleDelete(e, row.name)}><DeleteIcon /></Button>
                   </TableCell>
                 </TableRow>
