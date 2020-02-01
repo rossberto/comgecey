@@ -1,11 +1,8 @@
 import React from 'react';
-import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
-
+import {Container, Grid} from '@material-ui/core';
+import DeleteIcon from '@material-ui/icons/Delete';
 import SearchBar from './SearchBar';
 import UsersTable from './UsersTable';
-
-import DeleteIcon from '@material-ui/icons/Delete';
 
 function createData(name, convocatory) {
   return { name, convocatory};
