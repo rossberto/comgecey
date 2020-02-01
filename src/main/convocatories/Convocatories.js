@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Grid from '@material-ui/core/Grid';
 import SearchBar from './SearchBar';
 import ConvocatoriesTable from './ConvocatoriesTable';
@@ -17,16 +17,25 @@ const rows = [
 ];
 
 export default function Convocatories(props) {
+  const [filter, setFilter] = useState({searchText:'', filterOption:'Todas'});
   const [convocatories, setConvocatories] = useState(rows);
+  //const [searchText, setSearchText] = useState('');
 
-  function handleUpdateFilter(filter) {
-    if (filter !== 'Todas') {
-      const filtered = rows.filter(row => row.status==filter);
+  useEffect(() => {
+    if (filter.filterOption !== 'Todas') {
+      const filtered = rows.filter(row => row.status===filter.filterOption &&
+                                   row.convocatory.toLowerCase().includes(filter.searchText.toLowerCase()));
       setConvocatories(filtered);
     } else {
-      setConvocatories(rows);
+      const filtered = rows.filter(row => row.convocatory.toLowerCase().includes(filter.searchText.toLowerCase()));
+      setConvocatories(filtered);
     }
+  }, [filter]);
+
+  function handleUpdateFilter(key, value) {
+    setFilter({...filter, [key]:value});
   }
+
   return (
     <Grid container alignItems="center" direction="column" spacing={3}>
       <Grid item xs={12} sm={10}>

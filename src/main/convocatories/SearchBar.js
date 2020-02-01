@@ -47,18 +47,8 @@ export default function SearchBar(props) {
     setLabelWidth(inputLabel.current.offsetWidth);
   }, []);
 
-  React.useEffect(() => {
-    props.updateFilter(inputs.filterOption);
-    //console.log(inputs.filterOption);
-  }, [inputs.filterOption]);
-
   function handleChange(e) {
-    const key = e.target.name;
-    const value = e.target.value;
-    setInputs({
-      ...inputs,
-      [key]: value,
-    });
+    props.updateFilter(e.target.name, e.target.value);
   };
 
   function handleClick() {
@@ -77,7 +67,7 @@ export default function SearchBar(props) {
           className={classes.input}
           placeholder="Buscar Convocatoria"
           inputProps={{ 'aria-label': 'search google maps' }}
-          value={inputs.searchText}
+          //value={inputs.searchText}
           onChange={handleChange}
         />
         <IconButton type="submit" className={classes.iconButton} aria-label="search">
@@ -91,7 +81,7 @@ export default function SearchBar(props) {
           </InputLabel>
           <Select
             native
-            value={inputs.filterOption}
+            //value={inputs.filterOption}
             labelWidth={labelWidth}
             inputProps={{
               name: 'filterOption',
