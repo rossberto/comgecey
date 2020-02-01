@@ -10,6 +10,8 @@ import {Router} from 'react-router-dom';
 import {renderRoutes} from 'react-router-config'
 import Pages from './main/pages/Pages';
 
+import Blog from './main/blog/Blog';
+
 import history from './main/history';
 
 const theme = createMuiTheme({
@@ -48,7 +50,7 @@ function StartPage() {
 }
 
 function App() {
-  const [auth, setAuth] = useState(true);
+  const [auth, setAuth] = useState(false);
 
   function goDashboard(val) {
     setAuth(val);
@@ -69,7 +71,8 @@ function App() {
       {/*<ThemeProvider theme={theme}>*/}
         {/*page*/}
       <Router history={history}>
-        <StartPage />
+        {/*<Blog />*/}
+        {<StartPage />}
       </Router>
       {/*</ThemeProvider>*/}
 

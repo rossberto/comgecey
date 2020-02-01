@@ -26,29 +26,6 @@ const columns = [
   },
 ];
 
-function createData(name, code, population, size) {
-  return { name, code, population };
-}
-
-const rows = [
-  createData('Christian Eduardo Boyain de Goytia y Luna', '2027-1', <DeleteIcon />),
-  createData('Diana Iveth Sierra Gomez', '2020-1', <DeleteIcon />),
-  createData('Jorge Alberto Fonz Aguilar', '2020-2', <DeleteIcon />),
-  createData('Gloria Yaneth Calderón Loeza', '2020-3', <DeleteIcon />),
-  createData('Francisco Calderón Ojeda', '2020-4', <DeleteIcon />),
-  createData('Diana Iveth Sierra Gomez', '2020-5', <DeleteIcon />),
-  createData('Jorge Alberto Fonz Aguilar', '2020-6', <DeleteIcon />),
-  createData('Gloria Yaneth Calderón Loeza', '2020-7', <DeleteIcon />),
-  createData('Francisco Calderón Ojeda', '2020-8', <DeleteIcon />),
-  createData('Diana Iveth Sierra Gomez', '2020-9', <DeleteIcon />),
-  createData('Jorge Alberto Fonz Aguilar', '2021-1', <DeleteIcon />),
-  createData('Gloria Yaneth Calderón Loeza', '2022-1', <DeleteIcon />),
-  createData('Francisco Calderón Ojeda', '2023-1', <DeleteIcon />),
-  createData('Diana Iveth Sierra Gomez', '2024-1', <DeleteIcon />),
-  createData('Jorge Alberto Fonz Aguilar', '2025-1', <DeleteIcon />),
-  createData('Gloria Yaneth Calderón Loeza', '2026-1', <DeleteIcon />),
-];
-
 const useStyles = makeStyles({
   root: {
     //maxWidth: '600px',
@@ -60,7 +37,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function UsersTable() {
+export default function UsersTable(props) {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -74,8 +51,25 @@ export default function UsersTable() {
     setPage(0);
   };
 
-  function handleClick() {
-    nav('/users/1')
+  function handleClick(e, type) {
+    switch (type) {
+      case 'user':
+        nav('/users/1');
+        break;
+      case 'conv':
+        nav('/convocatories/1');
+        break;
+      default:
+
+    }
+    console.log(e.target.name);
+  }
+
+  function handleDelete(e, name) {
+    const r = window.confirm('Confirmas la eliminación del usuario ' + name + '.')
+    if (r) {
+      console.log('Se solicita eliminar usuario.');
+    }
   }
 
   return (
@@ -96,17 +90,18 @@ export default function UsersTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => {
+            {props.users.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => {
               return (
                 <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                  {columns.map(column => {
-                    const value = row[column.id];
-                    return (
-                      <TableCell key={column.id} align={column.align}>
-                        <Button onClick={handleClick}>{column.format && typeof value === 'number' ? column.format(value) : value}</Button>
-                      </TableCell>
-                    );
-                  })}
+                  <TableCell key={row.name} align="center">
+                    <Button onClick={(e) => handleClick(e, 'user')}>{row.name}</Button>
+                  </TableCell>
+                  <TableCell key={row.name+row.convocatory} align="center">
+                    <Button name={row.convocatory} onClick={(e) => handleClick(e, 'conv')}>{row.convocatory}</Button>
+                  </TableCell>
+                  <TableCell key={'del-'+row.name} align="center">
+                    <Button onClick={(e) => handleDelete(e, row.name)}><DeleteIcon /></Button>
+                  </TableCell>
                 </TableRow>
               );
             })}
@@ -116,7 +111,7 @@ export default function UsersTable() {
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
         component="div"
-        count={rows.length}
+        count={props.users.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onChangePage={handleChangePage}

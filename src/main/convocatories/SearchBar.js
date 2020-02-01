@@ -41,9 +41,9 @@ const useStyles = makeStyles(theme => ({
 export default function CustomizedInputBase() {
   const classes = useStyles();
 
-  const [state, setState] = React.useState({
-    age: '',
-    name: 'hai',
+  const [inputs, setInputs] = React.useState({
+    searchText: '',
+    filterOption: 'Todas'
   });
 
   const inputLabel = React.useRef(null);
@@ -52,10 +52,16 @@ export default function CustomizedInputBase() {
     setLabelWidth(inputLabel.current.offsetWidth);
   }, []);
 
-  const handleChange = name => event => {
-    setState({
-      ...state,
-      [name]: event.target.value,
+  React.useEffect(() => {
+    console.log(inputs.filterOption);
+  }, [inputs.filterOption]);
+
+  function handleChange(e) {
+    const key = e.target.name;
+    const value = e.target.value;
+    setInputs({
+      ...inputs,
+      [key]: value,
     });
   };
 
@@ -63,9 +69,12 @@ export default function CustomizedInputBase() {
     <React.Fragment>
       <Paper component="form" className={classes.root}>
         <InputBase
+          name="searchText"
           className={classes.input}
           placeholder="Buscar Convocatoria"
           inputProps={{ 'aria-label': 'search google maps' }}
+          value={inputs.searchText}
+          onChange={handleChange}
         />
         <IconButton type="submit" className={classes.iconButton} aria-label="search">
           <SearchIcon />
@@ -77,20 +86,19 @@ export default function CustomizedInputBase() {
             Mostrar
           </InputLabel>
           <Select
-
             native
-            value={state.age}
-            onChange={handleChange('age')}
+            value={inputs.filterOption}
             labelWidth={labelWidth}
             inputProps={{
-              name: 'age',
+              name: 'filterOption',
               id: 'outlined-age-native-simple',
             }}
+            onChange={handleChange}
           >
-            <option value="no">Todas</option>
-            <option value="Aguascalientes">Abiertas</option>
-            <option value="Baja California">Cerradas</option>
-            <option value="Baja California Sur">Canceladas</option>
+            <option value="Todas">Todas</option>
+            <option value="Abiertas">Abiertas</option>
+            <option value="Cerradas">Cerradas</option>
+            <option value="Canceladas">Canceladas</option>
           </Select>
         </FormControl>
         <Divider className={classes.divider} orientation="vertical" />
