@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import Grid from '@material-ui/core/Grid';
+import {Grid, Typography} from '@material-ui/core';
 import SearchBar from './SearchBar';
 import ConvocatoriesTable from './ConvocatoriesTable';
 import StopIcon from '@material-ui/icons/Stop';
@@ -38,6 +38,9 @@ export default function Convocatories(props) {
 
   return (
     <Grid container alignItems="center" direction="column" spacing={3}>
+      <Grid item xs={12} sm={10}>
+        <Typography align="center" variant="h2" component="h2" gutterBottom style={{alignItems:'center'}}>Convocatorias</Typography>
+      </Grid>
       <Grid item xs={12} sm={10}>
         <SearchBar updateFilter={handleUpdateFilter} />
       </Grid>

@@ -52,7 +52,9 @@ export default function NewConvDialog(props) {
 
   return (
     <Dialog onClose={props.closeDialog} open={props.open}>
-      <DialogTitle align="center">Nueva Convocatoria</DialogTitle>
+      <DialogTitle align="center">
+        <Typography align="center" variant="h4" component="h3" gutterBottom style={{alignItems:'center'}}>Nueva Convocatoria</Typography>
+      </DialogTitle>
       <DialogContent>
         <Grid container styles={{width:'100%'}}>
           <Grid item>

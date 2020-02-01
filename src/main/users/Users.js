@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Container, Grid} from '@material-ui/core';
+import {Container, Grid, Typography} from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import SearchBar from './SearchBar';
 import UsersTable from './UsersTable';
@@ -37,6 +37,9 @@ export default function Users(props) {
 
   return (
     <Grid container alignItems="center" direction="column" spacing={3}>
+      <Grid item xs={12} sm={10}>
+        <Typography align="center" variant="h2" component="h2" gutterBottom style={{alignItems:'center'}}>Médicos</Typography>
+      </Grid>
       <Grid item xs={12} sm={10}>
         <SearchBar updateFilter={handleUpdateFilter} />
       </Grid>
