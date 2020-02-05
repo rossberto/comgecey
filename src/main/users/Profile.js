@@ -69,7 +69,7 @@ export default function Profile(props) {
   return (
     <div className={classes.root}>
       <Grid container spacing={3}>
-        <Grid item xs={12} sm={10}>
+        <Grid item xs={12}>
           <Typography align="center" variant="h2" component="h2" gutterBottom style={{alignItems:'center'}}>Perfil de Médico</Typography>
         </Grid>
         <Grid item xs={12} sm={6}>

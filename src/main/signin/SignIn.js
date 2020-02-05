@@ -15,6 +15,8 @@ import Container from '@material-ui/core/Container';
 
 import AppContext from '../../AppContext';
 
+import logo from './comgecey-02.png';
+
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -62,6 +64,7 @@ export default function SignIn() {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
+        <img position="contain" width="100%" className={classes.image} src={logo} />
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
