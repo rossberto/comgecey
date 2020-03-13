@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import AppContext from './AppContext';
 import routes from './configs/routesConfig';
 import {Router} from 'react-router-dom';
@@ -53,6 +53,11 @@ function StartPage() {
 
 function App() {
   const [auth, setAuth] = useState(false);
+  const [userSession, setUserSession] = useState({});
+
+  useEffect(() => {
+    console.log(userSession);
+  }, [userSession]);
 
   function goDashboard(val) {
     setAuth(val);
@@ -67,7 +72,9 @@ function App() {
       value={{
         routes,
         auth,
-        goDashboard
+        goDashboard,
+        userSession,
+        setUserSession
       }}
     >
       <ThemeProvider theme={theme}>

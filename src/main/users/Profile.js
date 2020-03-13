@@ -1,10 +1,12 @@
-import React, {useEffect} from 'react';
+import React, { useContext, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {Paper, Grid, TextField, Button, Typography} from '@material-ui/core';
 import IdInfo from './details/IdInfo';
 import UserFiles from './UserFiles';
 import ProfessionalInfo from './details/ProfessionalInfo';
 import AddressInfo from './details/AddressInfo';
+
+import AppContext from '../../AppContext';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -62,6 +64,9 @@ const professionalInfo = {
 export default function Profile(props) {
   const classes = useStyles();
 
+  const appContext = useContext(AppContext);
+  const { auth, goDashboard, routes, userSession, setUserSession } = appContext;
+
   useEffect(() => {
     window.scrollTo(0, 0)
   });
@@ -74,7 +79,7 @@ export default function Profile(props) {
         </Grid>
         <Grid item xs={12} sm={6}>
           <Paper className={classes.paper}>
-            <IdInfo info={idInfo} classes={classes}/>
+            <IdInfo info={userSession} classes={classes}/>
           </Paper>
           <br />
           <Paper className={classes.paper}>

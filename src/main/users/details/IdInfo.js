@@ -1,17 +1,26 @@
-import React, {useState} from 'react';
-import {Paper, Grid, TextField, Button, Typography} from '@material-ui/core';
+import React, { useState, useEffect, useRef } from 'react';
+import axios from 'axios';
+import {Paper, Grid, TextField, Button, Typography, InputLabel, Select, FormControl, Container, CssBaseline} from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import SaveIcon from '@material-ui/icons/Save';
 
 export default function IdInfo(props) {
   const [editDisabled, setEditDisabled] = useState(false);
   const [info, setInfo] = useState(props.info);
+  const inputLabel = useRef(null);
+  const [labelWidth, setLabelWidth] = useState(0);
+
+  useEffect(() => {
+    setLabelWidth(inputLabel.current.offsetWidth);
+  }, []);
 
   function handleEdit() {
     setEditDisabled(true);
   }
 
   function handleSave() {
+    const url = 'http://localhost:4000/api/users/' + info.id;
+    axios.put(url, info);
     setEditDisabled(false);
   }
 
@@ -103,14 +112,66 @@ export default function IdInfo(props) {
             />
           </Grid>
           <Grid item xs={6}>
+            <FormControl size="small" fullWidth variant="outlined">
+              <InputLabel ref={inputLabel} htmlFor="standard-age-native-simple" >
+                Estado de Nacimiento
+              </InputLabel>
+              <Select
+                native
+                value= {info.birth_state ? info.birth_state : 'no'}
+                labelWidth={labelWidth}
+                inputProps={{
+                  name: 'birth_state',
+                  id: 'birth_state',
+                  readOnly: !editDisabled
+                }}
+                variant={editDisabled ? "standard" : "filled"}
+              >
+                <option value="no">Seleccione uno...</option>
+                <option value="Aguascalientes">Aguascalientes</option>
+                <option value="Baja California">Baja California</option>
+                <option value="Baja California Sur">Baja California Sur</option>
+                <option value="Campeche">Campeche</option>
+                <option value="Chiapas">Chiapas</option>
+                <option value="Chihuahua">Chihuahua</option>
+                <option value="Coahuila">Coahuila</option>
+                <option value="Colima">Colima</option>
+                <option value="Distrito Federal">Distrito Federal</option>
+                <option value="Durango">Durango</option>
+                <option value="Estado de México">Estado de México</option>
+                <option value="Guanajuato">Guanajuato</option>
+                <option value="Guerrero">Guerrero</option>
+                <option value="Hidalgo">Hidalgo</option>
+                <option value="Jalisco">Jalisco</option>
+                <option value="Michoacán">Michoacán</option>
+                <option value="Morelos">Morelos</option>
+                <option value="Nayarit">Nayarit</option>
+                <option value="Nuevo León">Nuevo León</option>
+                <option value="Oaxaca">Oaxaca</option>
+                <option value="Puebla">Puebla</option>
+                <option value="Querétaro">Querétaro</option>
+                <option value="Quintana Roo">Quintana Roo</option>
+                <option value="San Luis Potosí">San Luis Potosí</option>
+                <option value="Sinaloa">Sinaloa</option>
+                <option value="Sonora">Sonora</option>
+                <option value="Tabasco">Tabasco</option>
+                <option value="Tamaulipas">Tamaulipas</option>
+                <option value="Tlaxcala">Tlaxcala</option>
+                <option value="Veracruz">Veracruz</option>
+                <option value="Yucatán">Yucatán</option>
+                <option value="Zacatecas">Zacatecas</option>
+              </Select>
+            </FormControl>
+          </Grid>
+          <Grid item xs={12}>
             <TextField
+              value={info.birth_city ? info.birth_city : ''}
+              variant="outlined"
               required
               fullWidth
-              id="birthplace"
-              label="Lugar de Nacimiento"
-              name="birthplace"
-              size="small"
-              value={info.birthplace}
+              id="birth_city"
+              label="Ciudad de Nacimiento"
+              name="birth_city"
               InputProps={{
                 readOnly: !editDisabled,
               }}

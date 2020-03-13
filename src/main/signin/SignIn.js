@@ -1,4 +1,5 @@
-import React, {useContext} from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+import axios from 'axios';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -51,14 +52,34 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function SignIn() {
-  const appContext = useContext(AppContext);
-  const {auth, goDashboard, routes} = appContext;
-
   const classes = useStyles();
+
+  const appContext = useContext(AppContext);
+  const { auth, goDashboard, routes, userSession, setUserSession } = appContext;
+
+  const [inputs, setInputs] = useState({email: 'rossberto@gmail.com', password: '1234'});
+
+  function handleChange(e) {
+    e.preventDefault();
+
+    setInputs({...inputs, [e.target.name]: e.target.value});
+  }
 
   function handleClick(e) {
     e.preventDefault();
-    goDashboard(true);
+
+    const url = 'http://localhost:4000/api/auth';
+    axios.post(url, {email: inputs.email, password: inputs.password}).then(response => {
+      if (response.status === 201) {
+        response.data.user.birthdate = response.data.user.birthdate.slice(0,10);
+        setUserSession(response.data.user);
+        goDashboard(true);
+      } else {
+        alert('Usuario y/o contraseña incorrectos');
+      }
+    }).catch(err => {
+      alert('Usuario no ha confirmado correo o le falta completar su información de registro.');
+    });
   }
   return (
     <Container component="main" maxWidth="xs">
@@ -71,7 +92,7 @@ export default function SignIn() {
         <Typography component="h1" variant="h5">
           Ingreso
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onChange={handleChange}>
           <TextField
             variant="outlined"
             margin="normal"
