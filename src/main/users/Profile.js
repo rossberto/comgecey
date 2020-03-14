@@ -24,7 +24,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const idInfo = {
-  name: 'Juan',
+  name: '',
   father_lname: 'Gonzalez',
   mother_lname: 'Perez',
   email: 'juan@correo.com',
@@ -43,22 +43,23 @@ const addressInfo = {
 }
 
 const professionalInfo = {
-  school: 'Facultad de Medicina - UADY',
-  startDate: '2004-12-05',
-  endDate: '2008-06-06',
-  internship: 'Hospital Juárez',
-  internStartDate: '2008-05-05',
-  internEndDate: '2009-05-05',
-  ss: 'Catmis',
-  ssStartDate: '2009-07-07',
-  ssEndDate: '2010-05-05',
-  examDate: '2010-10-10',
-  examType: 'Defensa de Tesis',
-  examTitle: 'La diabetis en Yucatán',
-  book: '24/123',
-  profId: '6ASDF15AS6SFD1',
-  profIdDate: '2010-12-12',
-  ssa: '1DF3D5DF1'
+  endpoint: '/professional',
+  school: '',
+  start_date: '',
+  finish_date: '',
+  intership: '',
+  start_date_internship: '',
+  finish_date_internship: '',
+  social_service: '',
+  start_date_social: '',
+  finish_date_social: '',
+  exam_date: '',
+  exam_type: '',
+  tesis: '',
+  professional_id: '',
+  professional_id_date: '',
+  book: '',
+  ssa: ''
 }
 
 export default function Profile(props) {
@@ -87,12 +88,12 @@ export default function Profile(props) {
           </Paper>
           <br />
           <Paper className={classes.paper}>
-            {<AddressInfo info={addressInfo} classes={classes} />}
+            {<AddressInfo info={addressInfo} userId={userSession.id} classes={classes} />}
           </Paper>
         </Grid>
         <Grid item xs={12} sm={6}>
           <Paper className={classes.paper}>
-            <ProfessionalInfo info={professionalInfo} classes={classes} />
+            <ProfessionalInfo info={professionalInfo} userId={userSession.id} classes={classes} />
           </Paper>
         </Grid>
       </Grid>

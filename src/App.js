@@ -59,10 +59,10 @@ function App() {
     console.log(userSession);
   }, [userSession]);
 
-  function goDashboard(val) {
+  function goDashboard(val, userId) {
     setAuth(val);
     if (val===true) {
-      history.push('/users/1');
+      history.push('/users/' + userId);
     } else {
       history.push('/signin')
     }

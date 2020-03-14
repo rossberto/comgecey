@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import {Paper, Grid, TextField, Button, Typography} from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import SaveIcon from '@material-ui/icons/Save';
@@ -7,15 +8,35 @@ export default function ProfessionalInfo(props) {
   const [editDisabled, setEditDisabled] = useState(false);
   const [info, setInfo] = useState(props.info);
 
+  useEffect(() => {
+    const url = 'http://localhost:4000/api/users/' + props.userId + '/professional';
+    axios.get(url).then(response => {
+      console.log(response.data);
+      const professionalData = Object.assign({}, response.data.professional);
+
+      const dates = ['start_date', 'finish_date', 'start_date_internship', 'finish_date_internship', 'start_date_social', 'finish_date_social', 'exam_date', 'professional_id_date']
+      dates.forEach(date => {
+        professionalData[date] = professionalData[date].slice(0, 10);
+      });
+
+      setInfo(professionalData);
+    });
+  }, []);
+
   function handleEdit() {
     setEditDisabled(true);
   }
 
   function handleSave() {
+    const url = 'http://localhost:4000/api/users/' + props.userId + '/professional';
+    axios.put(url, info);
+
     setEditDisabled(false);
   }
 
   function handleChange(e) {
+    e.preventDefault();
+
     const key = e.target.name;
     const value = e.target.value;
     setInfo({...info, [key]:value})
@@ -56,13 +77,13 @@ export default function ProfessionalInfo(props) {
             <TextField
               required
               fullWidth
-              name="startDate"
+              name="start_date"
               label="Fecha de Inicio"
               type="date"
-              id="startDate"
+              id="start_date"
               InputLabelProps={{shrink: true}}
               size="small"
-              value={info.startDate}
+              value={info.start_date}
               InputProps={{
                 readOnly: !editDisabled,
               }}
@@ -73,13 +94,13 @@ export default function ProfessionalInfo(props) {
             <TextField
               required
               fullWidth
-              name="endDate"
+              name="finish_date"
               label="Fecha de Terminación"
               type="date"
-              id="endDate"
+              id="finish_date"
               InputLabelProps={{shrink: true}}
               size="small"
-              value={info.endDate}
+              value={info.finish_date}
               InputProps={{
                 readOnly: !editDisabled,
               }}
@@ -90,11 +111,11 @@ export default function ProfessionalInfo(props) {
             <TextField
               required
               fullWidth
-              id="internship"
+              id="intership"
               label="Sitio donde realizó el internado"
-              name="internship"
+              name="intership"
               size="small"
-              value={info.internship}
+              value={info.intership}
               InputProps={{
                 readOnly: !editDisabled,
               }}
@@ -105,13 +126,13 @@ export default function ProfessionalInfo(props) {
             <TextField
               required
               fullWidth
-              name="internStartDate"
+              name="start_date_internship"
               label="Inicio de Internado"
               type="date"
-              id="internStartDate"
+              id="start_date_internship"
               InputLabelProps={{shrink: true}}
               size="small"
-              value={info.internStartDate}
+              value={info.start_date_internship}
               InputProps={{
                 readOnly: !editDisabled,
               }}
@@ -122,13 +143,13 @@ export default function ProfessionalInfo(props) {
             <TextField
               required
               fullWidth
-              name="internEndDate"
+              name="finish_date_internship"
               label="Fin de Internado"
               type="date"
-              id="internEndDate"
+              id="finish_date_internship"
               InputLabelProps={{shrink: true}}
               size="small"
-              value={info.internEndDate}
+              value={info.finish_date_internship}
               InputProps={{
                 readOnly: !editDisabled,
               }}
@@ -139,11 +160,11 @@ export default function ProfessionalInfo(props) {
             <TextField
               required
               fullWidth
-              id="ss"
+              id="social_service"
               label="Lugar donde realizó el servicio social"
-              name="ss"
+              name="social_service"
               size="small"
-              value={info.ss}
+              value={info.social_service}
               InputProps={{
                 readOnly: !editDisabled,
               }}
@@ -154,13 +175,13 @@ export default function ProfessionalInfo(props) {
             <TextField
               required
               fullWidth
-              name="ssStartDate"
+              name="start_date_social"
               label="Inicio de Servicio Social"
               type="date"
-              id="ssStartDate"
+              id="start_date_social"
               InputLabelProps={{shrink: true}}
               size="small"
-              value={info.ssStartDate}
+              value={info.start_date_social}
               InputProps={{
                 readOnly: !editDisabled,
               }}
@@ -171,13 +192,13 @@ export default function ProfessionalInfo(props) {
             <TextField
               required
               fullWidth
-              name="ssEndDate"
+              name="finish_date_social"
               label="Fin de Servicio Social"
               type="date"
-              id="ssEndDate"
+              id="finish_date_social"
               InputLabelProps={{shrink: true}}
               size="small"
-              value={info.ssEndDate}
+              value={info.finish_date_social}
               InputProps={{
                 readOnly: !editDisabled,
               }}
@@ -188,13 +209,13 @@ export default function ProfessionalInfo(props) {
             <TextField
               required
               fullWidth
-              name="examDate"
+              name="exam_date"
               label="Fecha de Examen Profesional"
               type="date"
-              id="examDate"
+              id="exam_date"
               InputLabelProps={{shrink: true}}
               size="small"
-              value={info.examDate}
+              value={info.exam_date}
               InputProps={{
                 readOnly: !editDisabled,
               }}
@@ -205,11 +226,11 @@ export default function ProfessionalInfo(props) {
             <TextField
               required
               fullWidth
-              name="examType"
+              name="exam_type"
               label="Tipo de Examen (Oral y/o Escrito)"
-              id="examType"
+              id="exam_type"
               size="small"
-              value={info.examType}
+              value={info.exam_type}
               InputProps={{
                 readOnly: !editDisabled,
               }}
@@ -219,11 +240,11 @@ export default function ProfessionalInfo(props) {
           <Grid item xs={12}>
             <TextField
               fullWidth
-              name="examTitle"
+              name="tesis"
               label="Título de la Tesis Recepcional"
-              id="examTitle"
+              id="tesis"
               size="small"
-              value={info.examTitle}
+              value={info.tesis}
               InputProps={{
                 readOnly: !editDisabled,
               }}
@@ -234,11 +255,11 @@ export default function ProfessionalInfo(props) {
             <TextField
               required
               fullWidth
-              name="profId"
+              name="professional_id"
               label="Número de Cédula Profesional"
-              id="profId"
+              id="professional_id"
               size="small"
-              value={info.profId}
+              value={info.professional_id}
               InputProps={{
                 readOnly: !editDisabled,
               }}
@@ -249,13 +270,13 @@ export default function ProfessionalInfo(props) {
             <TextField
               required
               fullWidth
-              name="profIdDate"
+              name="professional_id_date"
               label="Fecha de Expedición de Cédula Profesional"
               type="date"
-              id="profIdDate"
+              id="professional_id_date"
               InputLabelProps={{shrink: true}}
               size="small"
-              value={info.profIdDate}
+              value={info.professional_id_date}
               InputProps={{
                 readOnly: !editDisabled,
               }}

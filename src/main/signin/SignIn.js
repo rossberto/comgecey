@@ -73,7 +73,7 @@ export default function SignIn() {
       if (response.status === 201) {
         response.data.user.birthdate = response.data.user.birthdate.slice(0,10);
         setUserSession(response.data.user);
-        goDashboard(true);
+        goDashboard(true, response.data.user.id);
       } else {
         alert('Usuario y/o contraseña incorrectos');
       }

@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import axios from 'axios';
 import {Paper, Grid, TextField, Button, Typography, InputLabel, FormHelperText,
         FormControl, Select,NativeSelect, InputAdornment} from '@material-ui/core';
 import AccountCircle from '@material-ui/icons/AccountCircle';
@@ -20,6 +21,14 @@ export default function AddressInfo(props) {
   }, []);
 
   const [info, setInfo] = React.useState(props.info)
+
+  useEffect(() => {
+    const url = 'http://localhost:4000/api/users/' + props.userId + '/address';
+    axios.get(url).then(response => {
+      console.log(response.data);
+      setInfo(response.data.address);
+    });
+  }, []);
 /*
   const handleChange = name => event => {
     setState({
@@ -33,6 +42,9 @@ export default function AddressInfo(props) {
   }
 
   function handleSave() {
+    const url = 'http://localhost:4000/api/users/' + props.userId + '/address';
+    axios.put(url, info);
+
     setEditDisabled(false);
   }
 
@@ -176,11 +188,11 @@ export default function AddressInfo(props) {
             <TextField
               required
               fullWidth
-              name="cp"
+              name="zip_code"
               label="C.P."
-              id="cp"
+              id="zip_code"
               size="small"
-              value={info.cp}
+              value={info.zip_code}
               InputProps={{
                 readOnly: !editDisabled,
               }}
