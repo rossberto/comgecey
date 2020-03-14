@@ -55,10 +55,6 @@ function App() {
   const [auth, setAuth] = useState(false);
   const [userSession, setUserSession] = useState({});
 
-  useEffect(() => {
-    console.log(userSession);
-  }, [userSession]);
-
   function goDashboard(val, userId) {
     setAuth(val);
     if (val===true) {

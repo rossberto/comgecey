@@ -7,8 +7,8 @@ import SaveIcon from '@material-ui/icons/Save';
 export default function IdInfo(props) {
   const [editDisabled, setEditDisabled] = useState(false);
   const [info, setInfo] = useState(props.info);
-  const inputLabel = useRef(null);
   const [labelWidth, setLabelWidth] = useState(0);
+  const inputLabel = useRef(null);
 
   useEffect(() => {
     setLabelWidth(inputLabel.current.offsetWidth);
@@ -25,6 +25,8 @@ export default function IdInfo(props) {
   }
 
   function handleChange(e) {
+    e.preventDefault();
+
     const key = e.target.name;
     const value = e.target.value;
     setInfo(info => ({...info, [key]:value}));

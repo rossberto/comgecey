@@ -4,14 +4,33 @@ import {Paper, Grid, TextField, Button, Typography} from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import SaveIcon from '@material-ui/icons/Save';
 
+const professionalInfo = {
+  endpoint: '/professional',
+  school: '',
+  start_date: '',
+  finish_date: '',
+  intership: '',
+  start_date_internship: '',
+  finish_date_internship: '',
+  social_service: '',
+  start_date_social: '',
+  finish_date_social: '',
+  exam_date: '',
+  exam_type: '',
+  tesis: '',
+  professional_id: '',
+  professional_id_date: '',
+  book: '',
+  ssa: ''
+}
+
 export default function ProfessionalInfo(props) {
   const [editDisabled, setEditDisabled] = useState(false);
-  const [info, setInfo] = useState(props.info);
+  const [info, setInfo] = useState(professionalInfo);
 
   useEffect(() => {
     const url = 'http://localhost:4000/api/users/' + props.userId + '/professional';
     axios.get(url).then(response => {
-      console.log(response.data);
       const professionalData = Object.assign({}, response.data.professional);
 
       const dates = ['start_date', 'finish_date', 'start_date_internship', 'finish_date_internship', 'start_date_social', 'finish_date_social', 'exam_date', 'professional_id_date']

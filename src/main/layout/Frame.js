@@ -72,7 +72,7 @@ function Frame(props) {
   const theme = useTheme();
 
   const appContext = useContext(AppContext);
-  const {auth, goDashboard} = appContext;
+  const {auth, goDashboard, userSession } = appContext;
 
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
@@ -87,7 +87,7 @@ function Frame(props) {
   function handleClick(e, text) {
     switch (text) {
       case 'Mi Perfil':
-          nav('/users/1');
+          nav(`/users/${userSession.id}`);
         break;
       case 'Convocatorias':
           nav('/convocatories');

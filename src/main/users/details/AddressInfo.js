@@ -6,37 +6,33 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import EditIcon from '@material-ui/icons/Edit';
 import SaveIcon from '@material-ui/icons/Save';
 
+const addressInfo = {
+  street: '',
+  number: '',
+  town: '',
+  city: '',
+  state: '',
+  zip_code: '',
+  phone: ''
+}
+
 export default function AddressInfo(props) {
-  const [state, setState] = React.useState({
-    age: '',
-    name: 'hai',
-  });
-
   const [editDisabled, setEditDisabled] = React.useState(false);
-
-  const inputLabel = React.useRef(null);
+  const [info, setInfo] = React.useState(addressInfo);
   const [labelWidth, setLabelWidth] = React.useState(0);
+  const inputLabel = React.useRef(null);
+
   React.useEffect(() => {
     setLabelWidth(inputLabel.current.offsetWidth);
   }, []);
 
-  const [info, setInfo] = React.useState(props.info)
-
   useEffect(() => {
     const url = 'http://localhost:4000/api/users/' + props.userId + '/address';
     axios.get(url).then(response => {
-      console.log(response.data);
       setInfo(response.data.address);
     });
   }, []);
-/*
-  const handleChange = name => event => {
-    setState({
-      ...state,
-      [name]: event.target.value,
-    });
-  };
-*/
+
   function handleEdit() {
     setEditDisabled(true);
   }
@@ -49,7 +45,8 @@ export default function AddressInfo(props) {
   }
 
   function handleChange(e) {
-    console.log(e.target);
+    e.preventDefault();
+
     const key = e.target.name;
     const value = e.target.value;
     setInfo(info => ({...info, [key]:value}))
@@ -68,7 +65,7 @@ export default function AddressInfo(props) {
           <Button disabled={editDisabled} onClick={handleEdit}><EditIcon /></Button>
         </Grid>
       </Grid>
-      <form className={props.classes.form} noValidate onChange={handleChange}>
+      <form className={props.classes.form} noValidate onChange={handleChange} onSubmit={handleSave}>
         <Grid container spacing={2}>
           <Grid item xs={4}>
             <TextField
