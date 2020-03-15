@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
@@ -8,13 +8,10 @@ import EditIcon from '@material-ui/icons/Edit';
 import SaveIcon from '@material-ui/icons/Save';
 
 export default function GeneralInfo(props) {
-  const [info, setInfo] = useState(props.info);
-
   function handleChange(e) {
     e.preventDefault();
-    const key = e.target.name;
-    const value= e.target.value;
-    setInfo({...info, [key]:value});
+
+    props.updateInfo(e.target.name, e.target.value);
   }
 
   return (
@@ -31,7 +28,6 @@ export default function GeneralInfo(props) {
               label="Title "
               autoFocus
               size="small"
-              value={info.title}
               InputProps={{
                 readOnly: !props.edit,
               }}
@@ -48,7 +44,6 @@ export default function GeneralInfo(props) {
               id="date"
               InputLabelProps={{shrink: true}}
               size="small"
-              value={info.date}
               InputProps={{
                 readOnly: !props.edit,
               }}
@@ -64,7 +59,6 @@ export default function GeneralInfo(props) {
               name="description"
               autoComplete="descr"
               size="small"
-              value={info.description}
               InputProps={{
                 readOnly: !props.edit,
               }}
@@ -80,7 +74,6 @@ export default function GeneralInfo(props) {
               name="email"
               autoComplete="emai"
               size="small"
-              value={info.email}
               InputProps={{
                 readOnly: !props.edit,
               }}
@@ -96,7 +89,6 @@ export default function GeneralInfo(props) {
               name="phone"
               autoComplete="phon"
               size="small"
-              value={info.phone}
               InputProps={{
                 readOnly: !props.edit,
               }}
@@ -107,12 +99,11 @@ export default function GeneralInfo(props) {
             <TextField
               required
               fullWidth
-              id="bank"
+              id="bank_account"
               label="Cuenta Bancaria"
-              name="bank"
+              name="bank_account"
               autoComplete="bank"
               size="small"
-              value={info.bank}
               InputProps={{
                 readOnly: !props.edit,
               }}

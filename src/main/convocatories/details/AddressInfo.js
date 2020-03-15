@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
@@ -17,19 +17,16 @@ import EditIcon from '@material-ui/icons/Edit';
 import SaveIcon from '@material-ui/icons/Save';
 
 export default function AddressInfo(props) {
-  const [info, setInfo] = useState(props.info);
-
-  const inputLabel = React.useRef(null);
-  const [labelWidth, setLabelWidth] = React.useState(0);
-  React.useEffect(() => {
-    setLabelWidth(inputLabel.current.offsetWidth);
+  const inputLabel = useRef(null);
+  const [labelWidth, setLabelWidth] = useState(0);
+  useEffect(() => {
+    //setLabelWidth(inputLabel.current.offsetWidth);
   }, []);
 
   function handleChange(e) {
     e.preventDefault();
-    const key = e.target.name;
-    const value= e.target.value;
-    setInfo({...info, [key]:value});
+
+    props.updateInfo(e.target.name, e.target.value);
   }
 
   return (
@@ -38,14 +35,13 @@ export default function AddressInfo(props) {
         <Grid container spacing={2}>
           <Grid item xs={4}>
             <TextField
-              name="place"
+              name="name"
               required
               fullWidth
-              id="place"
+              id="name"
               label="Lugar"
               autoFocus
               size="small"
-              value={info.place}
               InputProps={{
                 readOnly: !props.edit,
               }}
@@ -61,7 +57,6 @@ export default function AddressInfo(props) {
               label="Calle"
               autoFocus
               size="small"
-              value={info.street}
               InputProps={{
                 readOnly: !props.edit,
               }}
@@ -76,7 +71,6 @@ export default function AddressInfo(props) {
               label="Número"
               name="number"
               size="small"
-              value={info.number}
               InputProps={{
                 readOnly: !props.edit,
               }}
@@ -91,7 +85,6 @@ export default function AddressInfo(props) {
               label="Colonia"
               name="town"
               size="small"
-              value={info.town}
               InputProps={{
                 readOnly: !props.edit,
               }}
@@ -106,21 +99,19 @@ export default function AddressInfo(props) {
               label="Ciudad"
               id="city"
               size="small"
-              value={info.city}
               InputProps={{
                 readOnly: !props.edit,
               }}
               variant={props.edit ? "standard" : "filled"}
             />
           </Grid>
-          <Grid item xs={4}>
+          {/*<Grid item xs={4}>
             <FormControl size="small" fullWidth className={props.classes.formControl}>
               <InputLabel ref={inputLabel} htmlFor="standard-age-native-simple">
                 Estado
               </InputLabel>
               <Select
                 native
-                value={info.state}
                 labelWidth={labelWidth}
                 disabled={!props.edit}
                 inputProps={{
@@ -174,7 +165,6 @@ export default function AddressInfo(props) {
               label="C.P."
               id="cp"
               size="small"
-              value={info.cp}
               InputProps={{
                 readOnly: !props.edit,
               }}
@@ -189,13 +179,12 @@ export default function AddressInfo(props) {
               label="Número telefónico"
               id="phone"
               size="small"
-              value={info.phone}
               InputProps={{
                 readOnly: !props.edit,
               }}
               variant={props.edit ? "standard" : "filled"}
             />
-          </Grid>
+          </Grid>*/}
 
         </Grid>
       </form>

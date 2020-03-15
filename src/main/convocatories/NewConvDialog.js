@@ -1,26 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
 import {Dialog, DialogTitle, DialogContent, DialogActions, Grid, Typography, Divider, Button} from '@material-ui/core';
 import GeneralInfo from './details/GeneralInfo';
 import AddressInfo from './details/AddressInfo';
+import { apiUrl } from '../apiUrl';
 
-const newGenInfo = {
-  title: '',
+const convUrl = apiUrl + 'convocatories/';
+const placeUrl = apiUrl + 'places/';
+
+const initConvInfo = {
   date: '',
+  title: '',
+  description: '',
   email: '',
   phone: '',
-  bank: ''
+  bank_account: '',
+  //status: '',
 }
 
-const placeInfo = {
-  place: '',
+const initPlaceInfo = {
+  name: '',
   street: '',
-  number: '',
   town: '',
   city: '',
-  state: '',
-  cp: '',
-  phone: ''
+  number: '',
+  //phone: ''
 }
 
 const useStyles = makeStyles(theme => ({
@@ -50,6 +55,39 @@ const useStyles = makeStyles(theme => ({
 export default function NewConvDialog(props) {
   const classes = useStyles();
 
+  const [conv, setConv] = useState(initConvInfo);
+  const [place, setPlace] = useState(initPlaceInfo);
+
+  function handleConvInfoChange(key, value) {
+    console.log(key);
+    console.log(value);
+    setConv({...conv, [key]: value});
+  }
+
+  function handlePlaceInfoChange(key, value) {
+    console.log(key);
+    console.log(value);
+    setPlace({...place, [key]: value});
+  }
+
+  function handleClick() {
+    console.log('se hizo click');
+    console.log(conv);
+    console.log(place);
+    axios.post(convUrl, conv).then(response => {
+      console.log(response);
+      if (response.status === 201) {
+        axios.post(placeUrl, place).then(response => {
+          console.log(response);
+          if (response.status === 201) {
+            props.closeDialog();
+            alert('Convocatoria creada exitosamente.');
+          }
+        });
+      }
+    })
+  }
+
   return (
     <Dialog onClose={props.closeDialog} open={props.open}>
       <DialogTitle align="center">
@@ -61,7 +99,7 @@ export default function NewConvDialog(props) {
             <Typography component="h1" variant="h5">
               Ficha de Convocatoria
             </Typography>
-            <GeneralInfo variant="standard" edit={true} info={newGenInfo} classes={classes}/>
+            <GeneralInfo updateInfo={handleConvInfoChange} variant="standard" edit={true} info={initConvInfo} classes={classes}/>
             <br />
             <Divider />
           </Grid>
@@ -69,7 +107,7 @@ export default function NewConvDialog(props) {
             <Typography component="h1" variant="h5">
               Lugar del Examen
             </Typography>
-            <AddressInfo edit={true} info={placeInfo} classes={classes}/>
+            <AddressInfo updateInfo={handlePlaceInfoChange} edit={true} info={initPlaceInfo} classes={classes}/>
           </Grid>
         </Grid>
       </DialogContent>
@@ -82,6 +120,7 @@ export default function NewConvDialog(props) {
       </Button>
         <Button
           variant="contained"
+          onClick={handleClick}
         >
           Crear
         </Button>
