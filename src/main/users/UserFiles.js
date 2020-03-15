@@ -26,73 +26,72 @@ function createData(name, calories, fat) {
   return { name, calories, fat };
 }
 
-const rows = [
-  createData('CURP', 159, 6.0),
-  createData('RFC', 237, 9.0),
-  createData('Comprobante de domicilio', 262, 16.0),
-  createData('Título Profesional', 305, 3.7),
-  createData('Solicitud', 356, 16.0),
-  createData('Comprobante de pago', 356, 16.0),
-];
+const endpoints = {
+  'CURP': 'curp',
+  'RFC': 'rfc',
+  'Comprobante de domicilio': 'domicilio',
+  'Título Profesional': 'profesional',
+  'Solicitud':'solicitud',
+  'Comprobante de pago': 'pago'
+}
 
 const initFile = {
-  'CURP': {
-    localPath: '',
-  },
-  'RFC': {
-    localPath: '',
-  },
-  'Comprobante de domicilio': {
-    label: 'Comprobante de domicilio',
-    localPath: '',
+  'Comprobante de pago': {
+    endpoint: 'pago'
   },
   'Título Profesional': {
-    label: 'Título Profesional',
-    localPath: '',
+    endpoint: 'profesional'
   },
-  'Solicitud': {
-    label: 'Solicitud',
-    localPath: '',
+  'RFC': {
+    endpoint: 'rfc',
   },
-  'Comprobante de pago': {
-    label: 'Comprobante de pago',
-    localPath: '',
+  'CURP': {
+    endpoint: 'curp',
+  },
+  'Comprobante de domicilio': {
+    endpoint: 'domicilio',
   }
+}
+
+const initSaveDisabled = {
+  'CURP': true,
+  'RFC': true,
+  'Comprobante de domicilio': true,
+  'Título Profesional': true,
+  'Solicitud': true,
+  'Comprobante de pago': true
 }
 
 export default function UserFiles(props) {
   const classes = useStyles();
 
   const [file, setFile] = useState(initFile);
+  const [saveDisabled, setSaveDisabled] = useState(initSaveDisabled);
 
   useEffect(() => {
+    console.log(saveDisabled);
     console.log(file);
-  }, [file]);
+  }, [saveDisabled]);
 
   function handleChange(e) {
-    console.log(e.target.files[0]);
-
-    //console.log({[e.target.name]: {e.target.value}});
     setFile({...file, [e.target.name]: {
       file: e.target.files[0],
-      filename: e.target.value.split('\\')[2],
-      changed: true
+      filename: e.target.value.split('\\')[2]
     }});
+
+    setSaveDisabled({...saveDisabled, [e.target.name]: false});
   }
 
   function handleClick(key) {
-    console.log(key);
-    console.log(file[key].file);
     const formData = new FormData();
     formData.append("file", file[key].file);
 
-
-    console.log(formData);
-    const url = 'http://localhost:4000/api/users/' + props.userId + '/files/curp';
+    const url = 'http://localhost:4000/api/users/' + props.userId + '/files/' + endpoints[key];
     axios.post(url, formData, {headers: {
       'Content-Type': 'application/pdf'
     }}).then(response => {
       console.log(response);
+      setSaveDisabled({...saveDisabled, [key]: true});
     });
   }
 
@@ -104,6 +103,14 @@ export default function UserFiles(props) {
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="simple table">
           <TableBody>
+            <TableRow key={'Solicitud'}>
+              <TableCell component="th" scope="row">
+                <Button>{'Solicitud'}</Button>
+              </TableCell>
+              <TableCell align="right">
+
+              </TableCell>
+            </TableRow>
             {Object.keys(file).map(key => (
               <TableRow key={key}>
                 <TableCell component="th" scope="row">
@@ -126,7 +133,7 @@ export default function UserFiles(props) {
                     </Button>
                     <Button
                       onClick={() => handleClick(key)}
-                      disabled = {file[key].changed ? false : true}
+                      disabled = {saveDisabled[key]}
                     >
                       <SaveIcon />
                     </Button>
