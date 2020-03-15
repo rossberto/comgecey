@@ -45,7 +45,7 @@ export default function Profile(props) {
           </Paper>
           <br />
           <Paper className={classes.paper}>
-            <UserFiles classes={classes}/>
+            <UserFiles userId={props.match.params.userId} classes={classes}/>
           </Paper>
           <br />
           <Paper className={classes.paper}>
