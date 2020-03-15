@@ -3,6 +3,9 @@ import axios from 'axios';
 import {Paper, Grid, TextField, Button, Typography, InputLabel, Select, FormControl, Container, CssBaseline} from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import SaveIcon from '@material-ui/icons/Save';
+import { apiUrl } from '../../apiUrl';
+
+const baseUrl = apiUrl + 'users/';
 
 export default function IdInfo(props) {
   const [editDisabled, setEditDisabled] = useState(false);
@@ -19,7 +22,7 @@ export default function IdInfo(props) {
   }
 
   function handleSave() {
-    const url = 'http://localhost:4000/api/users/' + info.id;
+    const url = baseUrl + info.id;
     axios.put(url, info);
     setEditDisabled(false);
   }

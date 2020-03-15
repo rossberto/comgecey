@@ -14,6 +14,9 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import FileAddIcon from '@material-ui/icons/NoteAdd';
 import SaveIcon from '@material-ui/icons/Save';
+import { apiUrl } from '../apiUrl';
+
+const baseUrl = apiUrl + 'users/';
 
 const useStyles = makeStyles({
   table: {
@@ -62,16 +65,31 @@ const initSaveDisabled = {
   'Comprobante de pago': true
 }
 
+const initFilePath = {
+  'CURP': '',
+  'RFC': '',
+  'Comprobante de domicilio': '',
+  'Título Profesional': '',
+  'Solicitud': '',
+  'Comprobante de pago': ''
+}
+
 export default function UserFiles(props) {
   const classes = useStyles();
 
   const [file, setFile] = useState(initFile);
   const [saveDisabled, setSaveDisabled] = useState(initSaveDisabled);
+  const [filePath, setFilePath] = useState(initFilePath)
 
   useEffect(() => {
-    console.log(saveDisabled);
-    console.log(file);
-  }, [saveDisabled]);
+    Object.keys(initFilePath).forEach(key => {
+      setFilePath(
+        {
+          ...filePath, [key]: baseUrl + props.userId + '/documents/solicitud-' + props.userId + '.pdf'
+        }
+      );
+    });
+  }, []);
 
   function handleChange(e) {
     setFile({...file, [e.target.name]: {
@@ -86,7 +104,7 @@ export default function UserFiles(props) {
     const formData = new FormData();
     formData.append("file", file[key].file);
 
-    const url = 'http://localhost:4000/api/users/' + props.userId + '/files/' + endpoints[key];
+    const url = baseUrl + props.userId + '/files/' + endpoints[key];
     axios.post(url, formData, {headers: {
       'Content-Type': 'application/pdf'
     }}).then(response => {
@@ -105,7 +123,7 @@ export default function UserFiles(props) {
           <TableBody>
             <TableRow key={'Solicitud'}>
               <TableCell component="th" scope="row">
-                <Button>{'Solicitud'}</Button>
+                <Button href={baseUrl + props.userId + '/documents/solicitud-' + props.userId + '.pdf'} className={classes.button} download target="_blank">{'Solicitud'}</Button>
               </TableCell>
               <TableCell align="right">
 
@@ -114,7 +132,7 @@ export default function UserFiles(props) {
             {Object.keys(file).map(key => (
               <TableRow key={key}>
                 <TableCell component="th" scope="row">
-                  <Button>{key}</Button>
+                  <Button href={filePath[key]} className={classes.button} download target="_blank">{key}</Button>
                   <Typography>
                     {file[key].filename}
                   </Typography>

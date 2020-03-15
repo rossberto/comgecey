@@ -5,6 +5,9 @@ import {Paper, Grid, TextField, Button, Typography, InputLabel, FormHelperText,
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import EditIcon from '@material-ui/icons/Edit';
 import SaveIcon from '@material-ui/icons/Save';
+import { apiUrl } from '../../apiUrl';
+
+const baseUrl = apiUrl + 'users/';
 
 const addressInfo = {
   street: '',
@@ -27,7 +30,7 @@ export default function AddressInfo(props) {
   }, []);
 
   useEffect(() => {
-    const url = 'http://localhost:4000/api/users/' + props.userId + '/address';
+    const url = baseUrl + props.userId + '/address';
     axios.get(url).then(response => {
       setInfo(response.data.address);
     });
@@ -38,7 +41,7 @@ export default function AddressInfo(props) {
   }
 
   function handleSave() {
-    const url = 'http://localhost:4000/api/users/' + props.userId + '/address';
+    const url = baseUrl + props.userId + '/address';
     axios.put(url, info);
 
     setEditDisabled(false);

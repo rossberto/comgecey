@@ -3,6 +3,9 @@ import axios from 'axios';
 import {Paper, Grid, TextField, Button, Typography} from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import SaveIcon from '@material-ui/icons/Save';
+import { apiUrl } from '../../apiUrl';
+
+const baseUrl = apiUrl + 'users/';
 
 const professionalInfo = {
   endpoint: '/professional',
@@ -29,7 +32,7 @@ export default function ProfessionalInfo(props) {
   const [info, setInfo] = useState(professionalInfo);
 
   useEffect(() => {
-    const url = 'http://localhost:4000/api/users/' + props.userId + '/professional';
+    const url = baseUrl + props.userId + '/professional';
     axios.get(url).then(response => {
       const professionalData = Object.assign({}, response.data.professional);
 
@@ -47,7 +50,7 @@ export default function ProfessionalInfo(props) {
   }
 
   function handleSave() {
-    const url = 'http://localhost:4000/api/users/' + props.userId + '/professional';
+    const url = baseUrl + props.userId + '/professional';
     axios.put(url, info);
 
     setEditDisabled(false);

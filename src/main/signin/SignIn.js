@@ -13,10 +13,11 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-
 import AppContext from '../../AppContext';
-
 import logo from './comgecey-02.png';
+import { apiUrl } from '../apiUrl';
+
+const baseUrl = apiUrl + 'auth/';
 
 function Copyright() {
   return (
@@ -68,8 +69,7 @@ export default function SignIn() {
   function handleClick(e) {
     e.preventDefault();
 
-    const url = 'http://localhost:4000/api/auth';
-    axios.post(url, {email: inputs.email, password: inputs.password}).then(response => {
+    axios.post(baseUrl, {email: inputs.email, password: inputs.password}).then(response => {
       if (response.status === 201) {
         response.data.user.birthdate = response.data.user.birthdate.slice(0,10);
         setUserSession(response.data.user);
