@@ -90,6 +90,7 @@ export default function SearchBar(props) {
             onChange={handleChange}
           >
             <option value="Todas">Todas</option>
+            <option value="Inactiva">Inactivas</option>
             <option value="Abierta">Abiertas</option>
             <option value="Cerrada">Cerradas</option>
             <option value="Cancelada">Canceladas</option>

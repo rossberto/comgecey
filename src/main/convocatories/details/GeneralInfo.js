@@ -1,13 +1,48 @@
-import React from 'react';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
+import React, { useRef, useState, useEffect } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import { Typography, Button, TextField, Grid, Paper, FormControl, InputLabel, Select } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import SaveIcon from '@material-ui/icons/Save';
 
+const useStyles = makeStyles(theme => ({
+  root: {
+
+    padding: '2px 4px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: "center",
+    marginBottom: "24px"
+    //maxWidth: "500px"
+    //width: "100%"
+  },
+  input: {
+    marginLeft: theme.spacing(1),
+    flex: 1,
+  },
+  iconButton: {
+    padding: 10,
+  },
+  divider: {
+    height: 28,
+    margin: 4,
+  },
+}));
+
 export default function GeneralInfo(props) {
+  const classes = useStyles();
+
+  const [inputs, setInputs] = React.useState({
+    searchText: '',
+    filterOption: 'Todas'
+  });
+
+  const inputLabel = useRef(null);
+  const [labelWidth, setLabelWidth] = useState(0);
+
+  useEffect(() => {
+    setLabelWidth(inputLabel.current.offsetWidth);
+  }, []);
+
   function handleChange(e) {
     e.preventDefault();
 
@@ -18,7 +53,7 @@ export default function GeneralInfo(props) {
     <React.Fragment>
       <form className={props.classes.form} noValidate onChange={handleChange}>
         <Grid container spacing={2}>
-          <Grid item xs={12}>
+          <Grid item xs={6}>
             <TextField
               autoComplete="tit"
               name="title"
@@ -99,6 +134,21 @@ export default function GeneralInfo(props) {
             <TextField
               required
               fullWidth
+              id="bank"
+              label="Banco"
+              name="bank"
+              autoComplete="bank"
+              size="small"
+              InputProps={{
+                readOnly: !props.edit,
+              }}
+              variant={props.edit ? "standard" : "filled"}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              required
+              fullWidth
               id="bank_account"
               label="Cuenta Bancaria"
               name="bank_account"
@@ -109,6 +159,31 @@ export default function GeneralInfo(props) {
               }}
               variant={props.edit ? "standard" : "filled"}
             />
+          </Grid>
+          <Grid item xs={6}>
+            <FormControl
+              size="small"
+              fullWidth
+              className={props.classes.formControl}
+            >
+              <InputLabel ref={inputLabel} htmlFor="outlined-age-native-simple">
+                Estatus
+              </InputLabel>
+              <Select
+                native
+                labelWidth={labelWidth}
+                disabled={!props.edit}
+                inputProps={{
+                  name: 'status',
+                  id: 'status',
+                  readOnly: !props.edit
+                }}
+                variant={props.edit ? "standard" : "filled"}
+              >
+                <option value="Inactiva">Inactiva</option>
+                <option value="Abierta">Abierta</option>
+              </Select>
+            </FormControl>
           </Grid>
         </Grid>
       </form>

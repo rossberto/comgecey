@@ -71,8 +71,8 @@ export default function UsersTable(props) {
             {props.convs.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => {
               return (
                 <TableRow hover role="checkbox" tabIndex={-1} key={index}>
-                  <TableCell key={row.convocatory} align="center">
-                    <Button onClick={handleClick}>{row.convocatory}</Button>
+                  <TableCell key={row.title} align="center">
+                    <Button name={row.id} onClick={handleClick}>{row.title}</Button>
                   </TableCell>
                   <TableCell key={row.status} align="center">
                     <Button onClick={handleClick}>{row.status}</Button>

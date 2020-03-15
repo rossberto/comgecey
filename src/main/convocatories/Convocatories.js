@@ -1,8 +1,12 @@
 import React, {useState, useEffect} from 'react';
+import axios from 'axios';
 import {Grid, Typography} from '@material-ui/core';
 import SearchBar from './SearchBar';
 import ConvocatoriesTable from './ConvocatoriesTable';
 import StopIcon from '@material-ui/icons/Stop';
+import { apiUrl } from '../apiUrl';
+
+const baseUrl = apiUrl + 'convocatories/';
 
 function createData(convocatory, status) {
   return { convocatory, status };
@@ -18,8 +22,15 @@ const rows = [
 
 export default function Convocatories(props) {
   const [filter, setFilter] = useState({searchText:'', filterOption:'Todas'});
-  const [convocatories, setConvocatories] = useState(rows);
+  const [convocatories, setConvocatories] = useState([]);
   //const [searchText, setSearchText] = useState('');
+
+  useEffect(() => {
+    axios.get(baseUrl).then(response => {
+      console.log(response.data.convocatories);
+      setConvocatories(response.data.convocatories);
+    });
+  }, []);
 
   useEffect(() => {
     if (filter.filterOption !== 'Todas') {

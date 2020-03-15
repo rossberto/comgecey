@@ -105,7 +105,7 @@ export default function AddressInfo(props) {
               variant={props.edit ? "standard" : "filled"}
             />
           </Grid>
-          {/*<Grid item xs={4}>
+          <Grid item xs={4}>
             <FormControl size="small" fullWidth className={props.classes.formControl}>
               <InputLabel ref={inputLabel} htmlFor="standard-age-native-simple">
                 Estado
@@ -121,7 +121,7 @@ export default function AddressInfo(props) {
                 }}
                 variant={props.edit ? "standard" : "filled"}
               >
-                <option value="no">Seleccione uno...</option>
+                <option value="no">Seleccionar...</option>
                 <option value="Aguascalientes">Aguascalientes</option>
                 <option value="Baja California">Baja California</option>
                 <option value="Baja California Sur">Baja California Sur</option>
@@ -161,9 +161,9 @@ export default function AddressInfo(props) {
             <TextField
               required
               fullWidth
-              name="cp"
+              name="zip_code"
               label="C.P."
-              id="cp"
+              id="zip_code"
               size="small"
               InputProps={{
                 readOnly: !props.edit,
@@ -171,7 +171,7 @@ export default function AddressInfo(props) {
               variant={props.edit ? "standard" : "filled"}
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={8}>
             <TextField
               required
               fullWidth
@@ -184,7 +184,7 @@ export default function AddressInfo(props) {
               }}
               variant={props.edit ? "standard" : "filled"}
             />
-          </Grid>*/}
+          </Grid>
 
         </Grid>
       </form>
