@@ -10,6 +10,7 @@ import { apiUrl } from '../apiUrl';
 
 const convsUrl = apiUrl + 'convocatories/';
 const placesUrl = apiUrl + 'places/';
+const convPlaceUrl = apiUrl + 'conv_has_place/';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -50,15 +51,23 @@ export default function Convocatory(props) {
   const classes = useStyles();
 
   const [conv, setConv] = useState({});
-  const [edit, setEdit] = useState({
-    GenInfo: false,
-    AddressInfo: false
-  });
+  const [place, setPlace] = useState({});
+  const [edit, setEdit] = useState({ GenInfo: false, AddressInfo: false });
 
   useEffect(() => {
     axios.get(convsUrl + props.match.params.convocatoryId).then(response => {
       response.data.convocatory.date = response.data.convocatory.date.slice(0,10);
-      setConv(response.data.convocatory)
+      setConv(response.data.convocatory);
+
+      axios.get(convPlaceUrl + props.match.params.convocatoryId).then(response => {
+        if (response.status === 200) {
+          axios.get(placesUrl + response.data.convocatory_has_place.Places_id).then(response => {
+            if (response.status === 200) {
+              setPlace(response.data.place);
+            }
+          });
+        }
+      });
     });
   }, [props.match.params]);
 
@@ -70,11 +79,20 @@ export default function Convocatory(props) {
     setConv({...conv, [key]: value});
   }
 
+  function handlePlaceInfo(key, value) {
+    setPlace({...place, [key]: value});
+  }
+
   function handleSave(name) {
     console.log(name);
     switch (name) {
       case 'GenInfo':
         axios.put(convsUrl + props.match.params.convocatoryId, conv).then(response => {
+          console.log(response);
+        });
+        break;
+      case 'AddressInfo':
+        axios.put(placesUrl + place.id, place).then(response => {
           console.log(response);
         });
         break;
@@ -110,7 +128,7 @@ export default function Convocatory(props) {
               handleSave={handleSave}
               edit={edit.AddressInfo}
             />
-            <AddressInfo info={placeInfo} classes={classes} edit={edit.AddressInfo}/>
+            <AddressInfo info={place} updateInfo={handlePlaceInfo} classes={classes} edit={edit.AddressInfo}/>
           </Paper>
         </Grid>
         <Grid item xs={12} sm={6}>

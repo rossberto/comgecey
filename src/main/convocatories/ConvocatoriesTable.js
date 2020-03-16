@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import {Paper, Table, TableBody, TableCell, TableContainer, TableHead,
-        TablePagination, TableRow, Button} from '@material-ui/core';
+import { Paper, Table, TableBody, TableCell, TableContainer, TableHead,
+         TablePagination, TableRow, Button, Typography } from '@material-ui/core';
 import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
 import StopIcon from '@material-ui/icons/Stop';
 
@@ -76,7 +76,7 @@ export default function UsersTable(props) {
                     <Button name={row.id} onClick={() => handleClick(row.id)}>{row.title}</Button>
                   </TableCell>
                   <TableCell key={row.status} align="center">
-                    <Button onClick={handleClick}>{row.status}</Button>
+                    <Typography variant="button" display="block" gutterBottom>{row.status}</Typography>
                   </TableCell>
                   <TableCell key="icon" align="center">
                     <Button onClick={handleClick}><StopIcon /></Button>

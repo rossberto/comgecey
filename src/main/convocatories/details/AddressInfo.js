@@ -35,6 +35,7 @@ export default function AddressInfo(props) {
         <Grid container spacing={2}>
           <Grid item xs={4}>
             <TextField
+              value={props.info.name}
               name="name"
               required
               fullWidth
@@ -50,6 +51,7 @@ export default function AddressInfo(props) {
           </Grid>
           <Grid item xs={4}>
             <TextField
+              value={props.info.street}
               name="street"
               required
               fullWidth
@@ -65,6 +67,7 @@ export default function AddressInfo(props) {
           </Grid>
           <Grid item xs={4} >
             <TextField
+              value={props.info.number}
               required
               fullWidth
               id="number"
@@ -79,6 +82,7 @@ export default function AddressInfo(props) {
           </Grid>
           <Grid item xs={4}>
             <TextField
+              value={props.info.town}
               required
               fullWidth
               id="town"
@@ -93,6 +97,7 @@ export default function AddressInfo(props) {
           </Grid>
           <Grid item xs={4}>
             <TextField
+              value={props.info.city}
               required
               fullWidth
               name="city"
@@ -111,6 +116,7 @@ export default function AddressInfo(props) {
                 Estado
               </InputLabel>
               <Select
+                value={props.info.state}
                 native
                 labelWidth={labelWidth}
                 disabled={!props.edit}
@@ -159,6 +165,7 @@ export default function AddressInfo(props) {
           </Grid>
           <Grid item xs={4}>
             <TextField
+              value={props.info.zip_code}
               required
               fullWidth
               name="zip_code"
@@ -173,6 +180,7 @@ export default function AddressInfo(props) {
           </Grid>
           <Grid item xs={8}>
             <TextField
+              value={props.info.phone}
               required
               fullWidth
               name="phone"

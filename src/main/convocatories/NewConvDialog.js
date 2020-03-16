@@ -8,6 +8,7 @@ import { apiUrl } from '../apiUrl';
 
 const convUrl = apiUrl + 'convocatories/';
 const placeUrl = apiUrl + 'places/';
+const convPlaceUrl = apiUrl + 'conv_has_place/';
 
 /*
 const initConvInfo = {
@@ -74,12 +75,21 @@ export default function NewConvDialog(props) {
   }
 
   function handleClick() {
+    const convPlace = {}
     axios.post(convUrl, conv).then(response => {
       if (response.status === 201) {
+        convPlace.Convocatories_id = response.data.convocatory.id;
+
         axios.post(placeUrl, place).then(response => {
           if (response.status === 201) {
-            props.closeDialog();
-            alert('Convocatoria creada exitosamente.');
+            convPlace.Places_id = response.data.place.id;
+
+            axios.post(convPlaceUrl, convPlace).then(response => {
+              if (response.status === 201) {
+                props.closeDialog();
+                alert('Convocatoria creada exitosamente.');
+              }
+            });
           }
         });
       }
