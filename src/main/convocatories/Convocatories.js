@@ -15,24 +15,30 @@ function createData(convocatory, status) {
 export default function Convocatories(props) {
   const [filter, setFilter] = useState({searchText:'', filterOption:'Todas'});
   const [convocatories, setConvocatories] = useState([]);
+  const [filtered, setFiltered] = useState([]);
   //const [searchText, setSearchText] = useState('');
 
   useEffect(() => {
     axios.get(baseUrl).then(response => {
-      console.log(response.data.convocatories);
       setConvocatories(response.data.convocatories);
+      setFiltered(response.data.convocatories);
     });
   }, []);
 
   useEffect(() => {
     console.log(convocatories);
     if (filter.filterOption !== 'Todas') {
-      const filtered = convocatories.filter(row => row.status===filter.filterOption &&
-                                   row.convocatory.toLowerCase().includes(filter.searchText.toLowerCase()));
-      setConvocatories(filtered);
+      //const filtered = convocatories.filter(row => row.status===filter.filterOption &&
+      //                             row.convocatory.toLowerCase().includes(filter.searchText.toLowerCase()))
+      setFiltered(
+        convocatories.filter(row => row.status===filter.filterOption &&
+                                     row.title.toLowerCase().includes(filter.searchText.toLowerCase()))
+      );
     } else {
-      const filtered = convocatories.filter(row => row.convocatory.toLowerCase().includes(filter.searchText.toLowerCase()));
-      setConvocatories(filtered);
+      //const filtered = convocatories.filter(row => row.convocatory.toLowerCase().includes(filter.searchText.toLowerCase()));
+      setFiltered(
+        convocatories.filter(row => row.title.toLowerCase().includes(filter.searchText.toLowerCase()))
+      );
     }
   }, [filter]);
 
@@ -49,7 +55,7 @@ export default function Convocatories(props) {
         <SearchBar updateFilter={handleUpdateFilter} />
       </Grid>
       <Grid item xs={12} >
-        <ConvocatoriesTable convs={convocatories} />
+        <ConvocatoriesTable convs={filtered} />
       </Grid>
     </Grid>
   );
