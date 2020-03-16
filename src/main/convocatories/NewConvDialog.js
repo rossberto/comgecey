@@ -9,14 +9,16 @@ import { apiUrl } from '../apiUrl';
 const convUrl = apiUrl + 'convocatories/';
 const placeUrl = apiUrl + 'places/';
 
+/*
 const initConvInfo = {
   date: '',
   title: '',
   description: '',
   email: '',
   phone: '',
+  bank: '',
   bank_account: '',
-  //status: '',
+  status: '',
 }
 
 const initPlaceInfo = {
@@ -25,8 +27,9 @@ const initPlaceInfo = {
   town: '',
   city: '',
   number: '',
-  //phone: ''
+  phone: ''
 }
+*/
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -55,8 +58,8 @@ const useStyles = makeStyles(theme => ({
 export default function NewConvDialog(props) {
   const classes = useStyles();
 
-  const [conv, setConv] = useState(initConvInfo);
-  const [place, setPlace] = useState(initPlaceInfo);
+  const [conv, setConv] = useState({});
+  const [place, setPlace] = useState({});
 
   function handleConvInfoChange(key, value) {
     console.log(key);
@@ -71,14 +74,9 @@ export default function NewConvDialog(props) {
   }
 
   function handleClick() {
-    console.log('se hizo click');
-    console.log(conv);
-    console.log(place);
     axios.post(convUrl, conv).then(response => {
-      console.log(response);
       if (response.status === 201) {
         axios.post(placeUrl, place).then(response => {
-          console.log(response);
           if (response.status === 201) {
             props.closeDialog();
             alert('Convocatoria creada exitosamente.');
@@ -99,7 +97,7 @@ export default function NewConvDialog(props) {
             <Typography component="h1" variant="h5">
               Ficha de Convocatoria
             </Typography>
-            <GeneralInfo updateInfo={handleConvInfoChange} variant="standard" edit={true} info={initConvInfo} classes={classes}/>
+            <GeneralInfo info={conv} updateInfo={handleConvInfoChange} variant="standard" edit={true} classes={classes}/>
             <br />
             <Divider />
           </Grid>
@@ -107,7 +105,7 @@ export default function NewConvDialog(props) {
             <Typography component="h1" variant="h5">
               Lugar del Examen
             </Typography>
-            <AddressInfo updateInfo={handlePlaceInfoChange} edit={true} info={initPlaceInfo} classes={classes}/>
+            <AddressInfo info={place} updateInfo={handlePlaceInfoChange} edit={true} classes={classes}/>
           </Grid>
         </Grid>
       </DialogContent>

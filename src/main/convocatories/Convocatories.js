@@ -12,14 +12,6 @@ function createData(convocatory, status) {
   return { convocatory, status };
 }
 
-const rows = [
-  createData('2020-1', 'Abierta'),
-  createData('2019-3', 'Cerrada'),
-  createData('2019-2b', 'Cerrada'),
-  createData('2019-1', 'Cerrada'),
-  createData('2019-2a', 'Cancelada'),
-];
-
 export default function Convocatories(props) {
   const [filter, setFilter] = useState({searchText:'', filterOption:'Todas'});
   const [convocatories, setConvocatories] = useState([]);
@@ -33,12 +25,13 @@ export default function Convocatories(props) {
   }, []);
 
   useEffect(() => {
+    console.log(convocatories);
     if (filter.filterOption !== 'Todas') {
-      const filtered = rows.filter(row => row.status===filter.filterOption &&
+      const filtered = convocatories.filter(row => row.status===filter.filterOption &&
                                    row.convocatory.toLowerCase().includes(filter.searchText.toLowerCase()));
       setConvocatories(filtered);
     } else {
-      const filtered = rows.filter(row => row.convocatory.toLowerCase().includes(filter.searchText.toLowerCase()));
+      const filtered = convocatories.filter(row => row.convocatory.toLowerCase().includes(filter.searchText.toLowerCase()));
       setConvocatories(filtered);
     }
   }, [filter]);

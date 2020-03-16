@@ -31,11 +31,6 @@ const useStyles = makeStyles(theme => ({
 export default function GeneralInfo(props) {
   const classes = useStyles();
 
-  const [inputs, setInputs] = React.useState({
-    searchText: '',
-    filterOption: 'Todas'
-  });
-
   const inputLabel = useRef(null);
   const [labelWidth, setLabelWidth] = useState(0);
 
@@ -55,6 +50,7 @@ export default function GeneralInfo(props) {
         <Grid container spacing={2}>
           <Grid item xs={6}>
             <TextField
+              value={props.info.title}
               autoComplete="tit"
               name="title"
               required
@@ -71,6 +67,7 @@ export default function GeneralInfo(props) {
           </Grid>
           <Grid item xs={6}>
             <TextField
+              value={props.info.date}
               required
               fullWidth
               name="date"
@@ -87,6 +84,7 @@ export default function GeneralInfo(props) {
           </Grid>
           <Grid item xs={6}>
             <TextField
+              value={props.info.description}
               required
               fullWidth
               id="description"
@@ -102,6 +100,7 @@ export default function GeneralInfo(props) {
           </Grid>
           <Grid item xs={6}>
             <TextField
+              value={props.info.email}
               required
               fullWidth
               id="email"
@@ -117,6 +116,7 @@ export default function GeneralInfo(props) {
           </Grid>
           <Grid item xs={6}>
             <TextField
+              value={props.info.phone}
               required
               fullWidth
               id="phone"
@@ -132,6 +132,7 @@ export default function GeneralInfo(props) {
           </Grid>
           <Grid item xs={6}>
             <TextField
+              value={props.info.bank}
               required
               fullWidth
               id="bank"
@@ -147,6 +148,7 @@ export default function GeneralInfo(props) {
           </Grid>
           <Grid item xs={6}>
             <TextField
+              value={props.info.bank_account}
               required
               fullWidth
               id="bank_account"
@@ -170,6 +172,7 @@ export default function GeneralInfo(props) {
                 Estatus
               </InputLabel>
               <Select
+                value={props.info.status}
                 native
                 labelWidth={labelWidth}
                 disabled={!props.edit}
@@ -180,6 +183,7 @@ export default function GeneralInfo(props) {
                 }}
                 variant={props.edit ? "standard" : "filled"}
               >
+                <option value="Seleccionar">Seleccionar...</option>
                 <option value="Inactiva">Inactiva</option>
                 <option value="Abierta">Abierta</option>
               </Select>

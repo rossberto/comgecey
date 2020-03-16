@@ -1,10 +1,16 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
 import {Paper, Grid, TextField, Button, Typography} from '@material-ui/core';
 import GeneralInfo from './details/GeneralInfo';
 import AddressInfo from './details/AddressInfo';
 import Suscribers from './details/Suscribers';
 import EditDetails from './details/EditDetails';
+import { apiUrl } from '../apiUrl';
+
+const convsUrl = apiUrl + 'convocatories/';
+const placesUrl = apiUrl + 'places/';
+
 const useStyles = makeStyles(theme => ({
   root: {
     //flexGrow: 1,
@@ -40,20 +46,41 @@ const placeInfo = {
   phone: '9999876532'
 }
 
-export default function Convocatory() {
+export default function Convocatory(props) {
   const classes = useStyles();
 
+  const [conv, setConv] = useState({});
   const [edit, setEdit] = useState({
     GenInfo: false,
     AddressInfo: false
   });
 
+  useEffect(() => {
+    axios.get(convsUrl + props.match.params.convocatoryId).then(response => {
+      response.data.convocatory.date = response.data.convocatory.date.slice(0,10);
+      setConv(response.data.convocatory)
+    });
+  }, [props.match.params]);
+
   function handleEditEnable(name) {
     setEdit({...edit, [name]:true});
   }
 
+  function handleConvInfo(key, value) {
+    setConv({...conv, [key]: value});
+  }
+
   function handleSave(name) {
     console.log(name);
+    switch (name) {
+      case 'GenInfo':
+        axios.put(convsUrl + props.match.params.convocatoryId, conv).then(response => {
+          console.log(response);
+        });
+        break;
+      default:
+
+    }
     setEdit({...edit, [name]:false});
   }
 
@@ -72,7 +99,7 @@ export default function Convocatory() {
               handleSave={handleSave}
               edit={edit.GenInfo}
             />
-            <GeneralInfo info={genInfo} classes={classes} edit={edit.GenInfo}/>
+            <GeneralInfo info={conv} updateInfo={handleConvInfo} classes={classes} edit={edit.GenInfo}/>
           </Paper>
           <br />
           <Paper className={classes.paper}>

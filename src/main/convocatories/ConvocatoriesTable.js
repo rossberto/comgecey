@@ -46,8 +46,9 @@ export default function UsersTable(props) {
     setPage(0);
   };
 
-  function handleClick() {
-    nav('/convocatories/1')
+  function handleClick(id) {
+    console.log(id);
+    nav('/convocatories/' + id);
   }
 
   return (
@@ -72,7 +73,7 @@ export default function UsersTable(props) {
               return (
                 <TableRow hover role="checkbox" tabIndex={-1} key={index}>
                   <TableCell key={row.title} align="center">
-                    <Button name={row.id} onClick={handleClick}>{row.title}</Button>
+                    <Button name={row.id} onClick={() => handleClick(row.id)}>{row.title}</Button>
                   </TableCell>
                   <TableCell key={row.status} align="center">
                     <Button onClick={handleClick}>{row.status}</Button>
