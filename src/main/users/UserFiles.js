@@ -34,25 +34,24 @@ const endpoints = {
   'RFC': 'rfc',
   'Comprobante de domicilio': 'domicilio',
   'Título Profesional': 'profesional',
-  'Solicitud':'solicitud',
   'Comprobante de pago': 'pago'
 }
 
 const initFile = {
-  'Comprobante de pago': {
-    endpoint: 'pago'
-  },
-  'Título Profesional': {
-    endpoint: 'profesional'
+  'CURP': {
+    endpoint: 'curp',
   },
   'RFC': {
     endpoint: 'rfc',
   },
-  'CURP': {
-    endpoint: 'curp',
-  },
   'Comprobante de domicilio': {
     endpoint: 'domicilio',
+  },
+  'Título Profesional': {
+    endpoint: 'profesional'
+  },
+  'Comprobante de pago': {
+    endpoint: 'pago'
   }
 }
 
@@ -61,7 +60,6 @@ const initSaveDisabled = {
   'RFC': true,
   'Comprobante de domicilio': true,
   'Título Profesional': true,
-  'Solicitud': true,
   'Comprobante de pago': true
 }
 
@@ -70,7 +68,6 @@ const initFilePath = {
   'RFC': '',
   'Comprobante de domicilio': '',
   'Título Profesional': '',
-  'Solicitud': '',
   'Comprobante de pago': ''
 }
 
@@ -79,15 +76,41 @@ export default function UserFiles(props) {
 
   const [file, setFile] = useState(initFile);
   const [saveDisabled, setSaveDisabled] = useState(initSaveDisabled);
-  const [filePath, setFilePath] = useState(initFilePath)
+  const [filePath, setFilePath] = useState({})
+
 
   useEffect(() => {
-    Object.keys(initFilePath).forEach(key => {
-      setFilePath(
-        {
-          ...filePath, [key]: baseUrl + props.userId + '/documents/solicitud-' + props.userId + '.pdf'
-        }
+    console.log(filePath);
+  }, [filePath]);
+
+  useEffect(() => {
+    async function checkFiles(base, end) {
+      const responses = await Promise.all(
+        Object.keys(initFilePath).map(key => {
+          const url = base + `${endpoints[key]}/${endpoints[key]}-` + end;
+          return axios.head(url).catch(err => {return err});
+        })
       );
+
+      return responses;
+    }
+
+    const headUrl = baseUrl + props.userId + '/files/';
+    const tailUrl = props.userId + '.pdf';
+    checkFiles(headUrl, tailUrl).then(response => {
+      const paths = {}
+      response.forEach(res => {
+        //console.log(res);
+        if (res.statusText === 'OK') {
+          Object.keys(endpoints).forEach(key => {
+            if (res.config.url.includes(endpoints[key])) {
+              paths[key] = res.config.url;
+            }
+          });
+        }
+      });
+
+      setFilePath(paths);
     });
   }, []);
 
@@ -108,8 +131,13 @@ export default function UserFiles(props) {
     axios.post(url, formData, {headers: {
       'Content-Type': 'application/pdf'
     }}).then(response => {
-      console.log(response);
-      setSaveDisabled({...saveDisabled, [key]: true});
+      const url = baseUrl + props.userId + '/files/' +
+                  `${endpoints[key]}/${endpoints[key]}-` +
+                  props.userId + '.pdf';
+      axios.head(url).then(res => {
+        setFilePath({...filePath, [key]: res.config.url});
+        setSaveDisabled({...saveDisabled, [key]: true});
+      });
     });
   }
 
