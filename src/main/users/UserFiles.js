@@ -10,7 +10,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import DeleteIcon from '@material-ui/icons/Delete';
+import RefreshIcon from '@material-ui/icons/Refresh';
 import EditIcon from '@material-ui/icons/Edit';
 import FileAddIcon from '@material-ui/icons/NoteAdd';
 import SaveIcon from '@material-ui/icons/Save';
@@ -63,30 +63,17 @@ const initSaveDisabled = {
   'Comprobante de pago': true
 }
 
-const initFilePath = {
-  'CURP': '',
-  'RFC': '',
-  'Comprobante de domicilio': '',
-  'Título Profesional': '',
-  'Comprobante de pago': ''
-}
-
 export default function UserFiles(props) {
   const classes = useStyles();
 
   const [file, setFile] = useState(initFile);
   const [saveDisabled, setSaveDisabled] = useState(initSaveDisabled);
-  const [filePath, setFilePath] = useState({})
-
-
-  useEffect(() => {
-    console.log(filePath);
-  }, [filePath]);
+  const [filePath, setFilePath] = useState({});
 
   useEffect(() => {
     async function checkFiles(base, end) {
       const responses = await Promise.all(
-        Object.keys(initFilePath).map(key => {
+        Object.keys(endpoints).map(key => {
           const url = base + `${endpoints[key]}/${endpoints[key]}-` + end;
           return axios.head(url).catch(err => {return err});
         })
@@ -99,16 +86,23 @@ export default function UserFiles(props) {
     const tailUrl = props.userId + '.pdf';
     checkFiles(headUrl, tailUrl).then(response => {
       const paths = {}
+      let alertForDocuments = false;
       response.forEach(res => {
-        //console.log(res);
         if (res.statusText === 'OK') {
           Object.keys(endpoints).forEach(key => {
             if (res.config.url.includes(endpoints[key])) {
               paths[key] = res.config.url;
             }
           });
+        } else {
+          alertForDocuments = true;
         }
       });
+
+      if (alertForDocuments === true) {
+        alert('Falta documentación, por favor, ingrésala para que puedas inscribirte. \n\n' +
+              'Sólo se aceptan archivos en formato PDF.')
+      }
 
       setFilePath(paths);
     });
@@ -141,6 +135,22 @@ export default function UserFiles(props) {
     });
   }
 
+  function handleFormRefresh() {
+    const confirms = window.confirm(
+      '¿Está seguro que quiere actualizar los datos de su solicitud?\n\n' +
+      'Aunque no haya hecho cambios, considere que la solicitud se actualizará ' +
+      'con la fecha actual');
+
+    if (confirms) {
+      axios.post(baseUrl + props.userId + '/form').then(response => {
+        if (response.statusText === 'Created') {
+          alert('Solicitud actualizada.')
+        }
+      })
+
+    }
+  }
+
   return (
     <React.Fragment>
       <Typography component="h1" variant="h5">
@@ -154,22 +164,26 @@ export default function UserFiles(props) {
                 <Button href={baseUrl + props.userId + '/documents/solicitud-' + props.userId + '.pdf'} className={classes.button} download target="_blank">{'Solicitud'}</Button>
               </TableCell>
               <TableCell align="right">
-
+                <Button
+                  onClick={handleFormRefresh}
+                >
+                  <RefreshIcon />
+                </Button>
               </TableCell>
             </TableRow>
             {Object.keys(file).map(key => (
               <TableRow key={key}>
                 <TableCell component="th" scope="row">
-                  <Button href={filePath[key]} className={classes.button} download target="_blank">{key}</Button>
+                  <Button disabled={filePath[key] ? false : true} href={filePath[key]} className={classes.button} download target="_blank">{key}</Button>
                   <Typography>
-                    {file[key].filename}
+                    {saveDisabled[key] ? '' : file[key].filename}
                   </Typography>
                 </TableCell>
                 <TableCell align="right">
                     <Button
                       component="label"
                     >
-                      {file[key].filename ? <EditIcon /> : <FileAddIcon />}
+                      {filePath[key] ? <EditIcon /> : <FileAddIcon />}
                       <input
                         type="file"
                         name={key}
