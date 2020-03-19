@@ -1,21 +1,13 @@
 import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
+import { Container, Typography, Box, Grid, Link, Checkbox, FormControlLabel,
+         TextField, CssBaseline, Button, Avatar } from '@material-ui/core';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import AppContext from '../../AppContext';
 import logo from './comgecey-02.png';
 import { apiUrl } from '../apiUrl';
+import { useCookies } from 'react-cookie';
 
 const baseUrl = apiUrl + 'auth/';
 
@@ -56,9 +48,16 @@ export default function SignIn() {
   const classes = useStyles();
 
   const appContext = useContext(AppContext);
-  const { auth, goDashboard, routes, userSession, setUserSession } = appContext;
+  const { auth, goDashboard, routes, setUserSession } = appContext;
+  const [inputs, setInputs] = useState({email: 'dev@rross.me', password: '1234'});
 
-  const [inputs, setInputs] = useState({email: 'rossberto@gmail.com', password: '1234'});
+  const [cookies, setCookie] = useCookies(['userId']);
+
+  useEffect(() => {
+    if (cookies.userId) {
+      goDashboard(true, cookies.userId);
+    }
+  }, [cookies.userId]);
 
   function handleChange(e) {
     e.preventDefault();
@@ -71,9 +70,11 @@ export default function SignIn() {
 
     axios.post(baseUrl, {email: inputs.email, password: inputs.password}).then(response => {
       if (response.status === 201) {
+        setCookie('userId', response.data.user.id, {
+          maxAge: 3600
+        });
         response.data.user.birthdate = response.data.user.birthdate.slice(0,10);
         setUserSession(response.data.user);
-        goDashboard(true, response.data.user.id);
       } else {
         alert('Usuario y/o contraseña incorrectos');
       }

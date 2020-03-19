@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Paper, Grid, TextField, Button, Typography,
           AppBar, Tabs, Tab, Box } from '@material-ui/core';
@@ -7,9 +7,8 @@ import UserFiles from './UserFiles';
 import ProfessionalInfo from './details/ProfessionalInfo';
 import AddressInfo from './details/AddressInfo';
 import AppContext from '../../AppContext';
-
 import PropTypes from 'prop-types';
-
+import { withCookies } from 'react-cookie';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -48,16 +47,12 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function SimpleTabs(props) {
+function SimpleTabs(props) {
   const classes = useStyles();
   const appContext = useContext(AppContext);
 
   const { auth, goDashboard, routes, userSession, setUserSession } = appContext;
   const [value, setValue] = React.useState(0);
-
-  useEffect(() => {
-    console.log(userSession);
-  });
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -102,3 +97,5 @@ export default function SimpleTabs(props) {
     </div>
   );
 }
+
+export default withCookies(SimpleTabs);

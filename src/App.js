@@ -1,20 +1,16 @@
 import React, { useState, useContext, useEffect } from 'react';
+import { Router } from 'react-router-dom';
+import {renderRoutes} from 'react-router-config';
+import { CookiesProvider } from 'react-cookie';
 import AppContext from './AppContext';
 import routes from './configs/routesConfig';
-import {Router} from 'react-router-dom';
-import {renderRoutes} from 'react-router-config'
-import Pages from './main/pages/Pages';
-
-import { makeStyles } from '@material-ui/core/styles';
-import { ThemeProvider } from '@material-ui/styles';
-import { createMuiTheme } from '@material-ui/core/styles';
-
-import Layout from './main/layout/Layout';
+import { makeStyles, ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-
+import Pages from './main/pages/Pages';
+import Layout from './main/layout/Layout';
 import Blog from './main/blog/Blog';
-
 import history from './main/history';
+import Auth from './auth/Auth';
 
 const theme = createMuiTheme({
   palette: {
@@ -40,18 +36,8 @@ const theme = createMuiTheme({
   },
 });
 
-function StartPage() {
-  const appContext = useContext(AppContext);
-
-  return (
-    <React.Fragment>
-      {appContext.auth && <Layout />}
-      {!appContext.auth && <Pages />}
-    </React.Fragment>
-  );
-}
-
 function App() {
+  const appContext = useContext(AppContext);
   const [auth, setAuth] = useState(false);
   const [userSession, setUserSession] = useState({});
 
@@ -73,34 +59,15 @@ function App() {
         setUserSession
       }}
     >
-      <ThemeProvider theme={theme}>
-        <Router history={history}>
-          {/*<Blog />*/}
-          {<StartPage />}
-        </Router>
-      </ThemeProvider>
 
-      {/*
-        <AppContext.Provider
-             value={{
-                 routes
-             }}
-         >
-             <StylesProvider jss={jss} generateClassName={generateClassName}>
-                 <Provider store={store}>
-                     <Auth>
-                         <Router history={history}>
-                             <FuseAuthorization>
-                                 <FuseTheme>
-                                     <FuseLayout/>
-                                 </FuseTheme>
-                             </FuseAuthorization>
-                         </Router>
-                     </Auth>
-                 </Provider>
-             </StylesProvider>
-         </AppContext.Provider>
-      */}
+        <ThemeProvider theme={theme}>
+            <Router history={history}>
+              <Auth history={history}>
+                <Layout />
+              </Auth>
+            </Router>
+        </ThemeProvider>
+
     </AppContext.Provider>
   );
 }

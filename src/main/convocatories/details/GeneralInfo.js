@@ -46,7 +46,7 @@ export default function GeneralInfo(props) {
 
   return (
     <React.Fragment>
-      <form className={props.classes.form} noValidate onChange={handleChange}>
+      <form className={props.classes.form} noValidate onChange={handleChange} onSubmit={e => e.preventDefault()}>
         <Grid container spacing={2}>
           <Grid item xs={6}>
             <TextField

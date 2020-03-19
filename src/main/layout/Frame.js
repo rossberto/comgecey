@@ -9,6 +9,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import AppContext from '../../AppContext';
 
 import nav from '../nav';
+import { withCookies, useCookies } from 'react-cookie';
 
 const drawerWidth = 200;
 
@@ -63,6 +64,7 @@ function Frame(props) {
   const {auth, goDashboard, userSession } = appContext;
 
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [cookies, setCookie, removeCookie] = useCookies();
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -100,6 +102,7 @@ function Frame(props) {
   }
 
   function handleSignOut() {
+    removeCookie('userId');
     goDashboard(false);
   }
 
@@ -204,4 +207,4 @@ Frame.propTypes = {
   container: PropTypes.instanceOf(typeof Element === 'undefined' ? Object : Element),
 };
 
-export default Frame;
+export default withCookies(Frame);
