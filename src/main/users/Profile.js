@@ -1,45 +1,83 @@
 import React, { useContext, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import {Paper, Grid, TextField, Button, Typography} from '@material-ui/core';
+import { Paper, Grid, TextField, Button, Typography,
+          AppBar, Tabs, Tab, Box } from '@material-ui/core';
 import IdInfo from './details/IdInfo';
 import UserFiles from './UserFiles';
 import ProfessionalInfo from './details/ProfessionalInfo';
 import AddressInfo from './details/AddressInfo';
-
 import AppContext from '../../AppContext';
+
+import PropTypes from 'prop-types';
+
+
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <Typography
+      component="div"
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && <Box p={3}>{children}</Box>}
+    </Typography>
+  );
+}
+
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.any.isRequired,
+  value: PropTypes.any.isRequired,
+};
+
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`,
+  };
+}
 
 const useStyles = makeStyles(theme => ({
   root: {
-    //flexGrow: 1,
+    flexGrow: 1,
+    backgroundColor: theme.palette.background.paper,
   },
-  paper: {
-    padding: theme.spacing(2),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-  },
-  form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(3),
-  }
 }));
 
-export default function Profile(props) {
+export default function SimpleTabs(props) {
   const classes = useStyles();
-
   const appContext = useContext(AppContext);
+
   const { auth, goDashboard, routes, userSession, setUserSession } = appContext;
+  const [value, setValue] = React.useState(0);
 
   useEffect(() => {
-    window.scrollTo(0, 0)
+    console.log(userSession);
   });
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
   return (
     <div className={classes.root}>
-      <Grid container spacing={3}>
-        <Grid item xs={12}>
-          <Typography align="center" variant="h2" component="h2" gutterBottom style={{alignItems:'center'}}>Perfil de Médico</Typography>
-        </Grid>
-        <Grid item xs={12} sm={6}>
+    <Grid direction="column" container spacing={3} alignItems="stretch">
+      <Grid item xs={12}>
+        <Typography align="center" variant="h2" component="h2" gutterBottom style={{alignItems:'center'}}>Perfil de Médico</Typography>
+      </Grid>
+      <Grid item xs={12} >
+        <AppBar position="static">
+          <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
+            <Tab label="Documentos" {...a11yProps(0)} />
+            <Tab label="Domicilios" {...a11yProps(1)} />
+            <Tab label="Profesional" {...a11yProps(2)} />
+          </Tabs>
+        </AppBar>
+        <TabPanel value={value} index={0}>
           <Paper className={classes.paper}>
             <IdInfo info={userSession} classes={classes}/>
           </Paper>
@@ -47,17 +85,20 @@ export default function Profile(props) {
           <Paper className={classes.paper}>
             <UserFiles userId={props.match.params.userId} classes={classes}/>
           </Paper>
-          <br />
+        </TabPanel>
+        <TabPanel value={value} index={1}>
           <Paper className={classes.paper}>
             {<AddressInfo userId={props.match.params.userId} classes={classes} />}
           </Paper>
-        </Grid>
-        <Grid item xs={12} sm={6}>
+          <br />
+        </TabPanel>
+        <TabPanel value={value} index={2}>
           <Paper className={classes.paper}>
             <ProfessionalInfo userId={props.match.params.userId} classes={classes} />
           </Paper>
-        </Grid>
+        </TabPanel>
       </Grid>
+    </Grid>
     </div>
   );
 }
