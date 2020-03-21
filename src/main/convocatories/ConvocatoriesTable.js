@@ -1,11 +1,14 @@
 import React from 'react';
+import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead,
          TablePagination, TableRow, Button, Typography } from '@material-ui/core';
 import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
 import StopIcon from '@material-ui/icons/Stop';
-
+import { apiUrl } from '../apiUrl';
 import nav from '../nav';
+
+const baseUrl = apiUrl + 'users/';
 
 const columns = [
   { id: 'code', label: 'Convocatoria', align: 'center' },
@@ -51,6 +54,21 @@ export default function UsersTable(props) {
     nav('/convocatories/' + id);
   }
 
+  function handleSuscribe(id) {
+    console.log('se va a inscribir');
+    console.log(id);
+    const url = baseUrl + props.userId + '/convocatories';
+    console.log(url);
+    axios.post(url, {convocatoryId: id}).then(response => {
+      console.log(response);
+      if (response.status === 201) {
+        alert('Tu solicitud ha sido enviada.')
+      } else {
+        alert('Hubo un problema, favor de intentar nuevamente más tarde.');
+      }
+    });
+  }
+
   return (
     <Paper className={classes.root}>
       <TableContainer className={classes.container}>
@@ -79,7 +97,7 @@ export default function UsersTable(props) {
                     <Typography variant="button" display="block" gutterBottom>{row.status}</Typography>
                   </TableCell>
                   <TableCell key="icon" align="center">
-                    <Button onClick={handleClick}><StopIcon /></Button>
+                    <Button disabled={row.status === 'Abierta' ? false : true} onClick={() => handleSuscribe(row.id)}>{row.status === 'Abierta' ? 'Inscribirme' : ''}</Button>
                   </TableCell>
                 </TableRow>
               );

@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
+import { withCookies } from 'react-cookie';
 import {Grid, Typography} from '@material-ui/core';
 import SearchBar from './SearchBar';
 import ConvocatoriesTable from './ConvocatoriesTable';
-import StopIcon from '@material-ui/icons/Stop';
 import { apiUrl } from '../apiUrl';
 
 const baseUrl = apiUrl + 'convocatories/';
@@ -12,11 +12,15 @@ function createData(convocatory, status) {
   return { convocatory, status };
 }
 
-export default function Convocatories(props) {
+function Convocatories(props) {
   const [filter, setFilter] = useState({searchText:'', filterOption:'Todas'});
   const [convocatories, setConvocatories] = useState([]);
   const [filtered, setFiltered] = useState([]);
   //const [searchText, setSearchText] = useState('');
+
+  useEffect(() => {
+    console.log(props);
+  });
 
   useEffect(() => {
     axios.get(baseUrl).then(response => {
@@ -55,8 +59,10 @@ export default function Convocatories(props) {
         <SearchBar updateFilter={handleUpdateFilter} />
       </Grid>
       <Grid item xs={12} >
-        <ConvocatoriesTable convs={filtered} />
+        <ConvocatoriesTable userId={props.cookies.cookies.userId} convs={filtered} />
       </Grid>
     </Grid>
   );
 }
+
+export default withCookies(Convocatories);
