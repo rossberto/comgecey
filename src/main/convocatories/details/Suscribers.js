@@ -1,25 +1,24 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
-import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, Button} from '@material-ui/core';
+import { Typography, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, Button} from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import VisibilityIcon from '@material-ui/icons/Visibility';
+import nav from '../../nav.js';
+import { apiUrl } from '../../apiUrl';
 
-import nav from '../../nav.js'
+const baseUrl =  apiUrl + 'convocatories/';
 
 const columns = [
-  { id: 'name', label: 'Nombre Completo', minWidth: 170 },
-  { id: 'code', label: 'Pago' },
-  {
-    id: 'population',
-    label: 'Acciones',
-    //minWidth: 170,
+  { id: 'completeName', label: 'Nombre Completo', minWidth: 170 },
+  { id: 'status', label: 'Estatus' },
+  { id: 'actions', label: 'Acciones', //minWidth: 170,
     align: 'right',
-    format: value => value.toLocaleString(),
-  },
+    format: value => value.toLocaleString() },
 ];
 
-function createData(name, code, population, size) {
-  return { name, code, population };
+function createData(name, status, actions) {
+  return { name, status, actions };
 }
 
 const rows = [
@@ -52,10 +51,19 @@ const useStyles = makeStyles({
   },
 });
 
-export default function Suscribers() {
+export default function Suscribers(props) {
   const classes = useStyles();
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [users, setUsers] = useState([]);
+  const [refresh, setRefresh] = useState(false);
+
+  useEffect(() => {
+    const url = baseUrl + props.convocatoryId + '/suscribers';
+    axios.get(url).then(response => {
+      setUsers(response.data.suscribers);
+    });
+  }, [refresh]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -66,8 +74,22 @@ export default function Suscribers() {
     setPage(0);
   };
 
-  function handleClick() {
-    nav('/users/1');
+  function handleClick(columnId, userId, completeName) {
+    if (columnId === 'completeName') {
+      nav('/users/' + userId); // Go to User Profile
+    } else {
+      const r = window.confirm(`¿Confirma la eliminación de ${completeName} de esta convocatoria?`);
+
+      if (r) {
+        const url = baseUrl + props.convocatoryId + '/suscribers/' + userId;
+        axios.delete(url).then(response => {
+          if (response.status === 204) {
+            alert('Se ha quitado el usuario de la convocatoria.');
+            setRefresh(!refresh);
+          }
+        });
+      }
+    }
   }
 
   return (
@@ -88,14 +110,18 @@ export default function Suscribers() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => {
+            {users.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => {
               return (
                 <TableRow hover role="checkbox" tabIndex={-1} key={index}>
                   {columns.map(column => {
                     const value = row[column.id];
+                    console.log(value);
                     return (
-                      <TableCell key={column.id} align={column.align}>
-                        <Button onClick={handleClick}>{column.format && typeof value === 'number' ? column.format(value) : value}</Button>
+                      <TableCell key={column.id} align="left">
+                        { column.id === 'status' ?
+                            <Typography variant="button" display="block" gutterBottom>{value}</Typography> :
+                            <Button disabled={false} onClick={(e) => handleClick(column.id, row.id, row.completeName)}>{column.id === 'completeName' ? value : <DeleteIcon />/*column.format && typeof value === 'number' ? column.format(value) : value*/}</Button>
+                        }
                       </TableCell>
                     );
                   })}

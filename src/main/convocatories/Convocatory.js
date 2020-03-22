@@ -27,26 +27,6 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const genInfo = {
-  title: '2020-2',
-  date: '2020-05-25',
-  description: 'Aquí se describe',
-  email: 'hola@comgecey.org',
-  phone: '9999875421',
-  bank: '1234567890'
-}
-
-const placeInfo = {
-  place: 'Facultad de Medicina - UADY',
-  street: 'Av. Itzimná',
-  number: 'S/N',
-  town: 'Col. Cupules',
-  city: 'Mérida',
-  state: 'Yucatán',
-  cp: '97321',
-  phone: '9999876532'
-}
-
 export default function Convocatory(props) {
   const classes = useStyles();
 
@@ -134,7 +114,7 @@ export default function Convocatory(props) {
         <Grid item xs={12} sm={6}>
           <Paper className={classes.paper}>
             <Typography component="h1" variant="h5">Inscritos</Typography>
-            <Suscribers classes={classes} />
+            <Suscribers convocatoryId={props.match.params.convocatoryId} classes={classes} />
           </Paper>
         </Grid>
       </Grid>

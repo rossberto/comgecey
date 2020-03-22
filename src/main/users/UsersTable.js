@@ -7,7 +7,7 @@ import nav from '../nav';
 
 const columns = [
   { id: 'name', label: 'Nombre Completo', minWidth: 170 },
-  { id: 'code', label: 'Convocatoria' },
+  { id: 'code', label: 'Email' },
   {
     id: 'population',
     label: 'Acciones',
@@ -87,8 +87,8 @@ export default function UsersTable(props) {
                   <TableCell key={index+row.name} align="center">
                     <Button onClick={(e) => handleClick(e, 'user')}>{row.name}</Button>
                   </TableCell>
-                  <TableCell key={index+row.convocatory} align="center">
-                    <Button name={row.convocatory} onClick={(e) => handleClick(e, 'conv')}>{row.convocatory}</Button>
+                  <TableCell key={index+row.email} align="center">
+                    <Button name={row.email} onClick={(e) => handleClick(e, 'conv')}>{row.email}</Button>
                   </TableCell>
                   <TableCell key={index+'del-'+row.name} align="center">
                     <Button onClick={(e) => handleDelete(e, row.name)}><DeleteIcon /></Button>
