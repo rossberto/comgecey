@@ -27,11 +27,34 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+const initConv = {
+  title: '',
+  date: '',
+  description: '',
+  email: '',
+  phone: '',
+  bank: '',
+  bank_account: '',
+  status: ''
+}
+
+const initPlace = {
+  name: '',
+  street: '',
+  number: '',
+  town: '',
+  city: '',
+  state: '',
+  zip_code: '',
+  phone: ''
+}
+
 export default function Convocatory(props) {
   const classes = useStyles();
 
-  const [conv, setConv] = useState({});
-  const [place, setPlace] = useState({});
+  const [fetched, setFetched] = useState(false);
+  const [conv, setConv] = useState(initConv);
+  const [place, setPlace] = useState(initPlace);
   const [edit, setEdit] = useState({ GenInfo: false, AddressInfo: false });
 
   useEffect(() => {
@@ -44,6 +67,7 @@ export default function Convocatory(props) {
           axios.get(placesUrl + response.data.convocatory_has_place.Places_id).then(response => {
             if (response.status === 200) {
               setPlace(response.data.place);
+              setFetched(true);
             }
           });
         }
@@ -64,7 +88,6 @@ export default function Convocatory(props) {
   }
 
   function handleSave(name) {
-    console.log(name);
     switch (name) {
       case 'GenInfo':
         axios.put(convsUrl + props.match.params.convocatoryId, conv).then(response => {
@@ -96,6 +119,7 @@ export default function Convocatory(props) {
               enableEdit={handleEditEnable}
               handleSave={handleSave}
               edit={edit.GenInfo}
+              fetched={fetched}
             />
             <GeneralInfo info={conv} updateInfo={handleConvInfo} classes={classes} edit={edit.GenInfo}/>
           </Paper>
@@ -107,6 +131,7 @@ export default function Convocatory(props) {
               enableEdit={handleEditEnable}
               handleSave={handleSave}
               edit={edit.AddressInfo}
+              fetched={fetched}
             />
             <AddressInfo info={place} updateInfo={handlePlaceInfo} classes={classes} edit={edit.AddressInfo}/>
           </Paper>

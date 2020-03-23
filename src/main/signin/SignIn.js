@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Container, Typography, Box, Grid, Link, Checkbox, FormControlLabel,
          TextField, CssBaseline, Button, Avatar } from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Fetching from '../Fetching';
 import AppContext from '../../AppContext';
 import logo from './comgecey-02.png';
 import { apiUrl } from '../apiUrl';
@@ -49,6 +50,8 @@ export default function SignIn() {
 
   const appContext = useContext(AppContext);
   const { auth, goDashboard, routes, setUserSession } = appContext;
+
+  const [fetched, setFetched] = useState(true);
   const [inputs, setInputs] = useState({email: 'dev@rross.me', password: '1234'});
 
   const [cookies, setCookie] = useCookies(['userId']);
@@ -68,6 +71,8 @@ export default function SignIn() {
   function handleClick(e) {
     e.preventDefault();
 
+    setFetched(false);
+
     axios.post(baseUrl, {email: inputs.email, password: inputs.password}).then(response => {
       if (response.status === 201) {
         setCookie('userId', response.data.user.id, {
@@ -75,11 +80,14 @@ export default function SignIn() {
         });
         response.data.user.birthdate = response.data.user.birthdate.slice(0,10);
         setUserSession(response.data.user);
+        setFetched(true);
       } else {
         alert('Usuario y/o contraseña incorrectos');
+        setFetched(true);
       }
     }).catch(err => {
       alert('Usuario no ha confirmado correo o le falta completar su información de registro.');
+      setFetched(true);
     });
   }
   return (
@@ -87,12 +95,18 @@ export default function SignIn() {
       <CssBaseline />
       <div className={classes.paper}>
         <img position="contain" width="100%" className={classes.image} src={logo} />
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Ingreso
-        </Typography>
+        <Fetching fetched={fetched} />
+        {
+          fetched ? <React.Fragment>
+                      <Avatar className={classes.avatar}>
+                        <LockOutlinedIcon />
+                      </Avatar>
+                      <Typography component="h1" variant="h5">
+                        Ingreso
+                      </Typography></React.Fragment>
+                  : ''
+        }
+
         <form className={classes.form} noValidate onChange={handleChange}>
           <TextField
             variant="outlined"

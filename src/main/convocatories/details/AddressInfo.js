@@ -20,7 +20,7 @@ export default function AddressInfo(props) {
   const inputLabel = useRef(null);
   const [labelWidth, setLabelWidth] = useState(0);
   useEffect(() => {
-    //setLabelWidth(inputLabel.current.offsetWidth);
+    setLabelWidth(inputLabel.current.offsetWidth);
   }, []);
 
   function handleChange(e) {

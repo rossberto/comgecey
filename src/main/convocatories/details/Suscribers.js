@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Typography, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, Button} from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import VisibilityIcon from '@material-ui/icons/Visibility';
+import Fetching from '../../Fetching';
 import nav from '../../nav.js';
 import { apiUrl } from '../../apiUrl';
 
@@ -53,6 +54,8 @@ const useStyles = makeStyles({
 
 export default function Suscribers(props) {
   const classes = useStyles();
+
+  const [fetched, setFetched] = useState(false);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [users, setUsers] = useState([]);
@@ -62,6 +65,7 @@ export default function Suscribers(props) {
     const url = baseUrl + props.convocatoryId + '/suscribers';
     axios.get(url).then(response => {
       setUsers(response.data.suscribers);
+      setFetched(true);
     });
   }, [refresh]);
 
@@ -94,6 +98,7 @@ export default function Suscribers(props) {
 
   return (
     <Paper className={classes.root}>
+      <Fetching fetched={fetched} />
       <TableContainer className={classes.container}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>

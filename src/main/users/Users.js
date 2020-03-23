@@ -13,6 +13,7 @@ function createData(name, email) {
 }
 
 export default function Users(props) {
+  const [fetched, setFetched] = useState(false);
   const [users, setUsers] = useState([]);
   const [filtered, setFiltered] = useState([]);
 
@@ -27,6 +28,7 @@ export default function Users(props) {
 
       setUsers(formatUsers);
       setFiltered(formatUsers);
+      setFetched(true)
     });
   }, []);
 
@@ -44,7 +46,7 @@ export default function Users(props) {
         <SearchBar updateFilter={handleUpdateFilter} />
       </Grid>
       <Grid item xs={12} >
-        <UsersTable users={filtered} />
+        <UsersTable fetched={fetched} users={filtered} />
       </Grid>
     </Grid>
   );

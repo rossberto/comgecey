@@ -2,7 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, Button} from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
-
+import Fetching from '../Fetching';
 import nav from '../nav';
 
 const columns = [
@@ -65,6 +65,7 @@ export default function UsersTable(props) {
 
   return (
     <Paper className={classes.root}>
+      <Fetching fetched={props.fetched} />
       <TableContainer className={classes.container}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>

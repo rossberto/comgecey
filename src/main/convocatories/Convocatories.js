@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import { withCookies } from 'react-cookie';
 import {Grid, Typography} from '@material-ui/core';
+import Fetching from '../Fetching';
 import SearchBar from './SearchBar';
 import ConvocatoriesTable from './ConvocatoriesTable';
 import { apiUrl } from '../apiUrl';
@@ -13,6 +14,7 @@ function createData(convocatory, status) {
 }
 
 function Convocatories(props) {
+  const [fetched, setFetched] = useState(false);
   const [filter, setFilter] = useState({searchText:'', filterOption:'Todas'});
   const [convocatories, setConvocatories] = useState([]);
   const [filtered, setFiltered] = useState([]);
@@ -26,6 +28,7 @@ function Convocatories(props) {
     axios.get(baseUrl).then(response => {
       setConvocatories(response.data.convocatories);
       setFiltered(response.data.convocatories);
+      setFetched(true);
     });
   }, []);
 
@@ -59,7 +62,8 @@ function Convocatories(props) {
         <SearchBar updateFilter={handleUpdateFilter} />
       </Grid>
       <Grid item xs={12} >
-        <ConvocatoriesTable userId={props.cookies.cookies.userId} convs={filtered} />
+        <Fetching fetched={fetched} />
+        {fetched ? <ConvocatoriesTable userId={props.cookies.cookies.userId} convs={filtered} /> : ''}
       </Grid>
     </Grid>
   );
