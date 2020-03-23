@@ -1,6 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
-import {Paper, Grid, TextField, Button, Typography, InputLabel, Select, FormControl, Container, CssBaseline} from '@material-ui/core';
+import {Paper, Grid, TextField, Button, Typography, InputLabel, FormHelperText,
+        FormControl, Select,NativeSelect, InputAdornment} from '@material-ui/core';
+import AccountCircle from '@material-ui/icons/AccountCircle';
 import EditIcon from '@material-ui/icons/Edit';
 import SaveIcon from '@material-ui/icons/Save';
 import Fetching from './Fetching';
@@ -8,33 +10,33 @@ import { apiUrl } from '../../apiUrl';
 
 const baseUrl = apiUrl + 'users/';
 
-export default function IdInfo(props) {
+const addressInfo = {
+  street: '',
+  number: '',
+  town: '',
+  city: '',
+  state: '',
+  zip_code: '',
+  phone: ''
+}
+
+export default function MailAddressInfo(props) {
   const [fetched, setFetched] = useState(false);
   const [editDisabled, setEditDisabled] = useState(false);
-  const [info, setInfo] = useState({
-    name: '',
-    father_lname: '',
-    mother_lname: '',
-    birth_state: '',
-    birth_city: '',
-    birthdate: ''
-  });
+  const [info, setInfo] = useState(addressInfo);
   const [labelWidth, setLabelWidth] = useState(0);
   const inputLabel = useRef(null);
 
-  useEffect(() => {
-    const url = baseUrl + props.userId;
-    axios.get(url).then(response => {
-      if (response.status === 200) {
-        response.data.user.birthdate = response.data.user.birthdate.slice(0, 10);
-        setInfo(response.data.user);
-        setFetched(true);
-      }
-    });
+  React.useEffect(() => {
+    setLabelWidth(inputLabel.current.offsetWidth);
   }, []);
 
   useEffect(() => {
-    setLabelWidth(inputLabel.current.offsetWidth);
+    const url = baseUrl + props.userId + '/mail';
+    axios.get(url).then(response => {
+      setInfo(response.data.mail);
+      setFetched(true);
+    });
   }, []);
 
   function handleEdit() {
@@ -42,8 +44,9 @@ export default function IdInfo(props) {
   }
 
   function handleSave() {
-    const url = baseUrl + info.id;
+    const url = baseUrl + props.userId + '/mail';
     axios.put(url, info);
+
     setEditDisabled(false);
   }
 
@@ -52,7 +55,7 @@ export default function IdInfo(props) {
 
     const key = e.target.name;
     const value = e.target.value;
-    setInfo(info => ({...info, [key]:value}));
+    setInfo(info => ({...info, [key]:value}))
   }
 
   return (
@@ -60,7 +63,7 @@ export default function IdInfo(props) {
       <Grid container justify="space-between">
         <Grid item>
           <Typography component="h1" variant="h5">
-            Ficha de identificación
+            Domicilio de correspondencia
           </Typography>
         </Grid>
         <Grid item>
@@ -71,86 +74,82 @@ export default function IdInfo(props) {
           <Button disabled={editDisabled} onClick={handleEdit}><EditIcon /></Button>
         </Grid>
       </Grid>
-      <form className={props.classes.form} noValidate onChange={handleChange}>
+      <form className={props.classes.form} noValidate onChange={handleChange} onSubmit={handleSave}>
         <Grid container spacing={2}>
-          <Grid item xs={12}>
+          <Grid item xs={4}>
             <TextField
-              autoComplete="fname"
-              name="name"
+              name="street"
               required
               fullWidth
-              id="name"
-              label="Nombre(s)"
+              id="street"
+              label="Calle"
               autoFocus
               size="small"
-              value={info.name}
+              value={info.street}
               InputProps={{
                 readOnly: !editDisabled,
               }}
               variant={editDisabled ? "standard" : "filled"}
             />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={4} >
             <TextField
               required
               fullWidth
-              id="father_lname"
-              label="Apellido Paterno"
-              name="father_lname"
-              autoComplete="lname"
+              id="number"
+              label="Número"
+              name="number"
               size="small"
-              value={info.father_lname}
+              value={info.number}
               InputProps={{
                 readOnly: !editDisabled,
               }}
               variant={editDisabled ? "standard" : "filled"}
             />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={4}>
             <TextField
               required
               fullWidth
-              id="mother_lname"
-              label="Apellido Materno"
-              name="mother_lname"
-              autoComplete="mother_lnameac"
+              id="town"
+              label="Colonia"
+              name="town"
               size="small"
-              value={info.mother_lname}
+              value={info.town}
               InputProps={{
                 readOnly: !editDisabled,
               }}
               variant={editDisabled ? "standard" : "filled"}
             />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={4}>
             <TextField
               required
               fullWidth
-              name="birthdate"
-              label="Fecha de Nacimiento"
-              type="date"
-              id="birthdate"
-              InputLabelProps={{shrink: true}}
+              name="city"
+              label="Ciudad"
+              id="city"
               size="small"
-              value={info.birthdate}
+              value={info.city}
               InputProps={{
                 readOnly: !editDisabled,
               }}
               variant={editDisabled ? "standard" : "filled"}
             />
           </Grid>
-          <Grid item xs={6}>
-            <FormControl size="small" fullWidth variant="outlined">
-              <InputLabel ref={inputLabel} htmlFor="standard-age-native-simple" >
-                Estado de Nacimiento
+          <Grid item xs={4}>
+            <FormControl size="small" fullWidth className={props.classes.formControl}>
+              <InputLabel ref={inputLabel} htmlFor="standard-age-native-simple">
+                Estado
               </InputLabel>
               <Select
                 native
-                value= {info.birth_state ? info.birth_state : 'no'}
+                value={info.state} //value={state.age}
+                //onChange={handleChange('age')}
                 labelWidth={labelWidth}
                 inputProps={{
-                  name: 'birth_state',
-                  id: 'birth_state',
+                  name: 'state',
+                  id: 'standard-age-native-simple',
                   readOnly: !editDisabled
                 }}
                 variant={editDisabled ? "standard" : "filled"}
@@ -191,21 +190,37 @@ export default function IdInfo(props) {
               </Select>
             </FormControl>
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={4}>
             <TextField
-              value={info.birth_city ? info.birth_city : ''}
-              variant="outlined"
               required
               fullWidth
-              id="birth_city"
-              label="Ciudad de Nacimiento"
-              name="birth_city"
+              name="zip_code"
+              label="C.P."
+              id="zip_code"
+              size="small"
+              value={info.zip_code}
               InputProps={{
                 readOnly: !editDisabled,
               }}
               variant={editDisabled ? "standard" : "filled"}
             />
           </Grid>
+          <Grid item xs={12}>
+            <TextField
+              required
+              fullWidth
+              name="phone"
+              label="Número telefónico"
+              id="phone"
+              size="small"
+              value={info.phone}
+              InputProps={{
+                readOnly: !editDisabled,
+              }}
+              variant={editDisabled ? "standard" : "filled"}
+            />
+          </Grid>
+
         </Grid>
       </form>
     </React.Fragment>

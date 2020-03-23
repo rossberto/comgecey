@@ -14,6 +14,7 @@ import RefreshIcon from '@material-ui/icons/Refresh';
 import EditIcon from '@material-ui/icons/Edit';
 import FileAddIcon from '@material-ui/icons/NoteAdd';
 import SaveIcon from '@material-ui/icons/Save';
+import Fetching from './details/Fetching';
 import { apiUrl } from '../apiUrl';
 
 const baseUrl = apiUrl + 'users/';
@@ -66,6 +67,7 @@ const initSaveDisabled = {
 export default function UserFiles(props) {
   const classes = useStyles();
 
+  const [fetched, setFetched] = useState(false);
   const [file, setFile] = useState(initFile);
   const [saveDisabled, setSaveDisabled] = useState(initSaveDisabled);
   const [filePath, setFilePath] = useState({});
@@ -105,6 +107,7 @@ export default function UserFiles(props) {
       }
 
       setFilePath(paths);
+      setFetched(true);
     });
   }, []);
 
@@ -156,6 +159,9 @@ export default function UserFiles(props) {
       <Typography component="h1" variant="h5">
         Documentos
       </Typography>
+
+      <Fetching fetched={fetched} />
+
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="simple table">
           <TableBody>

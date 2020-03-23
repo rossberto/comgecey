@@ -6,6 +6,7 @@ import IdInfo from './details/IdInfo';
 import UserFiles from './UserFiles';
 import ProfessionalInfo from './details/ProfessionalInfo';
 import AddressInfo from './details/AddressInfo';
+import MailAddressInfo from './details/MailAddressInfo';
 import AppContext from '../../AppContext';
 import PropTypes from 'prop-types';
 import { withCookies } from 'react-cookie';
@@ -67,29 +68,37 @@ function SimpleTabs(props) {
       <Grid item xs={12} >
         <AppBar position="static">
           <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
-            <Tab label="Documentos" {...a11yProps(0)} />
+            <Tab label="Personal" {...a11yProps(0)} />
             <Tab label="Domicilios" {...a11yProps(1)} />
             <Tab label="Profesional" {...a11yProps(2)} />
+            <Tab label="Documentos" {...a11yProps(3)} />
           </Tabs>
         </AppBar>
+
         <TabPanel value={value} index={0}>
           <Paper className={classes.paper}>
-            <IdInfo info={userSession} classes={classes}/>
-          </Paper>
-          <br />
-          <Paper className={classes.paper}>
-            <UserFiles userId={props.match.params.userId} classes={classes}/>
+              <IdInfo userId={props.match.params.userId} classes={classes}/>
           </Paper>
         </TabPanel>
+
         <TabPanel value={value} index={1}>
           <Paper className={classes.paper}>
-            {<AddressInfo userId={props.match.params.userId} classes={classes} />}
+            <AddressInfo userId={props.match.params.userId} classes={classes} />
           </Paper>
           <br />
+          <Paper className={classes.paper}>
+            <MailAddressInfo userId={props.match.params.userId} classes={classes} />
+          </Paper>
         </TabPanel>
+
         <TabPanel value={value} index={2}>
           <Paper className={classes.paper}>
             <ProfessionalInfo userId={props.match.params.userId} classes={classes} />
+          </Paper>
+        </TabPanel>
+        <TabPanel value={value} index={3}>
+          <Paper className={classes.paper}>
+            <UserFiles userId={props.match.params.userId} classes={classes}/>
           </Paper>
         </TabPanel>
       </Grid>

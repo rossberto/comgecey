@@ -3,6 +3,7 @@ import axios from 'axios';
 import {Paper, Grid, TextField, Button, Typography} from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import SaveIcon from '@material-ui/icons/Save';
+import Fetching from './Fetching';
 import { apiUrl } from '../../apiUrl';
 
 const baseUrl = apiUrl + 'users/';
@@ -28,6 +29,7 @@ const professionalInfo = {
 }
 
 export default function ProfessionalInfo(props) {
+  const [fetched, setFetched] = useState(false);
   const [editDisabled, setEditDisabled] = useState(false);
   const [info, setInfo] = useState(professionalInfo);
 
@@ -42,6 +44,7 @@ export default function ProfessionalInfo(props) {
       });
 
       setInfo(professionalData);
+      setFetched(true);
     });
   }, []);
 
@@ -71,6 +74,9 @@ export default function ProfessionalInfo(props) {
           <Typography component="h1" variant="h5">
             Licenciatura
           </Typography>
+        </Grid>
+        <Grid item>
+          <Fetching fetched={fetched} />
         </Grid>
         <Grid item>
           <Button disabled={!editDisabled} onClick={handleSave}><SaveIcon /></Button>

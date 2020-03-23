@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import {Paper, Grid, TextField, Button, Typography, InputLabel, FormHelperText,
         FormControl, Select,NativeSelect, InputAdornment} from '@material-ui/core';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import EditIcon from '@material-ui/icons/Edit';
 import SaveIcon from '@material-ui/icons/Save';
+import Fetching from './Fetching';
 import { apiUrl } from '../../apiUrl';
 
 const baseUrl = apiUrl + 'users/';
@@ -20,10 +21,11 @@ const addressInfo = {
 }
 
 export default function AddressInfo(props) {
-  const [editDisabled, setEditDisabled] = React.useState(false);
-  const [info, setInfo] = React.useState(addressInfo);
-  const [labelWidth, setLabelWidth] = React.useState(0);
-  const inputLabel = React.useRef(null);
+  const [fetched, setFetched] = useState(false);
+  const [editDisabled, setEditDisabled] = useState(false);
+  const [info, setInfo] = useState(addressInfo);
+  const [labelWidth, setLabelWidth] = useState(0);
+  const inputLabel = useRef(null);
 
   React.useEffect(() => {
     setLabelWidth(inputLabel.current.offsetWidth);
@@ -33,6 +35,7 @@ export default function AddressInfo(props) {
     const url = baseUrl + props.userId + '/address';
     axios.get(url).then(response => {
       setInfo(response.data.address);
+      setFetched(true);
     });
   }, []);
 
@@ -62,6 +65,9 @@ export default function AddressInfo(props) {
           <Typography component="h1" variant="h5">
             Domicilio particular
           </Typography>
+        </Grid>
+        <Grid item>
+          <Fetching fetched={fetched} />
         </Grid>
         <Grid item>
           <Button disabled={!editDisabled} onClick={handleSave}><SaveIcon /></Button>
