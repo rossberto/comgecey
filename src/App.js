@@ -46,7 +46,7 @@ function App() {
     if (val===true) {
       history.push('/users/' + userId);
     } else {
-      history.push('/signin')
+      history.push('/signin');
     }
   }
   return (

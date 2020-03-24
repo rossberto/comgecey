@@ -1,4 +1,4 @@
-import React, {useEffect, useContext} from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { ListItem, List, IconButton, Hidden, Drawer, Divider, AppBar, CssBaseline,
@@ -55,6 +55,9 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+const userNavMenu  = ['Mi Perfil', 'Mis Convocatorias'];
+const adminNavMenu = ['Convocatorias', 'Usuarios', 'Mi Perfil', 'Mis Convocatorias']; //, 'Boletines'];
+
 function Frame(props) {
   const { container } = props;
   const classes = useStyles(props);
@@ -62,8 +65,8 @@ function Frame(props) {
 
   const appContext = useContext(AppContext);
   const {auth, goDashboard, userSession } = appContext;
-
-  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [navMenu, setNavMenu] = useState(adminNavMenu);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const [cookies, setCookie, removeCookie] = useCookies();
 
   const handleDrawerToggle = () => {
@@ -71,7 +74,13 @@ function Frame(props) {
   };
 
   useEffect(() => {
-    window.scrollTo(0, 0)
+    window.scrollTo(0, 0);
+
+    if (!userSession.is_admin) {
+      setNavMenu(adminNavMenu);
+    } else {
+      setNavMenu(userNavMenu);
+    }
   });
 
   function handleClick(e, text) {
@@ -81,6 +90,9 @@ function Frame(props) {
         break;
       case 'Convocatorias':
           nav('/convocatories');
+        break;
+      case 'Mis Convocatorias':
+          nav('/myconvocatories');
         break;
       case 'Usuarios':
           nav('/users');
@@ -111,7 +123,7 @@ function Frame(props) {
       <div className={classes.toolbar} />
       <Divider />
       <List>
-        {['Mi Perfil', 'Convocatorias', 'Usuarios', 'Boletines'].map((text, index) => (
+        {navMenu.map((text, index) => (
           <ListItem button ContainerProps={{name: text}} key={text} onClick={(e) => handleClick(e, text)}>
             <ListItemIcon>{index % 2 === 0 ? <InboxIcon name={text} /> : <MailIcon />}</ListItemIcon>
             <ListItemText primary={text} />
@@ -120,7 +132,7 @@ function Frame(props) {
       </List>
       <Divider />
       <List>
-        {['Landing', 'Registro', 'Blog'].map((text, index) => (
+        {['Comgecey', 'Blog'].map((text, index) => (
           <ListItem button value={text} key={text} onClick={(e) => handleClick(e, text)}>
             <ListItemIcon value={text}>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
             <ListItemText value={text} primary={text} />
