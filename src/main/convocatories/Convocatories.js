@@ -1,7 +1,8 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { withCookies } from 'react-cookie';
 import {Grid, Typography} from '@material-ui/core';
+import AppContext from '../../AppContext';
 import Fetching from '../Fetching';
 import SearchBar from './SearchBar';
 import ConvocatoriesTable from './ConvocatoriesTable';
@@ -14,6 +15,9 @@ function createData(convocatory, status) {
 }
 
 function Convocatories(props) {
+  const appContext = useContext(AppContext);
+  const { goDashboard, userSession } = appContext;
+
   const [fetched, setFetched] = useState(false);
   const [filter, setFilter] = useState({searchText:'', filterOption:'Todas'});
   const [convocatories, setConvocatories] = useState([]);
@@ -21,7 +25,11 @@ function Convocatories(props) {
   //const [searchText, setSearchText] = useState('');
 
   useEffect(() => {
-    console.log(props);
+    if (!userSession.is_admin) {
+      alert('La página a la que intenta acceder es de uso exclusivo de administradores de la plataforma Comgecey.\n\n' +
+            'Se le redireccionará a su perfil.');
+      goDashboard();
+    }
   });
 
   useEffect(() => {
@@ -33,7 +41,6 @@ function Convocatories(props) {
   }, []);
 
   useEffect(() => {
-    console.log(convocatories);
     if (filter.filterOption !== 'Todas') {
       //const filtered = convocatories.filter(row => row.status===filter.filterOption &&
       //                             row.convocatory.toLowerCase().includes(filter.searchText.toLowerCase()))

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead,
@@ -9,7 +9,6 @@ import { apiUrl } from '../apiUrl';
 import nav from '../nav';
 
 const baseUrl = apiUrl + 'users/';
-const convsUrl = apiUrl + 'convocatories/';
 
 const columns = [
   { id: 'code', label: 'Convocatoria', align: 'center' },
@@ -38,8 +37,8 @@ const useStyles = makeStyles({
 
 export default function UsersTable(props) {
   const classes = useStyles();
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -55,19 +54,16 @@ export default function UsersTable(props) {
     nav('/convocatories/' + id);
   }
 
-  function handleUnsuscribe(convocatoryId, userId) {
-      const r = window.confirm(`¿Confirmas que vas a desistir de esta convocatoria?`);
-
-      if (r) {
-        const url = convsUrl + convocatoryId + '/suscribers/' + userId;
-        axios.delete(url).then(response => {
-          if (response.status === 204) {
-            alert('Se ha quitado el usuario de la convocatoria.');
-            props.updateUserConvs();
-            //setRefresh(!refresh);
-          }
-        });
+  function handleSuscribe(id) {
+    const url = baseUrl + props.userId + '/convocatories';
+    axios.post(url, {convocatoryId: id}).then(response => {
+      if (response.status === 201) {
+        alert('Tu solicitud ha sido enviada.');
+        props.updateUserConvs();
+      } else {
+        alert('Hubo un problema, favor de intentar nuevamente más tarde.');
       }
+    });
   }
 
   return (
@@ -95,10 +91,10 @@ export default function UsersTable(props) {
                     <Button name={row.id} onClick={() => handleClick(row.id)}>{row.title}</Button>
                   </TableCell>
                   <TableCell key={row.status} align="center">
-                    <Typography variant="button" display="block" gutterBottom>{row.user_status}</Typography>
+                    <Typography variant="button" display="block" gutterBottom>{row.status}</Typography>
                   </TableCell>
                   <TableCell key="icon" align="center">
-                    <Button disabled={(row.user_status !== 'Certificado') && (row.user_status !== null)  ? false : true} onClick={(e) => handleUnsuscribe(row.id, props.userId)}>{(row.user_status !== 'Certificado') && (row.user_status !== null) ? 'Desistir' : ''}</Button>
+                    <Button disabled={row.status === 'Abierta' ? false : true} onClick={() => handleSuscribe(row.id)}>{row.status === 'Abierta' ? 'Inscribirme' : ''}</Button>
                   </TableCell>
                 </TableRow>
               );

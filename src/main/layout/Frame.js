@@ -76,7 +76,7 @@ function Frame(props) {
   useEffect(() => {
     window.scrollTo(0, 0);
 
-    if (!userSession.is_admin) {
+    if (userSession.is_admin) {
       setNavMenu(adminNavMenu);
     } else {
       setNavMenu(userNavMenu);

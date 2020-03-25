@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import {Container, Grid, Typography} from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
+import AppContext from '../../AppContext';
 import SearchBar from './SearchBar';
 import UsersTable from './UsersTable';
 import { apiUrl } from '../apiUrl';
@@ -13,9 +14,20 @@ function createData(name, email) {
 }
 
 export default function Users(props) {
+  const appContext = useContext(AppContext);
+  const { goDashboard, userSession } = appContext;
+
   const [fetched, setFetched] = useState(false);
   const [users, setUsers] = useState([]);
   const [filtered, setFiltered] = useState([]);
+
+  useEffect(() => {
+    if (!userSession.is_admin) {
+      alert('La página a la que intenta acceder es de uso exclusivo de administradores de la plataforma Comgecey.\n\n' +
+            'Se le redireccionará a su perfil.');
+      goDashboard();
+    }
+  });
 
   useEffect(() => {
     axios.get(baseUrl).then(response => {
