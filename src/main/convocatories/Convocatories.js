@@ -33,6 +33,18 @@ function Convocatories(props) {
   });
 
   useEffect(() => {
+    console.log(props.cookies.cookies.token);
+    /*
+    const config = {
+      headers: {
+        Authorization: props.cookies.cookies.token
+      }
+    }*/
+
+    /*axios.defaults.headers = {
+        Authorization: props.cookies.cookies.access_token
+    }*/
+
     axios.get(baseUrl).then(response => {
       setConvocatories(response.data.convocatories);
       setFiltered(response.data.convocatories);
