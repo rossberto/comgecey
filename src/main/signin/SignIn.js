@@ -59,7 +59,12 @@ export default function SignIn() {
   const [cookies, setCookie] = useCookies(['userId']);
 
   useEffect(() => {
-    if (cookies.userId) {
+    console.log(cookies);
+    if (cookies.userId && cookies.token) {
+      axios.defaults.headers = {
+          Authorization: cookies.token + ':' + API_SECRET
+      }
+
       goDashboard(true, cookies.userId);
     }
   }, [cookies.userId]);
@@ -81,11 +86,16 @@ export default function SignIn() {
           maxAge: 3600
         });
 
+        setCookie('token', response.data.access_token + ':' + API_SECRET, {
+          maxAge: 3600
+        });
+
+        setCookie('is_admin', response.data.user.is_admin, {
+          maxAge: 3600
+        });
+
         response.data.user.birthdate = response.data.user.birthdate.slice(0,10);
 
-        axios.defaults.headers = {
-            Authorization: response.data.access_token + ':' + API_SECRET
-        }
         setUserSession(response.data.user);
         setFetched(true);
       } else {

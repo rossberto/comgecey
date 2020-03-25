@@ -57,6 +57,7 @@ const useStyles = makeStyles(theme => ({
 
 const userNavMenu  = ['Mi Perfil', 'Mis Convocatorias'];
 const adminNavMenu = ['Convocatorias', 'Usuarios', 'Mi Perfil', 'Mis Convocatorias']; //, 'Boletines'];
+const linksNavMenu = ['Comgecey', 'Blog'];
 
 function Frame(props) {
   const { container } = props;
@@ -75,8 +76,9 @@ function Frame(props) {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    console.log(cookies);
 
-    if (userSession.is_admin) {
+    if (userSession.is_admin || cookies.is_admin) {
       setNavMenu(adminNavMenu);
     } else {
       setNavMenu(userNavMenu);
@@ -115,6 +117,7 @@ function Frame(props) {
 
   function handleSignOut() {
     removeCookie('userId');
+    removeCookie('is_admin');
     goDashboard(false);
   }
 
@@ -132,7 +135,7 @@ function Frame(props) {
       </List>
       <Divider />
       <List>
-        {['Comgecey', 'Blog'].map((text, index) => (
+        {[].map((text, index) => (
           <ListItem button value={text} key={text} onClick={(e) => handleClick(e, text)}>
             <ListItemIcon value={text}>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
             <ListItemText value={text} primary={text} />
