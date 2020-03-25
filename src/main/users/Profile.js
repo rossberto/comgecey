@@ -77,28 +77,28 @@ function SimpleTabs(props) {
 
         <TabPanel value={value} index={0}>
           <Paper className={classes.paper}>
-              <IdInfo userId={props.match.params.userId} classes={classes}/>
+              <IdInfo userId={props.cookies.cookies.is_admin === 1 ? props.match.params.userId : props.cookies.cookies.userId} classes={classes}/>
           </Paper>
         </TabPanel>
 
         <TabPanel value={value} index={1}>
           <Paper className={classes.paper}>
-            <AddressInfo userId={props.match.params.userId} classes={classes} />
+            <AddressInfo userId={props.cookies.cookies.is_admin === 1 ? props.match.params.userId : props.cookies.cookies.userId} classes={classes} />
           </Paper>
           <br />
           <Paper className={classes.paper}>
-            <MailAddressInfo userId={props.match.params.userId} classes={classes} />
+            <MailAddressInfo userId={props.cookies.cookies.is_admin === 1 ? props.match.params.userId : props.cookies.cookies.userId} classes={classes} />
           </Paper>
         </TabPanel>
 
         <TabPanel value={value} index={2}>
           <Paper className={classes.paper}>
-            <ProfessionalInfo userId={props.match.params.userId} classes={classes} />
+            <ProfessionalInfo userId={props.cookies.cookies.is_admin === 1 ? props.match.params.userId : props.cookies.cookies.userId} classes={classes} />
           </Paper>
         </TabPanel>
         <TabPanel value={value} index={3}>
           <Paper className={classes.paper}>
-            <UserFiles userId={props.match.params.userId} classes={classes}/>
+            <UserFiles userId={props.cookies.cookies.is_admin === 1 ? props.match.params.userId : props.cookies.cookies.userId} classes={classes}/>
           </Paper>
         </TabPanel>
       </Grid>

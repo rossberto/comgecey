@@ -25,7 +25,7 @@ function Convocatories(props) {
   //const [searchText, setSearchText] = useState('');
 
   useEffect(() => {
-    if (!userSession.is_admin && !props.cookies.cookies.is_admin) {
+    if ( props.cookies.cookies.is_admin !== '1' ) {
       alert('La página a la que intenta acceder es de uso exclusivo de administradores de la plataforma Comgecey.\n\n' +
             'Se le redireccionará a su perfil.');
       goDashboard();
@@ -33,18 +33,6 @@ function Convocatories(props) {
   });
 
   useEffect(() => {
-    console.log(props.cookies.cookies.token);
-    /*
-    const config = {
-      headers: {
-        Authorization: props.cookies.cookies.token
-      }
-    }*/
-
-    /*axios.defaults.headers = {
-        Authorization: props.cookies.cookies.access_token
-    }*/
-
     axios.get(baseUrl).then(response => {
       setConvocatories(response.data.convocatories);
       setFiltered(response.data.convocatories);

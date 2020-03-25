@@ -42,8 +42,8 @@ function MyConvocatories(props) {
     });
   }, []);
 
-  useEffect(() => {
-    axios.get(userConvsUrl + userSession.id + '/convocatories').then(response => {
+  useEffect(() => { // userSession.id
+    axios.get(userConvsUrl + props.cookies.cookies.userId + '/convocatories').then(response => {
       setUserConvocatories(response.data.userConvocatories);
       //setFiltered(response.data.userConvocatories);
       setuserConvsFetched(true);

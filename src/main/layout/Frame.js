@@ -76,9 +76,8 @@ function Frame(props) {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    console.log(cookies);
 
-    if (userSession.is_admin || cookies.is_admin) {
+    if ( cookies.is_admin === '1' ) {
       setNavMenu(adminNavMenu);
     } else {
       setNavMenu(userNavMenu);
@@ -88,7 +87,7 @@ function Frame(props) {
   function handleClick(e, text) {
     switch (text) {
       case 'Mi Perfil':
-          nav(`/users/${userSession.id}`);
+          nav(`/users/${cookies.userId}`);
         break;
       case 'Convocatorias':
           nav('/convocatories');
