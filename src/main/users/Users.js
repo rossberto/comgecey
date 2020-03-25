@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
+import { withCookies } from 'react-cookie';
 import {Container, Grid, Typography} from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AppContext from '../../AppContext';
@@ -13,7 +14,7 @@ function createData(name, email) {
   return { name, email};
 }
 
-export default function Users(props) {
+function Users(props) {
   const appContext = useContext(AppContext);
   const { goDashboard, userSession } = appContext;
 
@@ -22,7 +23,7 @@ export default function Users(props) {
   const [filtered, setFiltered] = useState([]);
 
   useEffect(() => {
-    if (!userSession.is_admin) {
+    if (!userSession.is_admin && !props.cookies.cookies.is_admin) {
       alert('La página a la que intenta acceder es de uso exclusivo de administradores de la plataforma Comgecey.\n\n' +
             'Se le redireccionará a su perfil.');
       goDashboard();
@@ -33,6 +34,7 @@ export default function Users(props) {
     axios.get(baseUrl).then(response => {
       const formatUsers = response.data.users.map(user => {
         return {
+          id: user.id,
           name: user.name + ' ' + user.father_lname + ' ' + user.mother_lname,
           email: user.email
         }
@@ -63,3 +65,5 @@ export default function Users(props) {
     </Grid>
   );
 }
+
+export default withCookies(Users);

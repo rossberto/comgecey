@@ -1,9 +1,13 @@
 import React from 'react';
+import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
 import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, Button} from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Fetching from '../Fetching';
 import nav from '../nav';
+import { apiUrl } from '../apiUrl';
+
+const baseUrl = apiUrl + 'users/';
 
 const columns = [
   { id: 'name', label: 'Nombre Completo', minWidth: 170 },
@@ -42,24 +46,18 @@ export default function UsersTable(props) {
     setPage(0);
   };
 
-  function handleClick(e, type) {
-    switch (type) {
-      case 'user':
-        nav('/users/1');
-        break;
-      case 'conv':
-        nav('/convocatories/1');
-        break;
-      default:
-
-    }
-    console.log(e.target.name);
+  function handleClick(e, userId) {
+    nav('/users/' + userId);
   }
 
-  function handleDelete(e, name) {
+  function handleDelete(e, name, userId) {
     const r = window.confirm('Confirmas la eliminación del usuario ' + name + '.')
     if (r) {
-      console.log('Se solicita eliminar usuario.');
+      axios.delete(baseUrl + userId).then(response => {
+        if (response.status === 204) {
+          alert('Se ha eliminado el usuario.');
+        }
+      });
     }
   }
 
@@ -86,13 +84,13 @@ export default function UsersTable(props) {
               return (
                 <TableRow hover role="checkbox" tabIndex={-1} key={index}>
                   <TableCell key={index+row.name} align="center">
-                    <Button onClick={(e) => handleClick(e, 'user')}>{row.name}</Button>
+                    <Button onClick={(e) => handleClick(e, row.id)}>{row.name}</Button>
                   </TableCell>
                   <TableCell key={index+row.email} align="center">
                     <Button name={row.email} onClick={(e) => handleClick(e, 'conv')}>{row.email}</Button>
                   </TableCell>
                   <TableCell key={index+'del-'+row.name} align="center">
-                    <Button onClick={(e) => handleDelete(e, row.name)}><DeleteIcon /></Button>
+                    <Button onClick={(e) => handleDelete(e, row.name, row.id)}><DeleteIcon /></Button>
                   </TableCell>
                 </TableRow>
               );

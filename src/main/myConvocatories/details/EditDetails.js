@@ -23,10 +23,6 @@ export default function EditDetails(props) {
       <Grid item>
         <Fetching fetched={props.fetched} />
       </Grid>
-      <Grid item>
-        <Button disabled={!props.edit} onClick={handleSave}><SaveIcon /></Button>
-        <Button disabled={props.edit} onClick={handleEditEnable}><EditIcon /></Button>
-      </Grid>
     </Grid>
   );
 }

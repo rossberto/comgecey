@@ -136,12 +136,6 @@ export default function MyConvocatory(props) {
             <AddressInfo info={place} updateInfo={handlePlaceInfo} classes={classes} edit={edit.AddressInfo}/>
           </Paper>
         </Grid>
-        <Grid item xs={12} sm={6}>
-          <Paper className={classes.paper}>
-            <Typography component="h1" variant="h5">Inscritos</Typography>
-            <Suscribers convocatoryId={props.match.params.convocatoryId} classes={classes} />
-          </Paper>
-        </Grid>
       </Grid>
     </div>
   );

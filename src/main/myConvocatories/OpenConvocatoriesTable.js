@@ -50,8 +50,7 @@ export default function UsersTable(props) {
   };
 
   function handleClick(id) {
-    console.log(id);
-    nav('/convocatories/' + id);
+    nav('/myconvocatories/' + id);
   }
 
   function handleSuscribe(id) {

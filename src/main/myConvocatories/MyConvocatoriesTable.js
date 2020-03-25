@@ -13,14 +13,7 @@ const convsUrl = apiUrl + 'convocatories/';
 
 const columns = [
   { id: 'code', label: 'Convocatoria', align: 'center' },
-  { id: 'name', label: 'Estado', minWidth: 170, align: 'center' },
-  {
-    id: 'population',
-    label: 'Acciones',
-    //minWidth: 170,
-    align: 'center',
-    format: value => value.toLocaleString(),
-  },
+  { id: 'name', label: 'Estado', minWidth: 170, align: 'center' }
 ];
 
 
@@ -51,23 +44,7 @@ export default function UsersTable(props) {
   };
 
   function handleClick(id) {
-    console.log(id);
-    nav('/convocatories/' + id);
-  }
-
-  function handleUnsuscribe(convocatoryId, userId) {
-      const r = window.confirm(`¿Confirmas que vas a desistir de esta convocatoria?`);
-
-      if (r) {
-        const url = convsUrl + convocatoryId + '/suscribers/' + userId;
-        axios.delete(url).then(response => {
-          if (response.status === 204) {
-            alert('Se ha quitado el usuario de la convocatoria.');
-            props.updateUserConvs();
-            //setRefresh(!refresh);
-          }
-        });
-      }
+    nav('/myconvocatories/' + id);
   }
 
   return (
@@ -96,9 +73,6 @@ export default function UsersTable(props) {
                   </TableCell>
                   <TableCell key={row.status} align="center">
                     <Typography variant="button" display="block" gutterBottom>{row.user_status}</Typography>
-                  </TableCell>
-                  <TableCell key="icon" align="center">
-                    <Button disabled={(row.user_status !== 'Certificado') && (row.user_status !== null)  ? false : true} onClick={(e) => handleUnsuscribe(row.id, props.userId)}>{(row.user_status !== 'Certificado') && (row.user_status !== null) ? 'Desistir' : ''}</Button>
                   </TableCell>
                 </TableRow>
               );

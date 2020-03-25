@@ -25,7 +25,7 @@ function Convocatories(props) {
   //const [searchText, setSearchText] = useState('');
 
   useEffect(() => {
-    if (!userSession.is_admin) {
+    if (!userSession.is_admin && !props.cookies.cookies.is_admin) {
       alert('La página a la que intenta acceder es de uso exclusivo de administradores de la plataforma Comgecey.\n\n' +
             'Se le redireccionará a su perfil.');
       goDashboard();

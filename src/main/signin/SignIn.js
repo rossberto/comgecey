@@ -59,7 +59,6 @@ export default function SignIn() {
   const [cookies, setCookie] = useCookies(['userId']);
 
   useEffect(() => {
-    console.log(cookies);
     if (cookies.userId && cookies.token) {
       axios.defaults.headers = {
           Authorization: cookies.token + ':' + API_SECRET

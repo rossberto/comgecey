@@ -12,14 +12,7 @@ const baseUrl = apiUrl + 'users/';
 
 const columns = [
   { id: 'code', label: 'Convocatoria', align: 'center' },
-  { id: 'name', label: 'Estado', minWidth: 170, align: 'center' },
-  {
-    id: 'population',
-    label: 'Acciones',
-    //minWidth: 170,
-    align: 'center',
-    format: value => value.toLocaleString(),
-  },
+  { id: 'name', label: 'Estado', minWidth: 170, align: 'center' }
 ];
 
 
@@ -50,17 +43,12 @@ export default function UsersTable(props) {
   };
 
   function handleClick(id) {
-    console.log(id);
     nav('/convocatories/' + id);
   }
 
   function handleSuscribe(id) {
-    console.log('se va a inscribir');
-    console.log(id);
     const url = baseUrl + props.userId + '/convocatories';
-    console.log(url);
     axios.post(url, {convocatoryId: id}).then(response => {
-      console.log(response);
       if (response.status === 201) {
         alert('Tu solicitud ha sido enviada.')
       } else {
@@ -95,9 +83,6 @@ export default function UsersTable(props) {
                   </TableCell>
                   <TableCell key={row.status} align="center">
                     <Typography variant="button" display="block" gutterBottom>{row.status}</Typography>
-                  </TableCell>
-                  <TableCell key="icon" align="center">
-                    <Button disabled={row.status === 'Abierta' ? false : true} onClick={() => handleSuscribe(row.id)}>{row.status === 'Abierta' ? 'Inscribirme' : ''}</Button>
                   </TableCell>
                 </TableRow>
               );
