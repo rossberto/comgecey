@@ -10,6 +10,8 @@ import logo from './comgecey-02.png';
 import { apiUrl } from '../apiUrl';
 import { useCookies } from 'react-cookie';
 
+const API_SECRET = process.env.REACT_APP_JWT_SECRET;
+
 const baseUrl = apiUrl + 'auth/';
 
 function Copyright() {
@@ -78,11 +80,11 @@ export default function SignIn() {
         setCookie('userId', response.data.user.id, {
           maxAge: 3600
         });
-        
+
         response.data.user.birthdate = response.data.user.birthdate.slice(0,10);
 
         axios.defaults.headers = {
-            Authorization: response.data.access_token
+            Authorization: response.data.access_token + ':' + API_SECRET
         }
         setUserSession(response.data.user);
         setFetched(true);

@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Paper, Grid, TextField, Button, Typography,
           AppBar, Tabs, Tab, Box } from '@material-ui/core';
@@ -54,10 +54,6 @@ function SimpleTabs(props) {
 
   const { auth, goDashboard, routes, userSession, setUserSession } = appContext;
   const [value, setValue] = React.useState(0);
-
-  useEffect(() => {
-    console.log(props.cookies.cookies);
-  });
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
