@@ -3,9 +3,11 @@ import PropTypes from 'prop-types';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { ListItem, List, IconButton, Hidden, Drawer, Divider, AppBar, CssBaseline,
          Button, Container, Typography, Toolbar, ListItemText, ListItemIcon  } from '@material-ui/core';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
+import BallotIcon from '@material-ui/icons/Ballot';
 import MenuIcon from '@material-ui/icons/Menu';
+import AccountBox from '@material-ui/icons/AccountBox';
+import PeopleIcon from '@material-ui/icons/People';
+import EventNoteIcon from '@material-ui/icons/EventNote';
 import AppContext from '../../AppContext';
 
 import nav from '../nav';
@@ -56,7 +58,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const userNavMenu  = ['Mi Perfil', 'Mis Convocatorias'];
-const adminNavMenu = ['Convocatorias', 'Usuarios', 'Mi Perfil', 'Mis Convocatorias']; //, 'Boletines'];
+const adminNavMenu = ['Usuarios', 'Convocatorias']; //, 'Boletines'];
 const linksNavMenu = ['Comgecey', 'Blog'];
 
 function Frame(props) {
@@ -66,7 +68,7 @@ function Frame(props) {
 
   const appContext = useContext(AppContext);
   const {auth, goDashboard, userSession } = appContext;
-  const [navMenu, setNavMenu] = useState(adminNavMenu);
+  const [navMenu, setNavMenu] = useState([]);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [cookies, setCookie, removeCookie] = useCookies();
 
@@ -79,8 +81,6 @@ function Frame(props) {
 
     if ( cookies.is_admin === '1' ) {
       setNavMenu(adminNavMenu);
-    } else {
-      setNavMenu(userNavMenu);
     }
   });
 
@@ -123,21 +123,29 @@ function Frame(props) {
   const drawer = (
     <div>
       <div className={classes.toolbar} />
-      <Divider />
       <List>
-        {navMenu.map((text, index) => (
-          <ListItem button ContainerProps={{name: text}} key={text} onClick={(e) => handleClick(e, text)}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon name={text} /> : <MailIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
+        <ListItem ContainerProps={{name: 'Médico'}} key={'Médico'}>
+          <ListItemText primary={'Médico'} />
+        </ListItem>
+        {userNavMenu.map((text, index) => (
+          <ListItem button value={text} key={text} onClick={(e) => handleClick(e, text)}>
+            <ListItemIcon value={text}>{index % 2 === 0 ? <AccountBox /> : <BallotIcon />}</ListItemIcon>
+            <ListItemText value={text} primary={text} />
           </ListItem>
         ))}
       </List>
       <Divider />
       <List>
-        {[].map((text, index) => (
-          <ListItem button value={text} key={text} onClick={(e) => handleClick(e, text)}>
-            <ListItemIcon value={text}>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-            <ListItemText value={text} primary={text} />
+        {
+          cookies.is_admin === '1' ? (<ListItem ContainerProps={{name: 'Administrador'}} key={'Administrador'}>
+                                        <ListItemText primary={'Administrador'} />
+                                      </ListItem>)
+                                    : ''
+        }
+        {navMenu.map((text, index) => (
+          <ListItem button ContainerProps={{name: text}} key={text} onClick={(e) => handleClick(e, text)}>
+            <ListItemIcon>{index % 2 === 0 ? <PeopleIcon name={text} /> : <EventNoteIcon />}</ListItemIcon>
+            <ListItemText primary={text} />
           </ListItem>
         ))}
       </List>

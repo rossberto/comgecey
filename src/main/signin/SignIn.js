@@ -6,7 +6,7 @@ import { Container, Typography, Box, Grid, Link, Checkbox, FormControlLabel,
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Fetching from '../Fetching';
 import AppContext from '../../AppContext';
-import logo from './comgecey-02.png';
+import logo from './comgecey-02lr2.png';
 import { apiUrl } from '../apiUrl';
 import { useCookies } from 'react-cookie';
 

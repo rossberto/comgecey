@@ -29,10 +29,12 @@ function MyConvocatories(props) {
   const [filtered, setFiltered] = useState([]);
   //const [searchText, setSearchText] = useState('');
 
+/*
   useEffect(() => {
     console.log(props);
     //console.log(fetched);
   }, []);
+  */
 
   useEffect(() => {
     axios.get(convsUrl).then(response => {
