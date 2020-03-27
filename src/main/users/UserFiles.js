@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { withCookies } from 'react-cookie';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -25,10 +25,6 @@ const useStyles = makeStyles({
     width: "100%"
   },
 });
-
-function createData(name, calories, fat) {
-  return { name, calories, fat };
-}
 
 const endpoints = {
   'CURP': 'curp',
@@ -64,7 +60,7 @@ const initSaveDisabled = {
   'Comprobante de pago': true
 }
 
-export default function UserFiles(props) {
+function UserFiles(props) {
   const classes = useStyles();
 
   const [fetched, setFetched] = useState(false);
@@ -212,3 +208,5 @@ export default function UserFiles(props) {
     </React.Fragment>
   );
 }
+
+export default withCookies(UserFiles);
