@@ -20,6 +20,7 @@ function MyConvocatories(props) {
   const appContext = useContext(AppContext);
   const { userSession } = appContext;
 
+  const [userConvsTitles, setUserConvsTitles] = useState([]);
   const [convsFetched, setConvsFetched] = useState(false);
   const [userConvsFetched, setuserConvsFetched] = useState(false);
   const [userConvsUpdate, setUserConvsUpdate] = useState(false);
@@ -29,12 +30,18 @@ function MyConvocatories(props) {
   const [filtered, setFiltered] = useState([]);
   //const [searchText, setSearchText] = useState('');
 
-/*
+
   useEffect(() => {
     console.log(props);
-    //console.log(fetched);
-  }, []);
-  */
+    console.log(convocatories);
+    console.log(userConvocatories);
+    const userTitles = userConvocatories.map(item => {
+      return item.title;
+    });
+    console.log(userTitles);
+    setUserConvsTitles(userTitles);
+  }, [userConvocatories]);
+
 
   useEffect(() => {
     axios.get(convsUrl).then(response => {
@@ -52,28 +59,6 @@ function MyConvocatories(props) {
     });
   }, [userConvsUpdate]);
 
-  /*
-  useEffect(() => {
-    if (filter.filterOption !== 'Todas') {
-      //const filtered = convocatories.filter(row => row.status===filter.filterOption &&
-      //                             row.convocatory.toLowerCase().includes(filter.searchText.toLowerCase()))
-      setFiltered(
-        convocatories.filter(row => row.status===filter.filterOption &&
-                                     row.title.toLowerCase().includes(filter.searchText.toLowerCase()))
-      );
-    } else {
-      //const filtered = convocatories.filter(row => row.convocatory.toLowerCase().includes(filter.searchText.toLowerCase()));
-      setFiltered(
-        convocatories.filter(row => row.title.toLowerCase().includes(filter.searchText.toLowerCase()))
-      );
-    }
-  }, [filter]);
-
-  function handleUpdateFilter(key, value) {
-    setFilter({...filter, [key]:value});
-  }
-  */
-
   function handleUpdateUserConvs() {
     setUserConvsUpdate(!userConvsUpdate);
   }
@@ -89,7 +74,7 @@ function MyConvocatories(props) {
       <Grid item xs={12} >
         <Typography align="center" variant="h5" component="h5" gutterBottom style={{alignItems:'center'}}>Convocatorias Abiertas</Typography>
         <Fetching fetched={convsFetched} />
-        {convsFetched ? <OpenConvocatoriesTable userId={props.cookies.cookies.userId} convs={convocatories} updateUserConvs={handleUpdateUserConvs} /> : ''}
+        {convsFetched ? <OpenConvocatoriesTable userConvsTitles={userConvsTitles} userId={props.cookies.cookies.userId} convs={convocatories} updateUserConvs={handleUpdateUserConvs} /> : ''}
       </Grid>
       <Grid item xs={12} >
         <Typography align="center" variant="h5" component="h5" gutterBottom style={{alignItems:'center'}}>Mis Convocatorias</Typography>

@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Typography, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, Button} from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import VisibilityIcon from '@material-ui/icons/Visibility';
+import CheckIcon from '@material-ui/icons/Check';
 import Fetching from '../../Fetching';
 import nav from '../../nav.js';
 import { apiUrl } from '../../apiUrl';
@@ -13,32 +14,12 @@ const baseUrl =  apiUrl + 'convocatories/';
 const columns = [
   { id: 'completeName', label: 'Nombre Completo', minWidth: 170 },
   { id: 'status', label: 'Estatus' },
-  { id: 'actions', label: 'Acciones', //minWidth: 170,
+  { id: 'delete', label: 'Eliminar', //minWidth: 170,
     align: 'right',
     format: value => value.toLocaleString() },
-];
-
-function createData(name, status, actions) {
-  return { name, status, actions };
-}
-
-const rows = [
-  createData('Christian Eduardo Boyain de Goytia y Luna', <VisibilityIcon />, <DeleteIcon />),
-  createData('Diana Iveth Sierra Gomez', <VisibilityIcon />, <DeleteIcon />),
-  createData('Jorge Alberto Fonz Aguilar', <VisibilityIcon />, <DeleteIcon />),
-  createData('Gloria Yaneth Calderón Loeza', <VisibilityIcon />, <DeleteIcon />),
-  createData('Francisco Calderón Ojeda', <VisibilityIcon />, <DeleteIcon />),
-  createData('Diana Iveth Sierra Gomez', '', <DeleteIcon />),
-  createData('Jorge Alberto Fonz Aguilar', <VisibilityIcon />, <DeleteIcon />),
-  createData('Gloria Yaneth Calderón Loeza', <VisibilityIcon />, <DeleteIcon />),
-  createData('Francisco Calderón Ojeda', '', <DeleteIcon />),
-  createData('Diana Iveth Sierra Gomez', '', <DeleteIcon />),
-  createData('Jorge Alberto Fonz Aguilar', <VisibilityIcon />, <DeleteIcon />),
-  createData('Gloria Yaneth Calderón Loeza', <VisibilityIcon />, <DeleteIcon />),
-  createData('Francisco Calderón Ojeda', <VisibilityIcon />, <DeleteIcon />),
-  createData('Diana Iveth Sierra Gomez', '', <DeleteIcon />),
-  createData('Jorge Alberto Fonz Aguilar', <VisibilityIcon />, <DeleteIcon />),
-  createData('Gloria Yaneth Calderón Loeza', <VisibilityIcon />, <DeleteIcon />),
+  { id: 'accept', label: 'Aceptar', //minWidth: 170,
+    align: 'right',
+    format: value => value.toLocaleString() },
 ];
 
 const useStyles = makeStyles({
@@ -77,7 +58,7 @@ export default function Suscribers(props) {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-
+/*
   function handleClick(columnId, userId, completeName) {
     if (columnId === 'completeName') {
       nav('/users/' + userId); // Go to User Profile
@@ -93,6 +74,38 @@ export default function Suscribers(props) {
           }
         });
       }
+    }
+  }
+*/
+  function handleClick(cell, userId, completeName) {
+    if (cell === 'completeName') {
+      nav('/users/' + userId); // Go to User Profile
+    } else {
+      const r = window.confirm(`¿Confirma la eliminación de ${completeName} de esta convocatoria?`);
+
+      if (r) {
+        const url = baseUrl + props.convocatoryId + '/suscribers/' + userId;
+        axios.delete(url).then(response => {
+          if (response.status === 204) {
+            alert('Se ha quitado el usuario de la convocatoria.');
+            setRefresh(!refresh);
+          }
+        });
+      }
+    }
+  }
+
+  function handleAccept(userId, completeName) {
+    const r = window.confirm(`¿Confirma la inscripción de ${completeName} de esta convocatoria?`);
+
+    if (r) {
+      const url = baseUrl + props.convocatoryId + '/suscribers/' + userId;
+      axios.put(url, {status: 'Inscrito'}).then(response => {
+        if (response.status === 200) {
+          alert('Se ha inscrito el usuario de la convocatoria.');
+          setRefresh(!refresh);
+        }
+      });
     }
   }
 
@@ -118,18 +131,23 @@ export default function Suscribers(props) {
             {users.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => {
               return (
                 <TableRow hover role="checkbox" tabIndex={-1} key={index}>
-                  {columns.map(column => {
-                    const value = row[column.id];
-                    console.log(value);
-                    return (
-                      <TableCell key={column.id} align="left">
-                        { column.id === 'status' ?
-                            <Typography variant="button" display="block" gutterBottom>{value}</Typography> :
-                            <Button disabled={false} onClick={(e) => handleClick(column.id, row.id, row.completeName)}>{column.id === 'completeName' ? value : <DeleteIcon />/*column.format && typeof value === 'number' ? column.format(value) : value*/}</Button>
-                        }
-                      </TableCell>
-                    );
-                  })}
+                  <TableCell key={'completeName'} align="left">
+                        <Button disabled={false} onClick={(e) => handleClick('completeName', row.id, row.completeName)}>
+                          {row.completeName}
+                        </Button>
+                  </TableCell>
+                  <TableCell key={'status'} align="left">
+                        <Typography variant="button" display="block" gutterBottom>{row.status}</Typography>
+                  </TableCell>
+                  <TableCell key={'delete'} align="left">
+                        <Button disabled={false} onClick={(e) => handleClick('delete', row.id, row.completeName)}>
+                          <DeleteIcon />
+                        </Button>
+                  </TableCell>
+
+                  <TableCell key={index+'acc-'+ row.name} align="center">
+                    <Button disabled={row.status === 'Inscrito'} onClick={() => handleAccept(row.id, row.completeName, )}><CheckIcon /></Button>
+                  </TableCell>
                 </TableRow>
               );
             })}
@@ -139,7 +157,7 @@ export default function Suscribers(props) {
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
         component="div"
-        count={rows.length}
+        count={users.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onChangePage={handleChangePage}

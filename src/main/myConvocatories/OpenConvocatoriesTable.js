@@ -93,7 +93,7 @@ export default function UsersTable(props) {
                     <Typography variant="button" display="block" gutterBottom>{row.status}</Typography>
                   </TableCell>
                   <TableCell key="icon" align="center">
-                    <Button disabled={row.status === 'Abierta' ? false : true} onClick={() => handleSuscribe(row.id)}>{row.status === 'Abierta' ? 'Inscribirme' : ''}</Button>
+                    <Button disabled={props.userConvsTitles.includes(row.title)} onClick={() => handleSuscribe(row.id)}>{row.status === 'Abierta' ? 'Inscribirme' : ''}</Button>
                   </TableCell>
                 </TableRow>
               );
