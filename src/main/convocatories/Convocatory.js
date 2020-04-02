@@ -109,7 +109,7 @@ export default function Convocatory(props) {
     <div className={classes.root}>
       <Grid container spacing={3}>
         <Grid item xs={12} sm={10}>
-          <Typography align="center" variant="h2" component="h2" gutterBottom style={{alignItems:'center'}}>Convocatoria 2020-1</Typography>
+          <Typography align="center" variant="h2" component="h2" gutterBottom style={{alignItems:'center'}}>Convocatoria {conv.title}</Typography>
         </Grid>
         <Grid item xs={12} sm={6}>
           <Paper className={classes.paper}>

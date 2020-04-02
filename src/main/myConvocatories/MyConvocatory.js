@@ -108,10 +108,10 @@ export default function MyConvocatory(props) {
   return (
     <div className={classes.root}>
       <Grid container spacing={3}>
-        <Grid item xs={12} sm={10}>
-          <Typography align="center" variant="h2" component="h2" gutterBottom style={{alignItems:'center'}}>Convocatoria 2020-1</Typography>
+        <Grid item xs={12} >
+          <Typography align="center" variant="h2" component="h2" gutterBottom style={{alignItems:'center'}}>Convocatoria {conv.title}</Typography>
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12}>
           <Paper className={classes.paper}>
             <EditDetails
               name='GenInfo'
