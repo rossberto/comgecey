@@ -101,7 +101,7 @@ export default function SearchBar(props) {
                     aria-label="directions" onClick={handleClick}>
           <Add />
         </IconButton>
-        <NewConvDialog closeDialog={handleDialogClose} open={open} />
+        <NewConvDialog refreshConvs={props.refreshConvs}  closeDialog={handleDialogClose} open={open} />
       </Paper>
     </React.Fragment>
   );

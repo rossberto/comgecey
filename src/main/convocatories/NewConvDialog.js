@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
 import {Dialog, DialogTitle, DialogContent, DialogActions, Grid, Typography, Divider, Button} from '@material-ui/core';
@@ -10,7 +10,6 @@ const convUrl = apiUrl + 'convocatories/';
 const placeUrl = apiUrl + 'places/';
 const convPlaceUrl = apiUrl + 'conv_has_place/';
 
-/*
 const initConvInfo = {
   date: '',
   title: '',
@@ -30,7 +29,6 @@ const initPlaceInfo = {
   number: '',
   phone: ''
 }
-*/
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -59,18 +57,26 @@ const useStyles = makeStyles(theme => ({
 export default function NewConvDialog(props) {
   const classes = useStyles();
 
-  const [conv, setConv] = useState({});
-  const [place, setPlace] = useState({});
+  const [conv, setConv] = useState(initConvInfo);
+  const [place, setPlace] = useState(initPlaceInfo);
+  const [createDisabled, setCreateDisabled] = useState(true);
+
+  useEffect(() => {
+    const convFilled = Object.keys(conv).every(key => conv[key] !== '');
+    const placeFilled = Object.keys(conv).every(key => place[key] !== '');
+
+    if (convFilled && placeFilled) {
+      setCreateDisabled(false);
+    } else {
+      setCreateDisabled(true);
+    }
+  }, [conv, place]);
 
   function handleConvInfoChange(key, value) {
-    console.log(key);
-    console.log(value);
     setConv({...conv, [key]: value});
   }
 
   function handlePlaceInfoChange(key, value) {
-    console.log(key);
-    console.log(value);
     setPlace({...place, [key]: value});
   }
 
@@ -87,6 +93,7 @@ export default function NewConvDialog(props) {
             axios.post(convPlaceUrl, convPlace).then(response => {
               if (response.status === 201) {
                 props.closeDialog();
+                props.refreshConvs();
                 alert('Convocatoria creada exitosamente.');
               }
             });
@@ -99,7 +106,8 @@ export default function NewConvDialog(props) {
   return (
     <Dialog onClose={props.closeDialog} open={props.open}>
       <DialogTitle align="center">
-        <Typography align="center" variant="h4" component="h3" gutterBottom style={{alignItems:'center'}}>Nueva Convocatoria</Typography>
+        Nueva Convocatoria
+        {/*<Typography align="center" variant="h4" component="h4" gutterBottom style={{alignItems:'center'}}>Nueva Convocatoria</Typography>*/}
       </DialogTitle>
       <DialogContent>
         <Grid container styles={{width:'100%'}}>
@@ -127,6 +135,7 @@ export default function NewConvDialog(props) {
         Cancelar
       </Button>
         <Button
+          disabled={createDisabled}
           variant="contained"
           onClick={handleClick}
         >

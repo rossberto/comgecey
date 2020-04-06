@@ -54,7 +54,7 @@ export default function SignIn() {
   const { auth, goDashboard, routes, setUserSession } = appContext;
 
   const [fetched, setFetched] = useState(true);
-  const [inputs, setInputs] = useState({email: 'dev@rross.me', password: '1234'});
+  const [inputs, setInputs] = useState({email: '', password: ''});
 
   const [cookies, setCookie] = useCookies(['userId']);
 

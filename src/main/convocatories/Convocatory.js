@@ -90,14 +90,10 @@ export default function Convocatory(props) {
   function handleSave(name) {
     switch (name) {
       case 'GenInfo':
-        axios.put(convsUrl + props.match.params.convocatoryId, conv).then(response => {
-          console.log(response);
-        });
+        axios.put(convsUrl + props.match.params.convocatoryId, conv);
         break;
       case 'AddressInfo':
-        axios.put(placesUrl + place.id, place).then(response => {
-          console.log(response);
-        });
+        axios.put(placesUrl + place.id, place);
         break;
       default:
 

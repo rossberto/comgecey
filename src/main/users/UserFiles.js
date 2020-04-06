@@ -185,7 +185,7 @@ function UserFiles(props) {
                     <Button
                       component="label"
                     >
-                      {filePath[key] ? <EditIcon /> : <FileAddIcon />}
+                      {filePath[key] ? <React.Fragment><EditIcon />Cambiar</React.Fragment> : <React.Fragment><FileAddIcon /> Agregar</React.Fragment>}
                       <input
                         type="file"
                         name={key}
@@ -197,7 +197,7 @@ function UserFiles(props) {
                       onClick={() => handleClick(key)}
                       disabled = {saveDisabled[key]}
                     >
-                      <SaveIcon />
+                      <SaveIcon />Guardar
                     </Button>
                 </TableCell>
               </TableRow>

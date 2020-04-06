@@ -32,21 +32,19 @@ function MyConvocatories(props) {
 
 
   useEffect(() => {
-    console.log(props);
-    console.log(convocatories);
-    console.log(userConvocatories);
     const userTitles = userConvocatories.map(item => {
       return item.title;
     });
-    console.log(userTitles);
     setUserConvsTitles(userTitles);
   }, [userConvocatories]);
 
 
   useEffect(() => {
     axios.get(convsUrl).then(response => {
-      setConvocatories(response.data.convocatories);
-      //setFiltered(response.data.convocatories);
+      const openConvs = response.data.convocatories.filter(conv => {
+        return conv.status === 'Abierta';
+      });
+      setConvocatories(openConvs);
       setConvsFetched(true);
     });
   }, []);
@@ -54,7 +52,6 @@ function MyConvocatories(props) {
   useEffect(() => { // userSession.id
     axios.get(userConvsUrl + props.cookies.cookies.userId + '/convocatories').then(response => {
       setUserConvocatories(response.data.userConvocatories);
-      //setFiltered(response.data.userConvocatories);
       setuserConvsFetched(true);
     });
   }, [userConvsUpdate]);

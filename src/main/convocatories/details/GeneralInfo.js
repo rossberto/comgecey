@@ -186,6 +186,8 @@ export default function GeneralInfo(props) {
                 <option value="Seleccionar">Seleccionar...</option>
                 <option value="Inactiva">Inactiva</option>
                 <option value="Abierta">Abierta</option>
+                <option value="Cerrada">Cerrada</option>
+                <option value="Cancelada">Cancelada</option>
               </Select>
             </FormControl>
           </Grid>

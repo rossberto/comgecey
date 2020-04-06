@@ -22,6 +22,7 @@ function Convocatories(props) {
   const [filter, setFilter] = useState({searchText:'', filterOption:'Todas'});
   const [convocatories, setConvocatories] = useState([]);
   const [filtered, setFiltered] = useState([]);
+  const [refresh, setRefresh] = useState(false);
   //const [searchText, setSearchText] = useState('');
 
   useEffect(() => {
@@ -38,18 +39,15 @@ function Convocatories(props) {
       setFiltered(response.data.convocatories);
       setFetched(true);
     });
-  }, []);
+  }, [refresh]);
 
   useEffect(() => {
     if (filter.filterOption !== 'Todas') {
-      //const filtered = convocatories.filter(row => row.status===filter.filterOption &&
-      //                             row.convocatory.toLowerCase().includes(filter.searchText.toLowerCase()))
       setFiltered(
         convocatories.filter(row => row.status===filter.filterOption &&
                                      row.title.toLowerCase().includes(filter.searchText.toLowerCase()))
       );
     } else {
-      //const filtered = convocatories.filter(row => row.convocatory.toLowerCase().includes(filter.searchText.toLowerCase()));
       setFiltered(
         convocatories.filter(row => row.title.toLowerCase().includes(filter.searchText.toLowerCase()))
       );
@@ -60,13 +58,17 @@ function Convocatories(props) {
     setFilter({...filter, [key]:value});
   }
 
+  function refreshConvs() {
+    setRefresh(!refresh);
+  }
+
   return (
     <Grid container alignItems="center" direction="column" spacing={3}>
       <Grid item xs={12} sm={10}>
         <Typography align="center" variant="h2" component="h2" gutterBottom style={{alignItems:'center'}}>Convocatorias</Typography>
       </Grid>
       <Grid item xs={12} sm={10}>
-        <SearchBar updateFilter={handleUpdateFilter} />
+        <SearchBar refreshConvs={refreshConvs} updateFilter={handleUpdateFilter} />
       </Grid>
       <Grid item xs={12} >
         <Fetching fetched={fetched} />
