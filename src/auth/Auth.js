@@ -3,23 +3,17 @@ import { withCookies, CookiesProvider } from 'react-cookie';
 import SignIn from '../main/signin/SignIn';
 import Pages from '../main/pages/Pages';
 import AppContext from '../AppContext';
-/*
-export default class Auth extends React.Component {
-  render()
-  {
-    return  <React.Fragment children={this.props.children} />;
-  }
-}
-*/
+
 
 function Auth(props) {
   const appContext = useContext(AppContext);
-  //const { auth, routes, userSession, setUserSession } = appContext;
+  const { routes, history } = appContext;
 
   const [auth, setAuth] = useState(false);
 
   // User session on cookies verification
   useEffect(() => {
+
     if (props.cookies.cookies.userId) {
       setAuth(true);
     } else {

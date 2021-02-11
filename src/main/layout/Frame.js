@@ -13,6 +13,8 @@ import AppContext from '../../AppContext';
 import nav from '../nav';
 import { withCookies, useCookies } from 'react-cookie';
 
+import logo32 from './logo32.png'
+
 const drawerWidth = 200;
 
 const useStyles = makeStyles(theme => ({
@@ -157,6 +159,7 @@ function Frame(props) {
       <CssBaseline />
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
+          <img src={logo32} style={{marginRight: "10px"}}></img>
           <Typography variant="h6" noWrap>
             Plataforma Comgecey
           </Typography>

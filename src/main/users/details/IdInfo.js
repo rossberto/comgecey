@@ -24,12 +24,16 @@ export default function IdInfo(props) {
 
   useEffect(() => {
     const url = baseUrl + props.userId;
+    console.log(url);
     axios.get(url).then(response => {
+      console.log(response.status);
       if (response.status === 200) {
         response.data.user.birthdate = response.data.user.birthdate.slice(0, 10);
         setInfo(response.data.user);
         setFetched(true);
       }
+    }).catch(err => {
+      console.log(err);
     });
   }, []);
 

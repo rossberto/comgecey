@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Router } from 'react-router-dom';
+import { Router, Route, Switch } from 'react-router-dom';
 import {renderRoutes} from 'react-router-config';
 import { CookiesProvider } from 'react-cookie';
 import AppContext from './AppContext';
@@ -11,6 +11,7 @@ import Layout from './main/layout/Layout';
 import Blog from './main/blog/Blog';
 import history from './main/history';
 import Auth from './auth/Auth';
+import PwdRecovery from './main/signin/PwdRecovery';
 
 const theme = createMuiTheme({
   palette: {
@@ -62,9 +63,17 @@ function App() {
 
         <ThemeProvider theme={theme}>
             <Router history={history}>
-              <Auth history={history}>
-                <Layout />
-              </Auth>
+              <Switch>
+                <Route exact path="/recover">
+                  <PwdRecovery history={history} />
+                </Route>
+
+                <Route path="/">
+                  <Auth history={history}>
+                    <Layout />
+                  </Auth>
+                </Route>
+              </Switch>
             </Router>
         </ThemeProvider>
 

@@ -10,7 +10,11 @@ export const SignInAppConfig = {
   routes: [
     {
       path: '/signin',
-      component: React.lazy(() => import('./SignIn'))
+      component: React.lazy(() => import('./Sign'))
+    },
+    {
+      path: '/recover',
+      component: React.lazy(() => import('./PwdRecovery'))
     }
   ]
 };

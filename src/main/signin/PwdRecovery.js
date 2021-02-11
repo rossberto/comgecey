@@ -11,7 +11,8 @@ import { apiUrl } from '../apiUrl';
 import { useCookies } from 'react-cookie';
 
 const API_SECRET = process.env.REACT_APP_JWT_SECRET;
-const baseUrl = apiUrl + 'auth/';
+
+const baseUrl = apiUrl + 'pwdrecovery';
 
 function Copyright() {
   return (
@@ -46,29 +47,14 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function SignIn() {
+export default function PwdRecovery(props) {
   const classes = useStyles();
 
   const appContext = useContext(AppContext);
   const { auth, goDashboard, routes, setUserSession } = appContext;
 
   const [fetched, setFetched] = useState(true);
-  const [inputs, setInputs] = useState({email: '', password: ''});
-
-  const [cookies, setCookie] = useCookies(['userId']);
-
-  useEffect(() => {
-    console.log(cookies);
-    if (cookies.userId && cookies.token) {
-      axios.defaults.headers = {
-          Authorization: cookies.token + ':' + API_SECRET
-      }
-
-      console.log(axios.defaults.headers);
-
-      goDashboard(true, cookies.userId);
-    }
-  }, [cookies.userId]);
+  const [inputs, setInputs] = useState({email: ''});
 
   function handleChange(e) {
     e.preventDefault();
@@ -78,33 +64,18 @@ export default function SignIn() {
 
   function handleClick(e) {
     e.preventDefault();
-
     setFetched(false);
 
-    axios.post(baseUrl, {email: inputs.email, password: inputs.password}).then(response => {
+    axios.post(baseUrl, {email: inputs.email}).then(response => {
       if (response.status === 201) {
-        setCookie('userId', response.data.user.id, {
-          maxAge: 3600
-        });
-
-        setCookie('token', response.data.access_token, {
-          maxAge: 3600
-        });
-
-        setCookie('is_admin', response.data.user.is_admin, {
-          maxAge: 3600
-        });
-
-        response.data.user.birthdate = response.data.user.birthdate.slice(0,10);
-
-        setUserSession(response.data.user);
+        alert('Te hemos enviado un correo electrónico con tu contraseña.');
         setFetched(true);
       } else {
-        alert('Usuario y/o contraseña incorrectos');
+        alert('Correo electrónico incorrecto.');
         setFetched(true);
       }
     }).catch(err => {
-      alert('Usuario no ha confirmado correo o le falta completar su información de registro.');
+      alert('El correo proporcionado no está registrado en nuestra plataforma.');
       setFetched(true);
     });
   }
@@ -116,11 +87,9 @@ export default function SignIn() {
         <Fetching fetched={fetched} />
         {
           fetched ? <React.Fragment>
-                      <Avatar className={classes.avatar}>
-                        <LockOutlinedIcon />
-                      </Avatar>
+                      <br />
                       <Typography component="h1" variant="h5">
-                        Ingreso
+                        Recuperación de Contraseña
                       </Typography></React.Fragment>
                   : ''
         }
@@ -137,18 +106,8 @@ export default function SignIn() {
             autoComplete="email"
             autoFocus
           />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Contraseña"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-          />
           <Button
+            disabled={inputs.email.length <= 4 || !inputs.email.includes('@')}
             type="submit"
             fullWidth
             variant="contained"
@@ -156,20 +115,8 @@ export default function SignIn() {
             className={classes.submit}
             onClick={handleClick}
           >
-            Ingresar
+            Enviar
           </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link href="/recover" variant="body2">
-                ¿Olvidaste tu contraseña?
-              </Link>
-            </Grid>
-            <Grid item>
-              <Link href="https://comgecey.org/registro" variant="body2">
-                {"¿Todavía no tienes cuenta? Regístrate"}
-              </Link>
-            </Grid>
-          </Grid>
         </form>
       </div>
       <Box mt={8}>
