@@ -12,7 +12,8 @@ const baseUrl = apiUrl + 'users/';
 
 const columns = [
   { id: 'code', label: 'Convocatoria', align: 'center' },
-  { id: 'name', label: 'Estado', minWidth: 170, align: 'center' }
+  { id: 'name', label: 'Estado', minWidth: 170, align: 'center' },
+  { id: 'name', label: 'Documentos de Inscritos', minWidth: 170, align: 'center' }
 ];
 
 
@@ -83,6 +84,9 @@ export default function UsersTable(props) {
                   </TableCell>
                   <TableCell key={row.status} align="center">
                     <Typography variant="button" display="block" gutterBottom>{row.status}</Typography>
+                  </TableCell>
+                  <TableCell key={row.users_docs} align="center">
+                    <Button name={row.id} onClick={() => console.log('User Docs')}>Descargar</Button>
                   </TableCell>
                 </TableRow>
               );

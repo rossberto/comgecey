@@ -27,14 +27,20 @@ const useStyles = makeStyles({
 });
 
 const endpoints = {
+  'Solicitud firmada': 'firma',
   'CURP': 'curp',
   'RFC': 'rfc',
   'Comprobante de domicilio': 'domicilio',
   'Título Profesional': 'profesional',
+  'Cédula Profesional': 'cedula',
+  'Comprobante de ejercicio profesional': 'ejercicio',
   'Comprobante de pago': 'pago'
 }
 
 const initFile = {
+  'Solicitud firmada': {
+    endpoint: 'firma',
+  },
   'CURP': {
     endpoint: 'curp',
   },
@@ -47,16 +53,25 @@ const initFile = {
   'Título Profesional': {
     endpoint: 'profesional'
   },
+  'Cédula Profesional': {
+    endpoint: 'cedula'
+  },
+  'Comprobante de ejercicio profesional': {
+    endpoint: 'ejercicio',
+  },
   'Comprobante de pago': {
     endpoint: 'pago'
   }
 }
 
 const initSaveDisabled = {
+  'Solicitud firmada': true,
   'CURP': true,
   'RFC': true,
   'Comprobante de domicilio': true,
   'Título Profesional': true,
+  'Cédula Profesional': true,
+  'Comprobante de ejercicio profesional': true,
   'Comprobante de pago': true
 }
 
@@ -97,7 +112,7 @@ function UserFiles(props) {
         }
       });
 
-      if (alertForDocuments === true) {
+      if ( alertForDocuments ) {
         alert('Falta documentación, por favor, ingrésala para que puedas inscribirte. \n\n' +
               'Sólo se aceptan archivos en formato PDF.')
       }
@@ -188,6 +203,7 @@ function UserFiles(props) {
                       {filePath[key] ? <React.Fragment><EditIcon />Cambiar</React.Fragment> : <React.Fragment><FileAddIcon /> Agregar</React.Fragment>}
                       <input
                         type="file"
+                        accept="application/pdf"
                         name={key}
                         style={{ display: "none" }}
                         onChange={handleChange}
